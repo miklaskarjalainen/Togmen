@@ -4,7 +4,7 @@
 
 [node name="Spatial" type="Spatial"]
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
+[node name="player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10717, 5.1352, 0.577724 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
@@ -14,7 +14,3 @@ use_collision = true
 width = 27.6064
 height = 0.289016
 depth = 28.3754
-
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19319, 8.55023, 18.0934 )
-fov = 85.9739
