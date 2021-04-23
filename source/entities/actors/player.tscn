@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://source/entities/actors/player.gd" type="Script" id=1]
 [ext_resource path="res://source/entities/actors/camera.gd" type="Script" id=2]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "bobbing"
 loop = true
 tracks/0/type = "value"
@@ -34,36 +34,42 @@ tracks/1/keys = {
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleMesh" id=4]
+radial_segments = 16
+
+[sub_resource type="CapsuleShape" id=3]
 height = 1.77135
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
 
-[node name="camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.931604, -0.816026 )
+[node name="camera_lock" type="Spatial" parent="."]
+
+[node name="camera" type="Camera" parent="camera_lock"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.931604, -0.600105 )
 script = ExtResource( 2 )
 
-[node name="hand_anim" type="AnimationPlayer" parent="camera"]
-anims/bobbing = SubResource( 3 )
+[node name="hand_anim" type="AnimationPlayer" parent="camera_lock/camera"]
+anims/bobbing = SubResource( 1 )
 
-[node name="hand" type="CSGBox" parent="camera"]
+[node name="hand" type="CSGBox" parent="camera_lock/camera"]
 transform = Transform( 0.962498, 0, 0.271289, 0, 1, 0, -0.271289, 0, 0.962498, 0.338695, -0.601882, -0.707484 )
 width = 0.173959
 height = 0.167245
 depth = 0.853335
 material = SubResource( 2 )
 
-[node name="hand2" type="CSGBox" parent="camera"]
+[node name="hand2" type="CSGBox" parent="camera_lock/camera"]
 transform = Transform( 0.96003, 0, -0.279896, 0, 1, 0, 0.279896, 0, 0.96003, -0.124751, -0.339287, -0.707484 )
 width = 0.173959
 height = 0.167245
 depth = 0.853335
 material = SubResource( 2 )
 
-[node name="body" type="CSGCylinder" parent="."]
-height = 2.78523
+[node name="body" type="CSGMesh" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 4 )
 
 [node name="coll" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )

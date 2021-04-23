@@ -23,6 +23,7 @@ func create_server() -> void:
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(PORT, MAX_CLIENTS)
 	get_tree().network_peer = peer
+	
 	print("Server created, port: ", PORT)
 	emit_signal("on_connection_ready")
 

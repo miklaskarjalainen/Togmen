@@ -1,16 +1,28 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://source/entities/actors/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/scenes/peers.gd" type="Script" id=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.870588, 0.231373, 0.231373, 1 )
+metallic = 0.48
+roughness = 0.31
 
 [node name="Spatial" type="Spatial"]
 
-[node name="player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10717, 5.1352, 0.577724 )
+[node name="peers" type="Spatial" parent="."]
+script = ExtResource( 2 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true
 
-[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
-width = 27.6064
+[node name="floor" type="CSGBox" parent="CSGCombiner"]
+width = 148.422
 height = 0.289016
-depth = 28.3754
+depth = 146.13
+
+[node name="floor2" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( -0.181504, 0, 0, 0, 1, 0, 0, 0, -0.175125, -11.9318, 4.55248, 9.48654 )
+width = 148.422
+height = 0.289016
+depth = 146.13
+material = SubResource( 1 )
