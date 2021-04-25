@@ -1,59 +1,75 @@
-extends KinematicBody
+extends Actor
 
-const MOV_SPEED   = 450
-const JUMP_STR    = 8
-const GRAVITY     = 8
+const MOV_SPEED   = 15
+const JUMP_STR    = 12
+const GRAVITY     = 24
 
-onready var camera := $camera_lock/camera
+onready var camera  := $camera_lock/camera
 
-func _physics_process(delta:float) -> void:
+func _ready():
+	if is_network_master():
+		$body.visible = false
+
+func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
 		_do_player_movement(delta)
 		_send_position()
-	else:                   # Controller by an another player
-		_update_peer(delta)
+		
+		if Input.is_action_just_pressed("suicide"):
+			_respawn()
+		if Input.is_action_just_pressed("hurt"):
+			health -= 10
+		
+		if health <= 0:
+			_respawn()
 
 var motion := Vector3()
-func _do_player_movement(delta:float) -> void:
-	var forwards  = int(Input.is_action_pressed("ui_up"))
-	var backwards = int(Input.is_action_pressed("ui_down"))
-	var left      = int(Input.is_action_pressed("ui_left"))
-	var right     = int(Input.is_action_pressed("ui_right"))
-	var jump      = Input.is_action_just_pressed("ui_accept") and is_on_floor()
-	
+func _do_player_movement(delta:float):
 	var direction := Vector3()
-	if forwards:
+	if Input.is_action_pressed("forwards"):
 		direction -= camera.global_transform.basis.z
-	if backwards:
+	if Input.is_action_pressed("backwards"):
 		direction += camera.global_transform.basis.z
-	if left:
+	if Input.is_action_pressed("left"):
 		direction -= camera.global_transform.basis.x
-	if right:
+	if Input.is_action_pressed("right"):
 		direction += camera.global_transform.basis.x
-	direction = direction.normalized() * MOV_SPEED * delta
+	direction = direction.normalized() * MOV_SPEED
 	motion.x = direction.x
 	motion.z = direction.z
 	
-	if jump:
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		motion.y += JUMP_STR
+
 	motion.y -= GRAVITY * delta;
 	
-	motion = move_and_slide(motion, Vector3.UP)
-
-func _update_peer(delta:float) -> void:
-	pass
+	Debug.add_line("speed", motion.length())
+	Debug.add_line("is_grounded", is_on_floor())
+	
+	motion.y = move_and_slide(motion, Vector3.UP, true, 4).y
 
 # Networking #
-remote func _update_info(_translation:Vector3, _rotation:Vector3):
+puppet func _update_info(_translation:Vector3, _rotation:Vector3):
 	translation            = _translation
 	$camera_lock.rotation  = _rotation
 
-remote func _send_position():
-	rpc_unreliable("_update_info", translation, $camera_lock.rotation)
+master func _damage(dmg:int):
+	var by_who := get_tree().get_rpc_sender_id()
+	health -= dmg
+	print("damaged: %s, by: %s" % [dmg, by_who])
+	
+	if health <= 0:
+		print("got killed by: ", by_who)
+		_respawn()
 
+func _send_position():
+	rpc_unreliable("_update_info", translation, $camera_lock.rotation)
 
 # Getters / Setters #
 
-# todo add support for other's ids
+func _respawn():
+	health = 100
+	global_transform = get_parent().get_spawn()
+
 func get_unique_id() -> int:
-	return get_tree().get_network_unique_id()
+	return int(name)

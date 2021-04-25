@@ -1,0 +1,202 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://source/ui/gui.gd" type="Script" id=1]
+[ext_resource path="res://assets/theme/Alphakind_large.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/sfx/hitmark.ogg" type="AudioStream" id=3]
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 1 ), 0.0, -4.27972, 0, 0, Vector2( 0.633333, 0 ), 0.038961, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0.244444, 0 ), 0.0, 1.12987, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=3]
+resource_name = "hit"
+length = 0.15
+step = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.352941 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="gui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -134, 366 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+health_color_r = SubResource( 4 )
+health_color_g = SubResource( 2 )
+
+[node name="health" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -78.0
+margin_right = 160.0
+custom_fonts/font = ExtResource( 2 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ammo" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 122.0
+margin_top = -78.0
+margin_right = 282.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.101961, 0, 1, 1 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="crosshair" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="right" type="ColorRect" parent="crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 6.0
+margin_top = -2.0
+margin_right = 16.0
+margin_bottom = 2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="left" type="ColorRect" parent="crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -2.0
+margin_right = -6.0
+margin_bottom = 2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="top" type="ColorRect" parent="crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = -16.0
+margin_right = 2.0
+margin_bottom = -6.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bottom" type="ColorRect" parent="crosshair"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = 6.0
+margin_right = 2.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hitmark" type="Control" parent="."]
+modulate = Color( 1, 1, 1, 0.352941 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_top = -22.0
+margin_right = 32.0
+margin_bottom = 10.0
+rect_rotation = 45.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="right" type="ColorRect" parent="hitmark"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 6.0
+margin_top = -2.0
+margin_right = 16.0
+margin_bottom = 2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="left" type="ColorRect" parent="hitmark"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -2.0
+margin_right = -6.0
+margin_bottom = 2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="top" type="ColorRect" parent="hitmark"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = -16.0
+margin_right = 2.0
+margin_bottom = -6.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bottom" type="ColorRect" parent="hitmark"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = 6.0
+margin_right = 2.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="anim" type="AnimationPlayer" parent="hitmark"]
+anims/hit = SubResource( 3 )
+
+[node name="sfx" type="AudioStreamPlayer" parent="hitmark"]
+stream = ExtResource( 3 )

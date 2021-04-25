@@ -1,7 +1,6 @@
 extends Node
 
 const PORT = 25595
-const MAX_CLIENTS = 5
 
 signal on_connection_ready # Created a server or connected to one
 signal on_peer_connect(id)
@@ -20,15 +19,16 @@ func _exit_tree():
 
 # Methods #
 func create_server() -> void:
-	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(PORT, MAX_CLIENTS)
+	var max_players = GameSettings.get_value("max_players", 5)
+	var peer := NetworkedMultiplayerENet.new()
+	peer.create_server(PORT, max_players)
 	get_tree().network_peer = peer
 	
 	print("Server created, port: ", PORT)
 	emit_signal("on_connection_ready")
 
 func create_client(ip_addr:String) -> void:
-	var peer = NetworkedMultiplayerENet.new()
+	var peer := NetworkedMultiplayerENet.new()
 	peer.create_client(ip_addr, PORT)
 	get_tree().network_peer = peer
 	

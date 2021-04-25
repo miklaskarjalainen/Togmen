@@ -1,8 +1,18 @@
 
 # Godot-specific ignores
 .import/
+*.import
+*.tmp
 export.cfg
 export_presets.cfg
 
 # Mono-specific ignores
 .mono/
+
+# Exported
+*.exe
+*.pck
+
+*.html
+*.js
+*.wasm

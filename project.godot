@@ -8,8 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://source/entities/actors/actor.gd"
+}, {
+"base": "Spatial",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://assets/weapons/weapon.gd"
+} ]
 _global_script_class_icons={
+"Actor": "",
+"Weapon": ""
 }
 
 [application]
@@ -21,6 +33,13 @@ config/icon="res://icon.png"
 [autoload]
 
 Net="*res://source/singleton/net.gd"
+Debug="*res://source/singleton/debug.tscn"
+GameSettings="*res://source/singleton/gamesettings.gd"
+
+[gui]
+
+theme/custom="res://assets/theme/default.tres"
+theme/custom_font="res://assets/theme/Alphakind_medium.tres"
 
 [input]
 
@@ -51,6 +70,60 @@ ui_down={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":13,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
  ]
+}
+forwards={
+"deadzone": 0.5,
+"events": [  ]
+}
+backwards={
+"deadzone": 0.5,
+"events": [  ]
+}
+left={
+"deadzone": 0.5,
+"events": [  ]
+}
+right={
+"deadzone": 0.5,
+"events": [  ]
+}
+jump={
+"deadzone": 0.5,
+"events": [  ]
+}
+reload_settings={
+"deadzone": 0.5,
+"events": [  ]
+}
+reload_gun={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+shoot={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+suicide={
+"deadzone": 0.5,
+"events": [  ]
+}
+web_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+web_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+web_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+web_4={
+"deadzone": 0.5,
+"events": [  ]
 }
 
 [physics]

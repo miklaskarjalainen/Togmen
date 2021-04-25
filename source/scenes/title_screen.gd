@@ -11,18 +11,17 @@ func _ready():
 func _physics_process(delta:float) -> void:
 	host_btn.disabled = true
 	join_btn.disabled = true
-	if !name_edit.text.empty():
+	if !name_edit.text.empty() and name_edit.text.length() < 17:
 		host_btn.disabled = false
 		if IP_edit.text.is_valid_ip_address():
 			join_btn.disabled = false
-
 
 # Signals #
 func _on_host_pressed():
 	Net.create_server()
 
 func _on_join_pressed():
-	var ip:String = IP_edit.text
+	var ip := IP_edit.text as String
 	Net.create_client(ip)
 
 func _on_connection_ready():
