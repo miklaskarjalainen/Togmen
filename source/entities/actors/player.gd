@@ -1,13 +1,13 @@
 extends Actor
 
-const MOV_SPEED   = 15
-const JUMP_STR    = 12
-const GRAVITY     = 24
+const MOV_SPEED    = 15
+const SCOPED_SPEED = 5
+const JUMP_STR     = 12
+const GRAVITY      = 24
 
 onready var camera  := $camera_lock/camera
 onready var gui     := $ui/gui/
 var peer_name       := ""
-
 func _ready():
 	if is_network_master():
 		$body.visible = false
@@ -24,12 +24,12 @@ func _physics_process(delta:float):
 			_respawn()
 		if Input.is_action_just_pressed("hurt"):
 			health -= 10
-		Debug.add_line("name", peer_name)
 		if health <= 0:
 			_respawn()
 
 var motion := Vector3()
 func _do_player_movement(delta:float):
+	# Controlling #
 	var direction := Vector3()
 	if Input.is_action_pressed("forwards"):
 		direction -= camera.global_transform.basis.z
@@ -43,9 +43,11 @@ func _do_player_movement(delta:float):
 	motion.x = direction.x
 	motion.z = direction.z
 	
+	# Jumping #
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		motion.y += JUMP_STR
-
+	
+	# Gravity #
 	motion.y -= GRAVITY * delta;
 	
 	Debug.add_line("speed", motion.length())

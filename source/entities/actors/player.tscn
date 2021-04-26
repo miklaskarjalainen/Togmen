@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://source/entities/actors/player.gd" type="Script" id=1]
 [ext_resource path="res://source/entities/actors/camera.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/weapons/ak-47/AK-47.tscn" type="PackedScene" id=7]
 [ext_resource path="res://source/entities/actors/hand.gd" type="Script" id=8]
 [ext_resource path="res://assets/weapons/weapon.gd" type="Script" id=9]
+[ext_resource path="res://assets/weapons/sniper/sniper.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CapsuleMesh" id=1]
 radial_segments = 16
@@ -58,6 +59,7 @@ max_range = 3
 
 [node name="Deagle" parent="camera_lock/hand" instance=ExtResource( 3 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+visible = false
 script = ExtResource( 9 )
 base_damage = 43
 max_ammo = 7
@@ -65,9 +67,19 @@ fire_rate = 0.4
 
 [node name="AK-47" parent="camera_lock/hand" instance=ExtResource( 7 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+visible = false
 base_damage = 14
 fire_rate = 0.15
 is_auto = true
+
+[node name="sniper" parent="camera_lock/hand" instance=ExtResource( 10 )]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+visible = false
+script = ExtResource( 9 )
+base_damage = 115
+max_ammo = 5
+fire_rate = 0.9
+can_scope = true
 
 [node name="body" type="CSGMesh" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

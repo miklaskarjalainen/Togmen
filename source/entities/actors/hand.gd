@@ -28,6 +28,8 @@ func _handle_weapon_switching():
 		_switch_weapon(1)
 	if Input.is_action_just_pressed("web_3"):
 		_switch_weapon(2)
+	if Input.is_action_just_pressed("web_4"):
+		_switch_weapon(3)
 
 func _handle_shooting():
 	if Input.is_action_just_pressed("shoot"):
@@ -54,6 +56,11 @@ func _shoot():
 	target.rpc_id(int(target.name), "_damage", get_weapon().get_damage())
 
 puppet func _switch_weapon(web:int):
+	# Same weapon
+	if get_children()[web] == current_weapon:
+		return
+	
+	# Update peer to have the same weapon
 	if is_network_master():
 		rpc("_switch_weapon", web)
 	

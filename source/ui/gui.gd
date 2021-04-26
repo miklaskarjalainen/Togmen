@@ -49,7 +49,7 @@ func _update_ammo():
 		$ammo.text = ""
 
 func _update_crosshair():
-	$crosshair.modulate = GameSettings.get_value("crosshair_color", Color(1.0, 1.0, 1.0, 1.0))
+	$crosshair.modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
 
 
 # Signals #

@@ -8,6 +8,7 @@ export(int, 0, 300, 1)       var max_ammo = 30      # 0 = unlimited
 export(int, 0, 32, 1)        var damage_falloff = 0 # per 1 unit
 export(float, 0.01, 2, 0.01) var fire_rate   = 0.14 # seconds
 export(bool)                 var is_auto     = false
+export(bool)                 var can_scope   = false
 export(int, 0, 256, 1)       var max_range   = 256
 
 onready var cur_ammo:int = max_ammo
@@ -79,6 +80,9 @@ func is_reloading() -> bool:
 	if !anim.has_animation("reload"):
 		return false
 	return anim.current_animation == "reload"
+
+func can_scope() -> bool:
+	return can_scope
 
 puppet func _play_anim(anim_name:String):
 	if is_network_master(): # Gun animations shows on other's games aswell
