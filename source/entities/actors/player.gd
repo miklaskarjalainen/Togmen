@@ -48,6 +48,10 @@ func _do_player_movement(delta:float):
 	
 	motion.y = move_and_slide(motion, Vector3.UP, true, 4).y
 
+func _respawn():
+	health = 100
+	global_transform = get_parent().get_spawn()
+
 # Networking #
 puppet func _update_info(_translation:Vector3, _rotation:Vector3):
 	translation            = _translation
@@ -67,9 +71,8 @@ func _send_position():
 
 # Getters / Setters #
 
-func _respawn():
-	health = 100
-	global_transform = get_parent().get_spawn()
-
 func get_unique_id() -> int:
 	return int(name)
+
+func get_hand():
+	return $camera_lock/hand
