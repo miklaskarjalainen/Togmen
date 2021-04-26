@@ -7,6 +7,7 @@ onready var join_btn = $join
 
 func _ready():
 	Net.connect("on_connection_ready", self, "_on_connection_ready")
+	IP_edit.text = GameSettings.get_value("default_ip", "127.0.0.1")
 
 func _physics_process(delta:float) -> void:
 	host_btn.disabled = true
@@ -25,4 +26,5 @@ func _on_join_pressed():
 	Net.create_client(ip)
 
 func _on_connection_ready():
+	Net.set_master_name(name_edit.text)
 	get_tree().change_scene("res://source/scenes/game.tscn")

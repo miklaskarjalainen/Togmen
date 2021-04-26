@@ -55,8 +55,8 @@ height = 6.0
 depth = 46.0
 
 [node name="short_floor" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.1038, 1.42209, -11 )
-width = 26.0
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.4562, 1.42209, -11 )
+width = 36.8407
 height = 6.0
 depth = 50.0
 
@@ -67,14 +67,14 @@ height = 6.0
 depth = 82.4996
 
 [node name="short_wall3" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 12.4221, -18 )
-width = 21.7309
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 12.4221, -18 )
+width = 30.0
 height = 28.0
 depth = 46.0
 
 [node name="short_wall4" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 12.4221, 18 )
-width = 32.0
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.141, 12.4221, 17.974 )
+width = 38.4628
 height = 28.0
 depth = 8.0
 
@@ -88,7 +88,13 @@ depth = 32.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 12.4221, -46.6482 )
 width = 10.0
 height = 28.0
-depth = 134.0
+depth = 96.328
+
+[node name="mid_wall7" type="CSGBox" parent="mid"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30.1715, 12.3958, -46.6414 )
+width = 10.0
+height = 28.0
+depth = 192.386
 
 [node name="mid_wall4" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4607, 12.4221, -72.7529 )
@@ -103,8 +109,8 @@ height = 28.0
 depth = 23.1222
 
 [node name="mid_wall6" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.61387, 22.4221, -68.7529 )
-width = 8.09328
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22537, 22.4055, -68.6109 )
+width = 7.22301
 height = 8.0
 depth = 23.1222
 
@@ -127,12 +133,105 @@ depth = 48.0
 [node name="ct_floor" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, 18.4315 )
 width = 34.0
+depth = 38.2715
+
+[node name="ct_floor2" type="CSGBox" parent="mid"]
+transform = Transform( 0.993003, 0.118092, 0, -0.118092, 0.993003, 0, 0, 0, 1, -11.5461, -0.466768, 28.8402 )
+width = 61.3009
 depth = 22.0
 
 [node name="lower_floor" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 5.43147 )
-width = 14.0
-depth = 8.0
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8761, 0, 5.43147 )
+width = 17.8914
+depth = 65.4563
+
+[node name="a" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0100937, -3.8147e-06, -0.0741062 )
+use_collision = true
+
+[node name="mid_door3" type="CSGBox" parent="a"]
+transform = Transform( -0.914155, 0, -0.405365, 0, 1, 0, 0.405365, 0, -0.914155, -53.4261, 8.17328, -62.2491 )
+width = 6.0
+height = 8.0
+depth = 1.0
+
+[node name="mid_door4" type="CSGBox" parent="a"]
+transform = Transform( -0.94071, -0.00151281, -0.339209, -0.00179646, 0.999998, 0.000522214, 0.339207, 0.00110063, -0.940711, -62.8121, 7.99787, -63.7984 )
+width = 8.0
+height = 8.0
+depth = 1.0
+
+[node name="mid_door5" type="CSGBox" parent="a"]
+transform = Transform( -0.914155, 0, -0.405365, 0, 1, 0, 0.405365, 0, -0.914155, -53.4261, 8.59375, -39.5287 )
+width = 6.0
+height = 8.0
+depth = 1.0
+
+[node name="mid_door6" type="CSGBox" parent="a"]
+transform = Transform( -0.94071, -0.00151281, -0.339209, -0.00179646, 0.999998, 0.000522214, 0.339207, 0.00110063, -0.940711, -62.756, 8.40137, -41.0919 )
+width = 8.0
+height = 8.0
+depth = 1.0
+
+[node name="mid_door7" type="CSGBox" parent="a"]
+transform = Transform( 0.984729, 0, 0.174095, 0, 1, 0, -0.174095, 0, 0.984729, -63.5029, 6.85042, -45.3352 )
+width = 5.11795
+height = 5.01821
+depth = 8.82065
+
+[node name="short_wall5" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 12.4221, -34.7656 )
+width = 7.84161
+height = 28.0
+depth = 68.6872
+
+[node name="short_wall6" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -70.2795, 12.4547, -78.8707 )
+width = 7.84161
+height = 28.0
+depth = 80.6619
+
+[node name="short_wall10" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -156.745, 12.4547, 54.5229 )
+width = 7.84161
+height = 28.0
+depth = 337.852
+
+[node name="short_wall8" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -88.7072, 13.5704, 38.8318 )
+width = 62.2278
+height = 28.0
+depth = 61.4042
+
+[node name="short_wall11" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94.1887, 13.5704, 149.18 )
+width = 128.986
+height = 28.0
+depth = 73.5078
+
+[node name="short_wall12" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8597, 13.5704, 78.3484 )
+width = 128.986
+height = 28.0
+depth = 83.6587
+
+[node name="short_wall9" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -77.7422, 9.42026, -3.74335 )
+width = 13.0061
+height = 10.2234
+depth = 12.1859
+
+[node name="short_wall7" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5366, 12.4547, -117.22 )
+width = 218.752
+height = 28.0
+depth = 6.81967
+
+[node name="short_floor3" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -103.844, -7.88601, 20.3524 )
+width = 126.818
+height = 24.6707
+depth = 283.046
 
 [node name="spawns" type="Spatial" parent="."]
 
@@ -152,7 +251,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3997, 3.23607, 5.78772 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.274, 7.33796, 9.13908 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.983502, -0.00638579, 0.180784, -0.174955, -0.287616, 0.94163, 0.0459834, -0.957724, -0.283989, 0, 10.2832, 0 )
+transform = Transform( 0.983502, -0.00638581, 0.180784, -0.174955, -0.287616, 0.94163, 0.0459834, -0.957725, -0.283988, 0, 10.2832, 0 )
 light_color = Color( 0.992157, 0.980392, 0.952941, 1 )
 light_energy = 0.7
 shadow_enabled = true

@@ -17,6 +17,22 @@ func _physics_process(_delta:float):
 	_update_ammo()
 	_update_crosshair()
 
+# Methods #
+
+func hitmark_play():
+	$hitmark/anim.play("hit")
+	$hitmark/sfx.play()
+
+func eliminated(peer_name:String):
+	$elimination.text = "Eliminated %s!" % peer_name
+	$elimination/anim.play("show")
+	$elimination.add_color_override("font_color", Color.green)
+
+func killed_by(peer_name:String):
+	$elimination.text = "Got killed by %s!" % peer_name
+	$elimination/anim.play("show")
+	$elimination.add_color_override("font_color", Color.red)
+
 func _update_health():
 	var health := actor_node.health as int
 	var text_color := Color(0,0,0,1)
@@ -35,6 +51,14 @@ func _update_ammo():
 func _update_crosshair():
 	$crosshair.modulate = GameSettings.get_value("crosshair_color", Color(1.0, 1.0, 1.0, 1.0))
 
-func hitmark_play():
-	$hitmark/anim.play("hit")
-	$hitmark/sfx.play()
+
+# Signals #
+
+func _on_anim_animation_finished(anim_name:String):
+	if anim_name != "show":
+		return
+	$elimination/anim.play("hide")
+
+
+func _on_sfx_finished():
+	$hitmark/sfx.stop()

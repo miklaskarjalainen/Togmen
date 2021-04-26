@@ -6,6 +6,7 @@ signal on_connection_ready # Created a server or connected to one
 signal on_peer_connect(id)
 signal on_peer_disconnect(id)
 
+var master_name := ""
 
 func _ready():
 	get_tree().connect("network_peer_connected",    self, "_on_peer_connect")
@@ -36,6 +37,9 @@ func create_client(ip_addr:String) -> void:
 
 
 # Getters / Setters #
+func set_master_name(peer_name:String):
+	master_name = peer_name
+
 func peer_quit() -> void:
 	get_tree().network_peer = null
 

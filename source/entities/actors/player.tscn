@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://source/entities/actors/player.gd" type="Script" id=1]
 [ext_resource path="res://source/entities/actors/camera.gd" type="Script" id=2]
+[ext_resource path="res://assets/weapons/deagle/Deagle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://source/ui/ui.gd" type="Script" id=4]
 [ext_resource path="res://source/ui/gui.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/weapons/knife/Knife.tscn" type="PackedScene" id=6]
@@ -9,13 +10,13 @@
 [ext_resource path="res://source/entities/actors/hand.gd" type="Script" id=8]
 [ext_resource path="res://assets/weapons/weapon.gd" type="Script" id=9]
 
-[sub_resource type="CapsuleMesh" id=2]
+[sub_resource type="CapsuleMesh" id=1]
 radial_segments = 16
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 1, 0.00392157, 0.00392157, 1 )
 
-[sub_resource type="CylinderShape" id=4]
+[sub_resource type="CylinderShape" id=3]
 height = 2.89525
 
 [node name="Player" type="KinematicBody"]
@@ -34,7 +35,7 @@ script = ExtResource( 2 )
 [node name="shoot_ray" type="RayCast" parent="camera_lock"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.931604, -0.600105 )
 enabled = true
-cast_to = Vector3( 0, 0, -3 )
+cast_to = Vector3( 0, 0, -200 )
 collision_mask = 3
 
 [node name="hand" type="Spatial" parent="camera_lock"]
@@ -55,6 +56,13 @@ fire_rate = 0.6
 is_auto = true
 max_range = 3
 
+[node name="Deagle" parent="camera_lock/hand" instance=ExtResource( 3 )]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+script = ExtResource( 9 )
+base_damage = 43
+max_ammo = 7
+fire_rate = 0.4
+
 [node name="AK-47" parent="camera_lock/hand" instance=ExtResource( 7 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 base_damage = 14
@@ -63,11 +71,11 @@ is_auto = true
 
 [node name="body" type="CSGMesh" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 2 )
-material = SubResource( 5 )
+mesh = SubResource( 1 )
+material = SubResource( 2 )
 
 [node name="coll" type="CollisionShape" parent="."]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="ui" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )

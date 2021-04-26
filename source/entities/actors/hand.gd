@@ -16,6 +16,8 @@ func _ready():
 		set_physics_process(false)
 
 func _physics_process(_delta:float):
+	Debug.add_line("fire rate", get_weapon().fire_rate_counter)
+	
 	_handle_weapon_switching()
 	_handle_shooting()
 
@@ -24,6 +26,8 @@ func _handle_weapon_switching():
 		_switch_weapon(0)
 	if Input.is_action_just_pressed("web_2"):
 		_switch_weapon(1)
+	if Input.is_action_just_pressed("web_3"):
+		_switch_weapon(2)
 
 func _handle_shooting():
 	if Input.is_action_just_pressed("shoot"):
@@ -38,7 +42,7 @@ func _shoot():
 		return
 	
 	# Set the raycast to the correct length
-	var max_length := get_weapon().get_max_range() as int
+	var max_length:int = get_weapon().get_max_range()
 	raycast.cast_to = Vector3(0,0, -max_length)
 	raycast.force_raycast_update()
 	
@@ -51,9 +55,6 @@ func _shoot():
 
 puppet func _switch_weapon(web:int):
 	if is_network_master():
-		if get_weapon().is_reloading():
-			return
-		
 		rpc("_switch_weapon", web)
 	
 	current_weapon = get_children()[web]

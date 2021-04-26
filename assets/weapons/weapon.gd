@@ -25,12 +25,15 @@ func _physics_process(delta:float):
 		reload()
 
 # Methods #
-func reload():
+func reload(var fast := false):
 	if max_ammo == 0:
 		return
 	if cur_ammo >= max_ammo:
 		return
 	if is_reloading():
+		return
+	if fast: #Reloading without the animation
+		_on_animation_finish("reload")
 		return
 	_play_anim("reload")
 
@@ -46,10 +49,13 @@ func shoot() -> bool:
 	if cur_ammo <= 0 and max_ammo != 0:
 		return false
 	
+	# Shooting #
 	fire_rate_counter = fire_rate
 	cur_ammo -= 1
 	_play_anim("attack1")
+	
 	return true
+
 
 # Getters / Setters #
 func get_cur_ammo() -> int:
@@ -86,5 +92,11 @@ puppet func _play_anim(anim_name:String):
 # Signals #
 
 func _on_animation_finish(anim_name:String):
+	if !visible:
+		return
+	
 	if anim_name == "reload":
 		cur_ammo = max_ammo
+	# Auto Reload
+	elif anim_name == "attack1" and cur_ammo == 0: 
+		reload()

@@ -25,6 +25,9 @@ func get_spawn() -> Transform:
 	var i      := randi() % spawns.size()
 	return spawns[i].global_transform
 
+func get_peer_name(id:int) -> String:
+	return get_node(str(id)).peer_name
+
 func _delete_peer(id:int):
 	get_node(str(id)).queue_free()
 
