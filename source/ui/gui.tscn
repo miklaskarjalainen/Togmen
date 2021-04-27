@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://source/ui/gui.gd" type="Script" id=1]
 [ext_resource path="res://assets/theme/Alphakind_large.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/sfx/hitmark.ogg" type="AudioStream" id=3]
+[ext_resource path="res://source/ui/elimination.gd" type="Script" id=4]
+[ext_resource path="res://source/ui/killstreak.gd" type="Script" id=5]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, -4.27972, 0, 0, Vector2( 0.633333, 0 ), 0.038961, 0.0, 0, 0 ]
@@ -27,10 +29,52 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0.352941 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 resource_name = "hide"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/path = NodePath("../killstreak:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../killstreak:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "hide"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -246,21 +290,45 @@ anims/hit = SubResource( 3 )
 [node name="sfx" type="AudioStreamPlayer" parent="hitmark"]
 stream = ExtResource( 3 )
 
+[node name="killstreak" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -644.0
+margin_top = -200.0
+margin_right = 638.0
+rect_pivot_offset = Vector2( 641, 100 )
+custom_colors/font_color = Color( 0.980392, 0.505882, 0.0431373, 1 )
+text = "ProJonyz has a 10 KILLSTREAK!"
+align = 1
+valign = 1
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="anim" type="AnimationPlayer" parent="killstreak"]
+anims/hide = SubResource( 6 )
+anims/show = SubResource( 7 )
+
 [node name="elimination" type="Label" parent="."]
 modulate = Color( 1, 1, 1, 0 )
+self_modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -512.0
-margin_top = -300.0
+margin_top = -310.0
 margin_right = 512.0
-margin_bottom = 4.0
-rect_scale = Vector2( 2, 2 )
+margin_bottom = -6.0
 rect_pivot_offset = Vector2( 512, 152 )
-text = "Eliminated PROJONYZ!"
+custom_fonts/font = ExtResource( 2 )
+text = "THIS IS A DEFAULT MESSAGE"
 align = 1
 valign = 1
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -270,4 +338,5 @@ anims/hide = SubResource( 4 )
 anims/show = SubResource( 5 )
 
 [connection signal="finished" from="hitmark/sfx" to="." method="_on_sfx_finished"]
-[connection signal="animation_finished" from="elimination/anim" to="." method="_on_anim_animation_finished"]
+[connection signal="animation_finished" from="killstreak/anim" to="killstreak" method="_on_animation_finished"]
+[connection signal="animation_finished" from="elimination/anim" to="elimination" method="_on_anim_animation_finished"]

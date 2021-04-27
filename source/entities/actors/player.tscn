@@ -53,9 +53,12 @@ transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 9 )
 base_damage = 55
 max_ammo = 0
+base_recoil = 0.0
+inaccuracy = 0.0
 fire_rate = 0.6
 is_auto = true
-max_range = 3
+can_scope = true
+max_range = 4
 
 [node name="Deagle" parent="camera_lock/hand" instance=ExtResource( 3 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
@@ -63,23 +66,31 @@ visible = false
 script = ExtResource( 9 )
 base_damage = 43
 max_ammo = 7
+base_recoil = 0.5
+inaccuracy = 0.12
 fire_rate = 0.4
+mov_speed = 13.5
 
 [node name="AK-47" parent="camera_lock/hand" instance=ExtResource( 7 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 visible = false
 base_damage = 14
+inaccuracy = 0.2
 fire_rate = 0.15
 is_auto = true
+mov_speed = 11.5
 
-[node name="sniper" parent="camera_lock/hand" instance=ExtResource( 10 )]
+[node name="Sniper" parent="camera_lock/hand" instance=ExtResource( 10 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 visible = false
 script = ExtResource( 9 )
 base_damage = 115
 max_ammo = 5
+base_recoil = 0.8
+inaccuracy = 0.0
 fire_rate = 0.9
 can_scope = true
+mov_speed = 8.5
 
 [node name="body" type="CSGMesh" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )

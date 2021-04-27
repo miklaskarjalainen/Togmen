@@ -4,8 +4,11 @@ extends Spatial
 export  var raycast_path:NodePath
 export  var gui_path:NodePath
 
+onready var player  = get_parent().get_parent()
 onready var raycast = get_node(raycast_path)
 onready var gui     = get_node(gui_path)
+onready var bullet_impact  = preload("res://source/particles/bullet_impact.tscn")
+onready var blood_particle = preload("res://source/particles/blood_particle.tscn")
 
 var current_weapon
 
@@ -44,16 +47,43 @@ func _shoot():
 		return
 	
 	# Set the raycast to the correct length
-	var max_length:int = get_weapon().get_max_range()
-	raycast.cast_to = Vector3(0,0, -max_length)
+	var max_length:int       = get_weapon().get_max_range()
+	raycast.rotation_degrees = get_weapon().get_recoil()
+	raycast.cast_to          = Vector3(0,0, -max_length)
 	raycast.force_raycast_update()
 	
 	# Get the object we hit
-	var target = raycast.get_collider()
-	if not target is Actor: # The object was not a player
+	if !raycast.is_colliding():
 		return
+	var target = raycast.get_collider()
+	# We hit the player?
+	if not target is Actor:
+		# Creates a bullet impact
+		create_bullet_impact(raycast.get_collision_point())
+		return
+	create_blood()
+	
 	gui.hitmark_play()      # Gives feed back to the player
-	target.rpc_id(int(target.name), "_damage", get_weapon().get_damage())
+	target.rpc_id(int(target.name), "_damage", get_weapon().get_damage(), get_weapon().name)
+
+puppet func create_bullet_impact(_location:Vector3):
+	if is_network_master():
+		rpc_unreliable("create_bullet_impact", _location)
+	
+	var instance = bullet_impact.instance()
+	add_child(instance)
+	instance.set_as_toplevel(true)
+	instance.translation = _location
+	instance.look_at(player.transform.origin, Vector3.UP)
+
+puppet func create_blood():
+	if is_network_master():
+		rpc_unreliable("create_blood")
+	
+	var instance = blood_particle.instance()
+	add_child(instance)
+	instance.set_as_toplevel(true)
+	instance.translation = player.transform.origin
 
 puppet func _switch_weapon(web:int):
 	# Same weapon

@@ -6,6 +6,7 @@ export  var health_color_r:Curve
 export  var health_color_g:Curve
 
 onready var actor_node      := get_node(actor_path)
+onready var elimination     := get_node("elimination")
 
 func _ready():
 	if !actor_node.is_network_master():
@@ -23,15 +24,14 @@ func hitmark_play():
 	$hitmark/anim.play("hit")
 	$hitmark/sfx.play()
 
-func eliminated(peer_name:String):
-	$elimination.text = "Eliminated %s!" % peer_name
-	$elimination/anim.play("show")
-	$elimination.add_color_override("font_color", Color.green)
+func show_killstreak(peer_name:String, killstreak:int):
+	$killstreak.show_killstreak(peer_name, killstreak)
 
-func killed_by(peer_name:String):
-	$elimination.text = "Got killed by %s!" % peer_name
-	$elimination/anim.play("show")
-	$elimination.add_color_override("font_color", Color.red)
+func eliminated(peer_name:String, web_name:String):
+	$elimination.eliminated(peer_name, web_name)
+
+func killed_by(peer_name:String, web_name:String):
+	$elimination.killed_by(peer_name, web_name)
 
 func _update_health():
 	var health := actor_node.health as int
@@ -51,14 +51,7 @@ func _update_ammo():
 func _update_crosshair():
 	$crosshair.modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
 
-
 # Signals #
-
-func _on_anim_animation_finished(anim_name:String):
-	if anim_name != "show":
-		return
-	$elimination/anim.play("hide")
-
 
 func _on_sfx_finished():
 	$hitmark/sfx.stop()

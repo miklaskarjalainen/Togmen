@@ -1,13 +1,14 @@
 extends Actor
 
-const MOV_SPEED    = 15
-const SCOPED_SPEED = 5
 const JUMP_STR     = 12
 const GRAVITY      = 24
 
 onready var camera  := $camera_lock/camera
 onready var gui     := $ui/gui/
 var peer_name       := ""
+var motion          := Vector3()
+var move_speed      := 15.0 # default if couldn't get one from a weapon
+
 func _ready():
 	if is_network_master():
 		$body.visible = false
@@ -23,12 +24,13 @@ func _physics_process(delta:float):
 		if Input.is_action_just_pressed("suicide"):
 			_respawn()
 		if Input.is_action_just_pressed("hurt"):
-			health -= 10
+			_damage(10, "suicide")
 		if health <= 0:
 			_respawn()
 
-var motion := Vector3()
 func _do_player_movement(delta:float):
+	move_speed = get_hand().get_weapon().get_mov_speed()
+	
 	# Controlling #
 	var direction := Vector3()
 	if Input.is_action_pressed("forwards"):
@@ -39,7 +41,7 @@ func _do_player_movement(delta:float):
 		direction -= camera.global_transform.basis.x
 	if Input.is_action_pressed("right"):
 		direction += camera.global_transform.basis.x
-	direction = direction.normalized() * MOV_SPEED
+	direction = direction.normalized() * move_speed
 	motion.x = direction.x
 	motion.z = direction.z
 	
@@ -60,7 +62,8 @@ func _respawn():
 	health = 100
 	# Reload all guns
 	for gun in $camera_lock/hand.get_children():
-		gun.reload(true)
+		if gun is Weapon: # There're also particles :/
+			gun.reload(true)
 	# Respawn
 	global_transform = get_parent().get_spawn()
 
@@ -83,18 +86,18 @@ puppet func _update_capsule_color(_color:Color):
 		return
 	$body.material.albedo_color = _color
 
-master func _damage(dmg:int):
+master func _damage(dmg:int, var web_name := ""):
 	var by_who := get_tree().get_rpc_sender_id()
 	health -= dmg
 	print("damaged: %s, by: %s" % [dmg, by_who])
 	
 	if health <= 0:
-		gui.killed_by(get_peer_name(by_who))
-		get_peer(by_who).rpc_id(by_who, "_eliminated_peer", get_unique_id())
-		_respawn()
+		gui.killed_by(get_peer_name(by_who), web_name)
+		get_peer(by_who).rpc_id(by_who, "_eliminated_peer", get_unique_id(), web_name)
 
-master func _eliminated_peer(id:int):
-	gui.eliminated(get_peer_name(id))
+# this player eliminated the gived peer
+master func _eliminated_peer(id:int, var web_name := ""):
+	gui.eliminated(get_peer_name(id), web_name)
 
 # Getters / Setters #
 func get_peer(id:int):
