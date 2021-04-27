@@ -2,11 +2,9 @@ extends Spatial
 
 # Todo: add swing
 export  var raycast_path:NodePath
-export  var gui_path:NodePath
 
 onready var player  = get_parent().get_parent()
 onready var raycast = get_node(raycast_path)
-onready var gui     = get_node(gui_path)
 onready var bullet_impact  = preload("res://source/particles/bullet_impact.tscn")
 onready var blood_particle = preload("res://source/particles/blood_particle.tscn")
 
@@ -56,15 +54,23 @@ func _shoot():
 	if !raycast.is_colliding():
 		return
 	var target = raycast.get_collider()
+	
+	var bullet_distance = (raycast.global_transform.origin - raycast.get_collision_point()).length()
+	var bullet_damage   = get_weapon().get_damage(bullet_distance)
+	print("Bullet travel distance: ", bullet_distance)
+	print("Would be damage: ", bullet_damage)
+	
 	# We hit the player?
 	if not target is Actor:
 		# Creates a bullet impact
 		create_bullet_impact(raycast.get_collision_point())
 		return
-	create_blood()
 	
-	gui.hitmark_play()      # Gives feed back to the player
-	target.rpc_id(int(target.name), "_damage", get_weapon().get_damage(), get_weapon().name)
+	# Feed back #
+	create_blood(raycast.get_collision_point())
+	Gui.hitmark_play()      # Gives feed back to the player
+	
+	target.rpc_id(int(target.name), "_damage", bullet_damage, get_weapon().name)
 
 puppet func create_bullet_impact(_location:Vector3):
 	if is_network_master():
@@ -76,14 +82,14 @@ puppet func create_bullet_impact(_location:Vector3):
 	instance.translation = _location
 	instance.look_at(player.transform.origin, Vector3.UP)
 
-puppet func create_blood():
+puppet func create_blood(_location:Vector3):
 	if is_network_master():
-		rpc_unreliable("create_blood")
+		rpc_unreliable("create_blood", _location)
 	
 	var instance = blood_particle.instance()
 	add_child(instance)
 	instance.set_as_toplevel(true)
-	instance.translation = player.transform.origin
+	instance.translation = _location
 
 puppet func _switch_weapon(web:int):
 	# Same weapon

@@ -35,6 +35,7 @@ config/icon="res://icon.png"
 Net="*res://source/singleton/net.gd"
 Debug="*res://source/singleton/debug.tscn"
 GameSettings="*res://source/singleton/gamesettings.gd"
+Gui="*res://source/singleton/gui.tscn"
 
 [display]
 

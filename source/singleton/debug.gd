@@ -7,10 +7,10 @@ func _ready():
 func _physics_process(_delta:float) -> void:
 	if Input.is_action_just_pressed("toggle_debug"):
 		visible = not visible
-	_clear()
 	if !visible:
 		return
 	
+	_clear()
 	add_line("FPS", Engine.get_frames_per_second())
 	
 	# Print IPs # prob should cache these?
@@ -25,6 +25,8 @@ func _physics_process(_delta:float) -> void:
 		add_line("Peer ID", get_tree().get_network_unique_id())
 
 func add_line(var_name:String, variable):
+	if !visible:
+		return
 	text += "%s: %s\n" % [var_name, variable] 
 
 func _clear():

@@ -39,7 +39,7 @@ func killed_by(peer_name:String, web_name:String):
 		"sniper":
 			message = "%s PWNED YOU" % peer_name 
 		"suicide":
-			message = "You took THE L!" % peer_name 
+			message = "You took THE L!"
 		_:
 			message = "%s KILLED YOU!" % peer_name
 	text = message

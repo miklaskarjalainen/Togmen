@@ -5,7 +5,7 @@ const SCOPE_MOV_PENALTY = 2.5
 
 export(int, 0, 250, 1)       var base_damage    = 14
 export(int, 0, 300, 1)       var max_ammo       = 30 # 0 = unlimited
-export(int, 0, 32, 1)        var damage_falloff = 0  # per 1 unit
+export(float, 0, 0.5, 0.01)  var damage_falloff = 0.0  # per 1 unit
 export(float, 0, 1.2, 0.02)  var base_recoil    = 0.10
 export(float, 0, 1.0, 0.02)  var inaccuracy     = 0.10
 export(float, 0.01, 2, 0.01) var fire_rate      = 0.14  # seconds
@@ -122,7 +122,7 @@ func get_max_ammo() -> int:
 func get_damage(var tar_range := 0) -> int:
 	if tar_range >= max_range:
 		return 0
-	return base_damage
+	return int(base_damage - (tar_range * damage_falloff))
 
 func get_max_range() -> int:
 	return max_range

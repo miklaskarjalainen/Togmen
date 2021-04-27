@@ -4,15 +4,17 @@ const JUMP_STR     = 12
 const GRAVITY      = 24
 
 onready var camera  := $camera_lock/camera
-onready var gui     := $ui/gui/
+
 var peer_name       := ""
 var motion          := Vector3()
 var move_speed      := 15.0 # default if couldn't get one from a weapon
+var killstreak      := 0
 
 func _ready():
 	if is_network_master():
 		$body.visible = false
 		peer_name = Net.master_name
+		Gui.set_player(self)
 
 func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
@@ -24,8 +26,9 @@ func _physics_process(delta:float):
 		if Input.is_action_just_pressed("suicide"):
 			_respawn()
 		if Input.is_action_just_pressed("hurt"):
-			_damage(10, "suicide")
+			health -= 10
 		if health <= 0:
+			Gui.killed_by("", "suicide")
 			_respawn()
 
 func _do_player_movement(delta:float):
@@ -60,10 +63,13 @@ func _do_player_movement(delta:float):
 func _respawn():
 	# Full heal
 	health = 100
+	
 	# Reload all guns
 	for gun in $camera_lock/hand.get_children():
 		if gun is Weapon: # There're also particles :/
 			gun.reload(true)
+	killstreak = 0
+	
 	# Respawn
 	global_transform = get_parent().get_spawn()
 
@@ -86,18 +92,38 @@ puppet func _update_capsule_color(_color:Color):
 		return
 	$body.material.albedo_color = _color
 
+puppet func _update_killstreak(_count:int):	
+	if _count >= 5:
+		if is_network_master():
+			rpc("_update_killstreak", _count)
+		Gui.show_killstreak(peer_name, _count)
+
+puppet func _ended_killstreak(_ender:String, _count:int):	
+	if _count >= 5:
+		if is_network_master():
+			rpc("_ended_killstreak", _ender, _count)
+		Gui.ended_killstreak(_ender, peer_name, _count)
+
 master func _damage(dmg:int, var web_name := ""):
 	var by_who := get_tree().get_rpc_sender_id()
+	
 	health -= dmg
 	print("damaged: %s, by: %s" % [dmg, by_who])
 	
 	if health <= 0:
-		gui.killed_by(get_peer_name(by_who), web_name)
+		var killer_name = get_peer_name(by_who)
+		
+		Gui.killed_by(killer_name, web_name)
 		get_peer(by_who).rpc_id(by_who, "_eliminated_peer", get_unique_id(), web_name)
+		_ended_killstreak(killer_name, killstreak)
+		_respawn()
 
 # this player eliminated the gived peer
 master func _eliminated_peer(id:int, var web_name := ""):
-	gui.eliminated(get_peer_name(id), web_name)
+	killstreak += 1
+	_update_killstreak(killstreak)
+	
+	Gui.eliminated(get_peer_name(id), web_name)
 
 # Getters / Setters #
 func get_peer(id:int):

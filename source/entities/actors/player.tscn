@@ -1,10 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://source/entities/actors/player.gd" type="Script" id=1]
 [ext_resource path="res://source/entities/actors/camera.gd" type="Script" id=2]
 [ext_resource path="res://assets/weapons/deagle/Deagle.tscn" type="PackedScene" id=3]
-[ext_resource path="res://source/ui/ui.gd" type="Script" id=4]
-[ext_resource path="res://source/ui/gui.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/weapons/knife/Knife.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/weapons/ak-47/AK-47.tscn" type="PackedScene" id=7]
 [ext_resource path="res://source/entities/actors/hand.gd" type="Script" id=8]
@@ -46,7 +44,6 @@ __meta__ = {
 "_editor_description_": "Handles gun switchiing"
 }
 raycast_path = NodePath("../shoot_ray")
-gui_path = NodePath("../../ui/gui")
 
 [node name="Knife" parent="camera_lock/hand" instance=ExtResource( 6 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
@@ -66,6 +63,7 @@ visible = false
 script = ExtResource( 9 )
 base_damage = 43
 max_ammo = 7
+damage_falloff = 0.2
 base_recoil = 0.5
 inaccuracy = 0.12
 fire_rate = 0.4
@@ -74,7 +72,9 @@ mov_speed = 13.5
 [node name="AK-47" parent="camera_lock/hand" instance=ExtResource( 7 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 visible = false
-base_damage = 14
+base_damage = 28
+damage_falloff = 0.05
+base_recoil = 0.2
 inaccuracy = 0.2
 fire_rate = 0.15
 is_auto = true
@@ -86,6 +86,7 @@ visible = false
 script = ExtResource( 9 )
 base_damage = 115
 max_ammo = 5
+damage_falloff = 0.12
 base_recoil = 0.8
 inaccuracy = 0.0
 fire_rate = 0.9
@@ -99,11 +100,3 @@ material = SubResource( 2 )
 
 [node name="coll" type="CollisionShape" parent="."]
 shape = SubResource( 3 )
-
-[node name="ui" type="CanvasLayer" parent="."]
-script = ExtResource( 4 )
-
-[node name="gui" parent="ui" instance=ExtResource( 5 )]
-margin_left = -2.0
-margin_right = -2.0
-actor_path = NodePath("../..")
