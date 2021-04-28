@@ -1,21 +1,19 @@
 extends Spatial
 
 # Todo: add swing
+export  var player_path:NodePath
 export  var raycast_path:NodePath
 
-onready var player  = get_parent().get_parent()
+onready var player  = get_node(player_path)
 onready var raycast = get_node(raycast_path)
 onready var bullet_impact  = preload("res://source/particles/bullet_impact.tscn")
 onready var blood_particle = preload("res://source/particles/blood_particle.tscn")
 onready var weapons = get_children()
 
-var current_weapon
-var previous_weapon
+var current_weapon  := 0
+var previous_weapon := 0
 
 func _ready():
-	_switch_weapon(weapons[1])
-	_switch_weapon(weapons[0])
-	
 	if !is_network_master():
 		set_process(false)
 		set_physics_process(false)
@@ -28,13 +26,13 @@ func _physics_process(_delta:float):
 
 func _handle_weapon_switching():
 	if Input.is_action_just_pressed("web_1"):
-		_switch_weapon(weapons[0])
+		_switch_weapon(0)
 	if Input.is_action_just_pressed("web_2"):
-		_switch_weapon(weapons[1])
+		_switch_weapon(1)
 	if Input.is_action_just_pressed("web_3"):
-		_switch_weapon(weapons[2])
+		_switch_weapon(2)
 	if Input.is_action_just_pressed("web_4"):
-		_switch_weapon(weapons[3])
+		_switch_weapon(3)
 	
 	if Input.is_action_just_pressed("quick_switch"):
 		_switch_weapon(previous_weapon)
@@ -98,7 +96,8 @@ puppet func create_blood(_location:Vector3):
 	instance.set_as_toplevel(true)
 	instance.translation = _location
 
-puppet func _switch_weapon(_weapon):
+# CANT SEND NODES OVER NET LOLOLOLOLOLOLOL
+puppet func _switch_weapon(_weapon:int):
 	# Same weapon
 	if _weapon == current_weapon:
 		return
@@ -113,10 +112,8 @@ puppet func _switch_weapon(_weapon):
 	# Hide all weapons, then make the new one visible
 	for child in get_children():
 		child.visible = false
-	current_weapon.visible = true
-	current_weapon._play_anim("show")
+	get_weapon().visible = true
+	get_weapon()._play_anim("show")
 
 func get_weapon():
-	if current_weapon == null:
-		return get_children()[0]
-	return current_weapon
+	return get_children()[current_weapon]

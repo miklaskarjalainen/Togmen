@@ -1,11 +1,12 @@
 extends Camera
 
+export var PLAYER_PATH:NodePath
 export var SENSITIVITY  := 0.15
 export var NORMAL_FOV   := 70
 export var SCOPED_FOV   := 30
 export var CAMERA_CLAMP := 80
 
-onready var player := get_parent().get_parent()
+onready var player := get_node(PLAYER_PATH)
 
 func _ready():
 	if !get_parent().is_network_master():
@@ -36,7 +37,7 @@ func _input(event):
 		var new_sens = SENSITIVITY
 		if is_scoping:
 			new_sens *= 0.6
-		get_parent().rotation_degrees.x -= event.relative.y * new_sens
-		get_parent().rotation_degrees.y -= event.relative.x * new_sens
-		get_parent().rotation_degrees.x  = clamp(get_parent().rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)
-	
+		rotation_degrees.x -= event.relative.y * new_sens
+		rotation_degrees.y -= event.relative.x * new_sens
+		rotation_degrees.x  = clamp(rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)
+
