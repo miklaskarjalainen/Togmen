@@ -61,28 +61,34 @@ func _shoot():
 	var target = raycast.get_collider()
 	
 	var bullet_distance = (raycast.global_transform.origin - raycast.get_collision_point()).length()
-	var bullet_damage   = get_weapon().get_damage(bullet_distance)
+	var base_bullet_damage   = get_weapon().get_damage(bullet_distance)
 	print("Bullet travel distance: ", bullet_distance)
-	print("Would be damage: ", bullet_damage)
+	print("Would be damage: ", base_bullet_damage)
 	
 	# We hit the player?
-	if not target is Actor:
+	if not target is BodyPart:
 		# Creates a bullet impact
 		create_bullet_impact(raycast.get_collision_point())
 		return
+	
+	# More damage if headshot, or less if hit legs
+	var bullet_damage:int = target.get_multiplier() * base_bullet_damage
+	var peer              = target.get_peer()
+	var peer_id:int       = target.get_peer_id()
 	
 	# Feed back #
 	create_blood(raycast.get_collision_point())
 	Gui.hitmark_play()      # Gives feed back to the player
 	
-	target.rpc_id(int(target.name), "_damage", bullet_damage, get_weapon().name)
+	print("Total Damage: ", bullet_damage)
+	peer.rpc_id(peer_id, "_damage", bullet_damage, get_weapon().name)
 
 puppet func create_bullet_impact(_location:Vector3):
 	if is_network_master():
 		rpc_unreliable("create_bullet_impact", _location)
 	
 	var instance = bullet_impact.instance()
-	add_child(instance)
+	player.add_child(instance)
 	instance.set_as_toplevel(true)
 	instance.translation = _location
 	instance.look_at(player.transform.origin, Vector3.UP)
@@ -92,11 +98,10 @@ puppet func create_blood(_location:Vector3):
 		rpc_unreliable("create_blood", _location)
 	
 	var instance = blood_particle.instance()
-	add_child(instance)
+	player.add_child(instance)
 	instance.set_as_toplevel(true)
 	instance.translation = _location
 
-# CANT SEND NODES OVER NET LOLOLOLOLOLOLOL
 puppet func _switch_weapon(_weapon:int):
 	# Same weapon
 	if _weapon == current_weapon:

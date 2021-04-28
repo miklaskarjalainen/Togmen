@@ -9,12 +9,15 @@ export var CAMERA_CLAMP := 80
 onready var player := get_node(PLAYER_PATH)
 
 func _ready():
-	if !get_parent().is_network_master():
-		queue_free()
-		return
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if is_network_master():
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		current = false
 
 func _physics_process(delta:float):
+	if !is_network_master():
+		return
+	
 	# Grap / Release mouse cursor #
 	if Input.is_action_just_pressed("ui_cancel"): 
 		var cur := int(Input.get_mouse_mode() != 2)
@@ -27,7 +30,9 @@ func _handle_weapon_scoping():
 	var is_scoping:int = player.get_hand().get_weapon().is_scoping()
 	if is_scoping:    # Is scoping
 		fov = SCOPED_FOV
+		player.get_hand().visible = false
 		return
+	player.get_hand().visible = true
 	fov = NORMAL_FOV
 
 func _input(event):
@@ -38,6 +43,6 @@ func _input(event):
 		if is_scoping:
 			new_sens *= 0.6
 		rotation_degrees.x -= event.relative.y * new_sens
-		rotation_degrees.y -= event.relative.x * new_sens
+		player.rotation_degrees.y -= event.relative.x * new_sens
 		rotation_degrees.x  = clamp(rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)
 

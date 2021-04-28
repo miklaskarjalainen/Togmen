@@ -1,18 +1,23 @@
 extends Actor
 
-const JUMP_STR     = 12
-const GRAVITY      = 24
+const ACCEL_SPD     := 120
+const AIR_ACCEL_SPD := 40
+const JUMP_STR      := 12
+const JUMP_MOV_BOOST:= 1 # Also known as bhopping
+const GRAVITY       := 24
 
-onready var camera  := $camera
+onready var camera     := $camera
+onready var jump_timer := $jump_timer
 
 var peer_name       := ""
 var motion          := Vector3()
-var move_speed      := 15.0 # default if couldn't get one from a weapon
 var killstreak      := 0
+var move_spd:int     = 15
 
 func _ready():
 	if is_network_master():
 		$body.visible = false
+		$hitbox.queue_free()
 		peer_name = Net.master_name
 		Gui.set_player(self)
 
@@ -20,7 +25,7 @@ func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
 		_do_player_movement(delta)
 		_update_name(peer_name)
-		_update_position(translation, $camera.rotation)
+		_update_position(translation, camera.rotation)
 		_update_capsule_color(GameSettings.get_value("capsule_color", Color(1.0, 0.3, 0.3, 1.0)))
 		
 		if Input.is_action_just_pressed("suicide"):
@@ -32,30 +37,46 @@ func _physics_process(delta:float):
 			_respawn()
 
 func _do_player_movement(delta:float):
-	move_speed = get_hand().get_weapon().get_mov_speed()
+	if is_on_floor() and jump_timer.is_stopped():
+		move_spd = get_hand().get_weapon().get_mov_speed()
 	
 	# Controlling #
 	var direction := Vector3()
 	if Input.is_action_pressed("forwards"):
-		direction -= camera.global_transform.basis.z
+		direction -= global_transform.basis.z
 	if Input.is_action_pressed("backwards"):
-		direction += camera.global_transform.basis.z
+		direction += global_transform.basis.z
 	if Input.is_action_pressed("left"):
-		direction -= camera.global_transform.basis.x
+		direction -= global_transform.basis.x
 	if Input.is_action_pressed("right"):
-		direction += camera.global_transform.basis.x
-	direction = direction.normalized() * move_speed
-	motion.x = direction.x
-	motion.z = direction.z
+		direction += global_transform.basis.x
+	
+	# If grounded acceleration / de-acceleration
+	if is_on_floor():
+		motion += direction.normalized() * ACCEL_SPD * delta
+		motion.x = lerp(motion.x, 0.0, 0.1)
+		motion.z = lerp(motion.z, 0.0, 0.1)
+	else: # Air acceleration and no de-accleretation
+		motion += direction.normalized() * AIR_ACCEL_SPD * delta
+	
+	# Speedcap
+	var hor_motion := motion
+	hor_motion.y = 0 # dont take y in count
+	if hor_motion.length() > move_spd: 
+		motion.x = (hor_motion.normalized() * move_spd).x
+		motion.z = (hor_motion.normalized() * move_spd).z
 	
 	# Jumping #
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump"):
+		jump_timer.start()
+	if !jump_timer.is_stopped() and is_on_floor():
 		motion.y += JUMP_STR
+		move_spd += JUMP_MOV_BOOST
 	
 	# Gravity #
 	motion.y -= GRAVITY * delta;
 	
-	Debug.add_line("speed", motion.length())
+	Debug.add_line("speed", hor_motion.length())
 	Debug.add_line("is_grounded", is_on_floor())
 	
 	motion.y = move_and_slide(motion, Vector3.UP, true, 4).y
@@ -65,7 +86,7 @@ func _respawn():
 	health = 100
 	
 	# Reload all guns
-	for gun in $camera_lock/hand.get_children():
+	for gun in get_hand().get_children():
 		if gun is Weapon: # There're also particles :/
 			gun.reload(true)
 	killstreak = 0
@@ -83,8 +104,8 @@ puppet func _update_position(_translation:Vector3, _rotation:Vector3):
 	if is_network_master():
 		rpc_unreliable("_update_position", _translation, _rotation)
 		return
-	translation            = _translation
-	$camera_lock.rotation  = _rotation
+	translation     = _translation
+	camera.rotation = _rotation
 
 puppet func _update_capsule_color(_color:Color):
 	if is_network_master():
@@ -118,7 +139,6 @@ master func _damage(dmg:int, var web_name := ""):
 		_ended_killstreak(killer_name, killstreak)
 		_respawn()
 
-# this player eliminated the gived peer
 master func _eliminated_peer(id:int, var web_name := ""):
 	killstreak += 1
 	_update_killstreak(killstreak)
