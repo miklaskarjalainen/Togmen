@@ -36,7 +36,6 @@ func _input(event):
 		var new_sens = SENSITIVITY
 		if is_scoping:
 			new_sens *= 0.6
-		
 		get_parent().rotation_degrees.x -= event.relative.y * new_sens
 		get_parent().rotation_degrees.y -= event.relative.x * new_sens
 		get_parent().rotation_degrees.x  = clamp(get_parent().rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)

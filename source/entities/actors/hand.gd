@@ -7,11 +7,15 @@ onready var player  = get_parent().get_parent()
 onready var raycast = get_node(raycast_path)
 onready var bullet_impact  = preload("res://source/particles/bullet_impact.tscn")
 onready var blood_particle = preload("res://source/particles/blood_particle.tscn")
+onready var weapons = get_children()
 
 var current_weapon
+var previous_weapon
 
 func _ready():
-	_switch_weapon(0)
+	_switch_weapon(weapons[1])
+	_switch_weapon(weapons[0])
+	
 	if !is_network_master():
 		set_process(false)
 		set_physics_process(false)
@@ -24,13 +28,16 @@ func _physics_process(_delta:float):
 
 func _handle_weapon_switching():
 	if Input.is_action_just_pressed("web_1"):
-		_switch_weapon(0)
+		_switch_weapon(weapons[0])
 	if Input.is_action_just_pressed("web_2"):
-		_switch_weapon(1)
+		_switch_weapon(weapons[1])
 	if Input.is_action_just_pressed("web_3"):
-		_switch_weapon(2)
+		_switch_weapon(weapons[2])
 	if Input.is_action_just_pressed("web_4"):
-		_switch_weapon(3)
+		_switch_weapon(weapons[3])
+	
+	if Input.is_action_just_pressed("quick_switch"):
+		_switch_weapon(previous_weapon)
 
 func _handle_shooting():
 	if Input.is_action_just_pressed("shoot"):
@@ -91,16 +98,17 @@ puppet func create_blood(_location:Vector3):
 	instance.set_as_toplevel(true)
 	instance.translation = _location
 
-puppet func _switch_weapon(web:int):
+puppet func _switch_weapon(_weapon):
 	# Same weapon
-	if get_children()[web] == current_weapon:
+	if _weapon == current_weapon:
 		return
 	
 	# Update peer to have the same weapon
 	if is_network_master():
-		rpc("_switch_weapon", web)
+		rpc("_switch_weapon", _weapon)
+		previous_weapon = current_weapon
 	
-	current_weapon = get_children()[web]
+	current_weapon = _weapon
 	
 	# Hide all weapons, then make the new one visible
 	for child in get_children():

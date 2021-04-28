@@ -1,53 +1,99 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 1, 1.2, 0.5 )
+[ext_resource path="res://assets/props/barrel/barrel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/props/wooden_box/wooden_box.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/props/wooden_sheet/wooden_sheet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/props/wooden_door/wooden_door.tscn" type="PackedScene" id=4]
 
 [node name="dust2" type="Spatial"]
 
-[node name="mid" type="CSGCombiner" parent="."]
+[node name="wooden_door" parent="." instance=ExtResource( 4 )]
+transform = Transform( 5.51617, 0, 8.34098, 0, 10, 0, -8.34098, 0, 5.51617, 4.07608, -0.254483, 16.1138 )
+
+[node name="wooden_door2" parent="." instance=ExtResource( 4 )]
+transform = Transform( -5.51617, 0, -8.34098, 0, 10, 0, 8.34098, 0, -5.51617, -0.923916, -0.254483, 17.1138 )
+
+[node name="wooden_box" parent="." instance=ExtResource( 2 )]
+transform = Transform( 5.5, 0, 0, 0, 5.4654, -0.61594, 0, 0.61594, 5.4654, -2.20917, 0.695836, 5.28428 )
+
+[node name="wooden_box2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 5.5, 0, 0, 0, 5.5, 0, 0, 0, 5.5, 6.46944, 4.49584, -68.7396 )
+
+[node name="barrel" parent="." instance=ExtResource( 1 )]
+transform = Transform( 3.8637, 0, 1.03528, 0, 4, 0, -1.03528, 0, 3.8637, -4.41664, 4.26993, -39.4361 )
+
+[node name="a" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0100937, -3.8147e-06, -0.0741062 )
 use_collision = true
 
-[node name="xbox" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.42209, 6 )
-width = 4.0
-height = 4.0
-depth = 4.0
+[node name="mid_door7" type="CSGBox" parent="a"]
+transform = Transform( 0.984729, 0, 0.174095, 0, 1, 0, -0.174095, 0, 0.984729, -63.5029, 6.85042, -50.8993 )
+width = 5.11795
+height = 5.01821
+depth = 8.82065
 
-[node name="xbox4" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -2.869, 1.85421, 3.68448 )
-height = 2.35584
-depth = 0.217473
+[node name="short_wall5" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 12.4221, -34.7656 )
+width = 10.0
+height = 28.0
+depth = 68.6872
 
-[node name="StaticBody" type="StaticBody" parent="mid/xbox4"]
+[node name="short_wall6" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -70.2795, 12.4547, -78.8707 )
+width = 7.84161
+height = 28.0
+depth = 71.466
 
-[node name="xbox5" type="CollisionShape" parent="mid/xbox4/StaticBody"]
-transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, -0.0479565, 0.0142753, 0.0532753 )
-shape = SubResource( 1 )
+[node name="short_wall10" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -156.745, 12.4547, 54.5229 )
+width = 7.84161
+height = 28.0
+depth = 337.852
 
-[node name="xbox2" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 6.42209, -68.5822 )
-width = 4.0
-height = 4.0
-depth = 4.0
+[node name="short_wall8" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -88.7072, 13.5704, 38.8318 )
+width = 62.2278
+height = 28.0
+depth = 61.4042
+
+[node name="short_wall11" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94.1887, 13.5704, 149.18 )
+width = 128.986
+height = 28.0
+depth = 73.5078
+
+[node name="short_wall12" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8597, 13.5704, 78.3484 )
+width = 128.986
+height = 28.0
+depth = 83.6587
+
+[node name="short_wall9" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -77.7422, 9.42026, -3.74335 )
+width = 13.0061
+height = 10.2234
+depth = 12.1859
+
+[node name="short_wall7" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5366, 12.4547, -117.22 )
+width = 218.752
+height = 28.0
+depth = 6.81967
+
+[node name="short_floor3" type="CSGBox" parent="a"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -103.844, -7.88601, 20.3524 )
+width = 126.818
+height = 24.6707
+depth = 283.046
+
+[node name="mid" type="CSGCombiner" parent="."]
+use_collision = true
 
 [node name="xbox3" type="CSGBox" parent="mid"]
 transform = Transform( -0.173648, -0.984808, 0, 0.984808, -0.173648, 0, 0, 0, 1, 7, 4.42209, -99.5822 )
 width = 18.0
 height = 86.0
 depth = 21.9384
-
-[node name="mid_door1" type="CSGBox" parent="mid"]
-transform = Transform( 0.848981, 0, -0.528423, 0, 1, 0, 0.528423, 0, 0.848981, -3, 3.42209, 16 )
-width = 6.0
-height = 8.0
-depth = 1.0
-
-[node name="mid_door2" type="CSGBox" parent="mid"]
-transform = Transform( 0.847784, 0.00179997, -0.530338, -0.00179646, 0.999998, 0.000522214, 0.530338, 0.000510003, 0.847786, 6.52793, 3.42209, 17 )
-width = 8.0
-height = 8.0
-depth = 1.0
 
 [node name="short_wall" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.42209, -8 )
@@ -114,11 +160,6 @@ width = 7.22301
 height = 8.0
 depth = 23.1222
 
-[node name="top_mid_barrel" type="CSGCylinder" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27187, 5.95252, -45.6273 )
-radius = 1.05585
-height = 2.78119
-
 [node name="mid_wall2" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 12.4221, 17.0328 )
 width = 10.0
@@ -145,93 +186,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8761, 0, 5.43147 )
 width = 17.8914
 depth = 65.4563
 
-[node name="a" type="CSGCombiner" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0100937, -3.8147e-06, -0.0741062 )
-use_collision = true
-
-[node name="mid_door3" type="CSGBox" parent="a"]
-transform = Transform( -0.914155, 0, -0.405365, 0, 1, 0, 0.405365, 0, -0.914155, -53.4261, 8.17328, -62.2491 )
-width = 6.0
-height = 8.0
-depth = 1.0
-
-[node name="mid_door4" type="CSGBox" parent="a"]
-transform = Transform( -0.94071, -0.00151281, -0.339209, -0.00179646, 0.999998, 0.000522214, 0.339207, 0.00110063, -0.940711, -62.8121, 7.99787, -63.7984 )
-width = 8.0
-height = 8.0
-depth = 1.0
-
-[node name="mid_door5" type="CSGBox" parent="a"]
-transform = Transform( -0.914155, 0, -0.405365, 0, 1, 0, 0.405365, 0, -0.914155, -53.4261, 8.59375, -39.5287 )
-width = 6.0
-height = 8.0
-depth = 1.0
-
-[node name="mid_door6" type="CSGBox" parent="a"]
-transform = Transform( -0.94071, -0.00151281, -0.339209, -0.00179646, 0.999998, 0.000522214, 0.339207, 0.00110063, -0.940711, -62.756, 8.40137, -41.0919 )
-width = 8.0
-height = 8.0
-depth = 1.0
-
-[node name="mid_door7" type="CSGBox" parent="a"]
-transform = Transform( 0.984729, 0, 0.174095, 0, 1, 0, -0.174095, 0, 0.984729, -63.5029, 6.85042, -45.3352 )
-width = 5.11795
-height = 5.01821
-depth = 8.82065
-
-[node name="short_wall5" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 12.4221, -34.7656 )
-width = 7.84161
-height = 28.0
-depth = 68.6872
-
-[node name="short_wall6" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -70.2795, 12.4547, -78.8707 )
-width = 7.84161
-height = 28.0
-depth = 80.6619
-
-[node name="short_wall10" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -156.745, 12.4547, 54.5229 )
-width = 7.84161
-height = 28.0
-depth = 337.852
-
-[node name="short_wall8" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -88.7072, 13.5704, 38.8318 )
-width = 62.2278
-height = 28.0
-depth = 61.4042
-
-[node name="short_wall11" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94.1887, 13.5704, 149.18 )
-width = 128.986
-height = 28.0
-depth = 73.5078
-
-[node name="short_wall12" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8597, 13.5704, 78.3484 )
-width = 128.986
-height = 28.0
-depth = 83.6587
-
-[node name="short_wall9" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -77.7422, 9.42026, -3.74335 )
-width = 13.0061
-height = 10.2234
-depth = 12.1859
-
-[node name="short_wall7" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5366, 12.4547, -117.22 )
-width = 218.752
-height = 28.0
-depth = 6.81967
-
-[node name="short_floor3" type="CSGBox" parent="a"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -103.844, -7.88601, 20.3524 )
-width = 126.818
-height = 24.6707
-depth = 283.046
+[node name="wooden_sheet" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1.68739e-07, 3.86344e-08, -3.5, -1.32476, 3.2396, 9.96282e-08, 3.2396, 1.32476, -1.41561e-07, -2.70223, 0.854119, 2.93825 )
 
 [node name="spawns" type="Spatial" parent="."]
 
@@ -250,8 +206,29 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3997, 3.23607, 5.78772 )
 [node name="short" type="Position3D" parent="spawns"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.274, 7.33796, 9.13908 )
 
+[node name="asite" type="Position3D" parent="spawns"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -129.183, 7.33796, 80.2448 )
+
+[node name="longdoors" type="Position3D" parent="spawns"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -57.8001, 7.33796, -49.3545 )
+
+[node name="long" type="Position3D" parent="spawns"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96.4251, 7.33796, -22.9945 )
+
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.983502, -0.00638581, 0.180784, -0.174955, -0.287616, 0.94163, 0.0459834, -0.957725, -0.283988, 0, 10.2832, 0 )
 light_color = Color( 0.992157, 0.980392, 0.952941, 1 )
 light_energy = 0.7
 shadow_enabled = true
+
+[node name="wooden_door3" parent="." instance=ExtResource( 4 )]
+transform = Transform( 2.75379, -0.038653, -9.61328, 0.0152501, 9.99992, -0.0358392, 9.61334, -0.0047912, 2.75383, -61.8234, 4.50314, -68.1489 )
+
+[node name="wooden_door4" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.26253, 0, 9.04604, 0, 10, 0, -9.04604, 0, -4.26253, -58.0766, 4.50314, -64.8323 )
+
+[node name="wooden_door5" parent="." instance=ExtResource( 4 )]
+transform = Transform( 2.75379, -0.038653, -9.61328, 0.0152501, 9.99992, -0.0358392, 9.61334, -0.0047912, 2.75383, -61.8234, 4.50314, -46.7715 )
+
+[node name="wooden_door6" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.26253, 0, 9.04604, 0, 10, 0, -9.04604, 0, -4.26253, -57.7024, 4.50314, -42.7974 )

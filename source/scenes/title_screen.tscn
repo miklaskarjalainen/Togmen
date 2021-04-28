@@ -24,10 +24,10 @@ anchor_left = 0.031
 anchor_top = 0.293
 anchor_right = 0.445
 anchor_bottom = 0.413
-margin_left = 0.255999
-margin_top = 0.199997
-margin_right = 0.319977
-margin_bottom = 0.199997
+margin_left = 0.320004
+margin_top = -2.96001
+margin_right = 0.384033
+margin_bottom = -2.95999
 
 [node name="name_label" type="Label" parent="."]
 anchor_left = 0.031
