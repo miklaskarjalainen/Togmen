@@ -3,7 +3,7 @@ extends Actor
 const JUMP_STR     = 12
 const GRAVITY      = 24
 
-onready var camera  := $camera_lock/camera
+onready var camera  := $camera
 
 var peer_name       := ""
 var motion          := Vector3()
@@ -20,7 +20,7 @@ func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
 		_do_player_movement(delta)
 		_update_name(peer_name)
-		_update_position(translation, $camera_lock.rotation)
+		_update_position(translation, $camera.rotation)
 		_update_capsule_color(GameSettings.get_value("capsule_color", Color(1.0, 0.3, 0.3, 1.0)))
 		
 		if Input.is_action_just_pressed("suicide"):
@@ -136,4 +136,4 @@ func get_unique_id() -> int:
 	return int(name)
 
 func get_hand():
-	return $camera_lock/hand
+	return $camera/hand
