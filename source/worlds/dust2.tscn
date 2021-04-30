@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/props/barrel/barrel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/props/wooden_box/wooden_box.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/props/wooden_sheet/wooden_sheet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/props/wooden_door/wooden_door.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/materials/orange.tres" type="Material" id=5]
 
 [node name="dust2" type="Spatial"]
 
@@ -37,48 +38,56 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 12.4221, -34.7656 )
 width = 10.0
 height = 28.0
 depth = 68.6872
+material = ExtResource( 5 )
 
 [node name="short_wall6" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -70.2795, 12.4547, -78.8707 )
 width = 7.84161
 height = 28.0
 depth = 71.466
+material = ExtResource( 5 )
 
 [node name="short_wall10" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -156.745, 12.4547, 54.5229 )
 width = 7.84161
 height = 28.0
 depth = 337.852
+material = ExtResource( 5 )
 
 [node name="short_wall8" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -88.7072, 13.5704, 38.8318 )
 width = 62.2278
 height = 28.0
 depth = 61.4042
+material = ExtResource( 5 )
 
 [node name="short_wall11" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94.1887, 13.5704, 149.18 )
 width = 128.986
 height = 28.0
 depth = 73.5078
+material = ExtResource( 5 )
 
 [node name="short_wall12" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8597, 13.5704, 78.3484 )
 width = 128.986
 height = 28.0
 depth = 83.6587
+material = ExtResource( 5 )
 
 [node name="short_wall9" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -77.7422, 9.42026, -3.74335 )
 width = 13.0061
 height = 10.2234
 depth = 12.1859
+material = ExtResource( 5 )
 
 [node name="short_wall7" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5366, 12.4547, -117.22 )
 width = 218.752
 height = 28.0
 depth = 6.81967
+material = ExtResource( 5 )
 
 [node name="short_floor3" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -103.844, -7.88601, 20.3524 )
@@ -94,6 +103,7 @@ transform = Transform( -0.173648, -0.984808, 0, 0.984808, -0.173648, 0, 0, 0, 1,
 width = 18.0
 height = 86.0
 depth = 21.9384
+material = ExtResource( 5 )
 
 [node name="short_wall" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.42209, -8 )
@@ -117,54 +127,63 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 12.4221, -18 )
 width = 30.0
 height = 28.0
 depth = 46.0
+material = ExtResource( 5 )
 
 [node name="short_wall4" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.141, 12.4221, 17.974 )
 width = 38.4628
 height = 28.0
 depth = 8.0
+material = ExtResource( 5 )
 
 [node name="mid_wall" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 12.4221, -14.6482 )
 width = 10.0
 height = 28.0
 depth = 32.0
+material = ExtResource( 5 )
 
 [node name="mid_wall3" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 12.4221, -46.6482 )
 width = 10.0
 height = 28.0
 depth = 96.328
+material = ExtResource( 5 )
 
 [node name="mid_wall7" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30.1715, 12.3958, -46.6414 )
 width = 10.0
 height = 28.0
 depth = 192.386
+material = ExtResource( 5 )
 
 [node name="mid_wall4" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4607, 12.4221, -72.7529 )
 width = 10.0
 height = 28.0
 depth = 32.0
+material = ExtResource( 5 )
 
 [node name="mid_wall5" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5393, 12.4221, -68.7529 )
 width = 28.0
 height = 28.0
 depth = 23.1222
+material = ExtResource( 5 )
 
 [node name="mid_wall6" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22537, 22.4055, -68.6109 )
-width = 7.22301
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.54316, 22.4055, -68.6109 )
+width = 7.81308
 height = 8.0
 depth = 23.1222
+material = ExtResource( 5 )
 
 [node name="mid_wall2" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 12.4221, 17.0328 )
 width = 10.0
 height = 28.0
 depth = 18.0
+material = ExtResource( 5 )
 
 [node name="mid_slope" type="CSGBox" parent="mid"]
 transform = Transform( 1, 0, 0, 0, 0.994151, -0.107999, 0, 0.107999, 0.994151, 2, 1, -7 )

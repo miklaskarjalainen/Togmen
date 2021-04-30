@@ -67,7 +67,6 @@ base_recoil = 0.0
 inaccuracy = 0.0
 fire_rate = 0.6
 is_auto = true
-can_scope = true
 max_range = 4
 
 [node name="Deagle" parent="camera/hand" instance=ExtResource( 3 )]

@@ -52,6 +52,7 @@ func reload(var fast := false):
 	if fast: #Reloading without the animation
 		_on_animation_finish("reload")
 		return
+	is_scoping = false
 	_play_anim("reload")
 
 # Returns true if can shoot
@@ -92,8 +93,8 @@ func get_recoil() -> Vector3:
 	var motion:Vector3 = player.motion
 	
 	randomize()
-	# Y Movement #
 	
+	# Y Movement #
 	if abs(motion.y) > 0.4:
 		var jump_recoil = base_recoil * JUMP_MULTIPLAIER
 		recoil += rand_vector(-jump_recoil, jump_recoil)

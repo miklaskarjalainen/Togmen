@@ -21,7 +21,7 @@ func _physics_process(delta:float):
 	# Grap / Release mouse cursor #
 	if Input.is_action_just_pressed("ui_cancel"): 
 		var cur := int(Input.get_mouse_mode() != 2)
-		Input.set_mouse_mode(2*cur)
+		Input.set_mouse_mode(cur*2)
 	
 	SENSITIVITY = GameSettings.get_value("sensitivity", SENSITIVITY) # Get sensitivity
 	_handle_weapon_scoping()
@@ -36,8 +36,9 @@ func _handle_weapon_scoping():
 	fov = NORMAL_FOV
 
 func _input(event):
+	
 	# Mouse look #
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == 2: 
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == 2:
 		var is_scoping:bool = player.get_hand().get_weapon().is_scoping()
 		var new_sens = SENSITIVITY
 		if is_scoping:

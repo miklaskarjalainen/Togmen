@@ -25,7 +25,7 @@ func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
 		_do_player_movement(delta)
 		_update_name(peer_name)
-		_update_position(translation, camera.rotation)
+		_update_position(translation, camera.rotation, rotation)
 		_update_capsule_color(GameSettings.get_value("capsule_color", Color(1.0, 0.3, 0.3, 1.0)))
 		
 		if Input.is_action_just_pressed("suicide"):
@@ -100,12 +100,13 @@ puppet func _update_name(_peer_name:String):
 		rpc("_update_name", peer_name)
 	peer_name = _peer_name
 
-puppet func _update_position(_translation:Vector3, _rotation:Vector3):
+puppet func _update_position(_translation:Vector3, _xrotation:Vector3, _yrotation:Vector3):
 	if is_network_master():
-		rpc_unreliable("_update_position", _translation, _rotation)
+		rpc_unreliable("_update_position", _translation, _xrotation, _yrotation)
 		return
 	translation     = _translation
-	camera.rotation = _rotation
+	rotation        = _yrotation
+	camera.rotation = _xrotation
 
 puppet func _update_capsule_color(_color:Color):
 	if is_network_master():
