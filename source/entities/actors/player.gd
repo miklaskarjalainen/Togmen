@@ -8,25 +8,32 @@ const GRAVITY       := 24
 
 onready var camera     := $camera
 onready var jump_timer := $jump_timer
+onready var player_anim = get_node("player_model/AnimationPlayer")
 
-var peer_name       := ""
-var motion          := Vector3()
-var killstreak      := 0
-var move_spd:int     = 15
+var peer_name       := ""        # "nickname"
+var motion          := Vector3() # current movement motion
+var move_spd:int     = 15        # maximum allowed movement speed, changes with different weapons
+
+var kill_count      := 0         # how many kills
+var death_count     := 0         # how many times have died
+var killstreak      := 0         # how many peers killed in a row without dying
 
 func _ready():
+	Gui.register_peer(self) # Adds this node to the scoreboard
+	
 	if is_network_master():
-		$body.visible = false
+		$player_model.visible = false
 		$hitbox.queue_free()
 		peer_name = Net.master_name
-		Gui.set_player(self)
+		Gui.set_player(self) # Makes the gui show this players health and ammo
 
 func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
 		_do_player_movement(delta)
+		
 		_update_name(peer_name)
 		_update_position(translation, camera.rotation, rotation)
-		_update_capsule_color(GameSettings.get_value("capsule_color", Color(1.0, 0.3, 0.3, 1.0)))
+		_update_stats(kill_count, death_count, killstreak)
 		
 		if Input.is_action_just_pressed("suicide"):
 			_respawn()
@@ -37,8 +44,6 @@ func _physics_process(delta:float):
 			_respawn()
 
 func _do_player_movement(delta:float):
-	if is_on_floor() and jump_timer.is_stopped():
-		move_spd = get_hand().get_weapon().get_mov_speed()
 	
 	# Controlling #
 	var direction := Vector3()
@@ -69,6 +74,10 @@ func _do_player_movement(delta:float):
 	# Jumping #
 	if Input.is_action_just_pressed("jump"):
 		jump_timer.start()
+	
+	# Bhopping, small speed bost if doing accurate jumps #
+	if is_on_floor() and jump_timer.is_stopped():
+		move_spd = get_hand().get_weapon().get_mov_speed()
 	if !jump_timer.is_stopped() and is_on_floor():
 		motion.y += JUMP_STR
 		move_spd += JUMP_MOV_BOOST
@@ -81,6 +90,7 @@ func _do_player_movement(delta:float):
 	
 	motion.y = move_and_slide(motion, Vector3.UP, true, 4).y
 
+# ADD MESSAGES FOR HEADSHOTS AND NOSCOPES
 func _respawn():
 	# Full heal
 	health = 100
@@ -89,7 +99,8 @@ func _respawn():
 	for gun in get_hand().get_children():
 		if gun is Weapon: # There're also particles :/
 			gun.reload(true)
-	killstreak = 0
+	killstreak  = 0
+	death_count += 1
 	
 	# Respawn
 	global_transform = get_parent().get_spawn()
@@ -108,25 +119,27 @@ puppet func _update_position(_translation:Vector3, _xrotation:Vector3, _yrotatio
 	rotation        = _yrotation
 	camera.rotation = _xrotation
 
-puppet func _update_capsule_color(_color:Color):
+puppet func _update_stats(_kills:int, _deaths:int, _killstreak:int):
 	if is_network_master():
-		rpc_unreliable("_update_capsule_color", _color)
+		rpc("_update_stats", _kills, _deaths, _killstreak)
 		return
-	$body.material.albedo_color = _color
+	kill_count  = _kills
+	death_count = _deaths
+	killstreak  = _killstreak
 
-puppet func _update_killstreak(_count:int):	
+puppet func _update_killstreak(_count:int):
 	if _count >= 5:
 		if is_network_master():
 			rpc("_update_killstreak", _count)
 		Gui.show_killstreak(peer_name, _count)
 
-puppet func _ended_killstreak(_ender:String, _count:int):	
+puppet func _ended_killstreak(_ender:String, _count:int):
 	if _count >= 5:
 		if is_network_master():
 			rpc("_ended_killstreak", _ender, _count)
 		Gui.ended_killstreak(_ender, peer_name, _count)
 
-master func _damage(dmg:int, var web_name := ""):
+master func _damage(dmg:int, var kill_type := ""):
 	var by_who := get_tree().get_rpc_sender_id()
 	
 	health -= dmg
@@ -135,23 +148,25 @@ master func _damage(dmg:int, var web_name := ""):
 	if health <= 0:
 		var killer_name = get_peer_name(by_who)
 		
-		Gui.killed_by(killer_name, web_name)
-		get_peer(by_who).rpc_id(by_who, "_eliminated_peer", get_unique_id(), web_name)
+		Gui.killed_by(killer_name, kill_type)
+		get_peer(by_who).rpc_id(by_who, "_eliminated_peer", get_unique_id(), kill_type)
 		_ended_killstreak(killer_name, killstreak)
+		
 		_respawn()
 
-master func _eliminated_peer(id:int, var web_name := ""):
+master func _eliminated_peer(id:int, var kill_type := ""):
+	kill_count += 1
 	killstreak += 1
 	_update_killstreak(killstreak)
 	
-	Gui.eliminated(get_peer_name(id), web_name)
+	Gui.eliminated(get_peer_name(id), kill_type)
 
 # Getters / Setters #
 func get_peer(id:int):
-	return get_parent().get_node(str(id))
+	return GameWorld.get_peer(id)
 
 func get_peer_name(var id := get_unique_id()) -> String:
-	return get_parent().get_peer_name(id)
+	return GameWorld.get_peer_name(id)
 
 func get_unique_id() -> int:
 	return int(name)

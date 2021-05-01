@@ -28,6 +28,9 @@ margin_left = 0.320004
 margin_top = -2.96001
 margin_right = 0.384033
 margin_bottom = -2.95999
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="name_label" type="Label" parent="."]
 anchor_left = 0.031

@@ -6,7 +6,7 @@ export var NORMAL_FOV   := 70
 export var SCOPED_FOV   := 30
 export var CAMERA_CLAMP := 80
 
-onready var player := get_node(PLAYER_PATH)
+onready var player    := get_node(PLAYER_PATH)
 
 func _ready():
 	if is_network_master():
@@ -29,7 +29,7 @@ func _physics_process(delta:float):
 func _handle_weapon_scoping():
 	var is_scoping:int = player.get_hand().get_weapon().is_scoping()
 	if is_scoping:    # Is scoping
-		fov = SCOPED_FOV
+		fov = SCOPED_FOV # Zoom
 		player.get_hand().visible = false
 		return
 	player.get_hand().visible = true

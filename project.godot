@@ -42,6 +42,7 @@ Net="*res://source/singleton/net.gd"
 Debug="*res://source/singleton/debug.tscn"
 GameSettings="*res://source/singleton/gamesettings.gd"
 Gui="*res://source/singleton/gui.tscn"
+GameWorld="*res://source/singleton/world.gd"
 
 [display]
 
@@ -155,6 +156,11 @@ web_4={
 quick_switch={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+toggle_scoreboard={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777218,"unicode":0,"echo":false,"script":null)
  ]
 }
 

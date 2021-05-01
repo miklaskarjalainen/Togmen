@@ -11,6 +11,7 @@ func _ready():
 	var id = get_tree().get_network_unique_id()
 	set_network_master(id)
 	
+	GameWorld.peer_holder = self
 	Net.connect("on_peer_connect", self, "_on_peer_connect")
 	Net.connect("on_peer_disconnect", self, "_on_peer_disconnect")
 	
@@ -20,10 +21,15 @@ func _physics_process(_delta:float):
 	Debug.add_line("players", get_child_count())
 
 func get_spawn() -> Transform:
+	# Gets a random spawn
+	
 	randomize()
 	var spawns := current_map.get_node("spawns").get_children()
 	var i      := randi() % spawns.size()
 	return spawns[i].global_transform
+
+func get_peer(id:int):
+	return get_node(str(id))
 
 func get_peer_name(id:int) -> String:
 	return get_node(str(id)).peer_name

@@ -14,8 +14,12 @@ export(bool)                 var can_scope      = false
 export(int, 0, 256, 1)       var max_range      = 256
 export(float, 1, 15, 0.5)    var mov_speed      = 15.0
 
-onready var player = get_node("../../../")
-onready var anim = $AnimationPlayer
+export var  sfx_shoot   :AudioStream
+export var  sfx_reload  :AudioStream
+onready var sfx_scope   := preload("res://assets/sfx/scope.ogg")
+
+onready var player       = get_node("../../../") # Needed to calculate the recoil
+onready var anim         = $AnimationPlayer
 onready var cur_ammo:int = max_ammo
 var is_scoping          := false
 var fire_rate_counter   := 0.0
@@ -37,6 +41,7 @@ func _physics_process(delta:float):
 	# Scope only on weapons that can scope
 	if Input.is_action_just_pressed("scope"):
 		if can_scope:
+			_play_sfx("scope")
 			is_scoping = not is_scoping
 	if !visible:
 		is_scoping = false
@@ -52,7 +57,9 @@ func reload(var fast := false):
 	if fast: #Reloading without the animation
 		_on_animation_finish("reload")
 		return
+	
 	is_scoping = false
+	_play_sfx("reload")
 	_play_anim("reload")
 
 # Returns true if can shoot
@@ -66,6 +73,9 @@ func shoot() -> bool:
 		return false
 	if cur_ammo <= 0 and max_ammo != 0:
 		return false
+	
+	# Shoot Sound effect
+	_play_sfx("shoot")
 	
 	# Shooting #
 	fire_rate_counter = fire_rate
@@ -83,7 +93,39 @@ puppet func _play_anim(anim_name:String):
 		return
 	push_warning("Weapon had no animation: " + anim_name)
 
+puppet func _play_sfx(sfx_name:String):
+	if is_network_master():
+		rpc("_play_sfx", sfx_name)
+	
+	match sfx_name:
+		"reload":
+			if get_reload_sfx() != null:
+				var sfx_player = get_node("../../reload_sfx")
+				sfx_player.stream = get_reload_sfx()
+				sfx_player.play(0.0)
+		"shoot":
+			if get_shoot_sfx() != null:
+				var sfx_player = get_node("../../shoot_sfx")
+				sfx_player.stream = get_shoot_sfx()
+				sfx_player.play(0.0)
+		"scope":
+			if get_scope_sfx() != null:
+				var sfx_player = get_node("../../scope_sfx")
+				sfx_player.stream = get_scope_sfx()
+				sfx_player.play(0.0)
+		_:
+			push_warning("Invalid gun sound effect")
+
 # Getters / Setters #
+func get_scope_sfx() -> AudioStream:
+	return sfx_scope
+
+func get_shoot_sfx() -> AudioStream:
+	return sfx_shoot
+
+func get_reload_sfx() -> AudioStream:
+	return sfx_reload
+
 func get_recoil() -> Vector3:
 	var JUMP_MULTIPLAIER     = 8
 	var MOVEMENT_MULTIPLAYER = 3

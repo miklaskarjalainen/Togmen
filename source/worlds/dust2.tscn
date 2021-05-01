@@ -89,6 +89,13 @@ height = 28.0
 depth = 6.81967
 material = ExtResource( 5 )
 
+[node name="short_wall13" type="CSGBox" parent="a"]
+transform = Transform( 0.966993, 0, -0.254804, 0, 1, 0, 0.254804, 0, 0.966993, -124.833, 12.4547, -62.288 )
+width = 107.605
+height = 28.0
+depth = 6.81967
+material = ExtResource( 5 )
+
 [node name="short_floor3" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -103.844, -7.88601, 20.3524 )
 width = 126.818
@@ -99,10 +106,10 @@ depth = 283.046
 use_collision = true
 
 [node name="xbox3" type="CSGBox" parent="mid"]
-transform = Transform( -0.173648, -0.984808, 0, 0.984808, -0.173648, 0, 0, 0, 1, 7, 4.42209, -99.5822 )
+transform = Transform( -0.173648, -0.984808, 0, 0.984808, -0.173648, 0, 0, 0, 1, 7, 4.42209, -101.79 )
 width = 18.0
 height = 86.0
-depth = 21.9384
+depth = 26.4056
 material = ExtResource( 5 )
 
 [node name="short_wall" type="CSGBox" parent="mid"]

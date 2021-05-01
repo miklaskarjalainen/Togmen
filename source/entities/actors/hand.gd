@@ -1,11 +1,13 @@
 extends Spatial
 
 # Todo: add swing
-export  var player_path:NodePath
-export  var raycast_path:NodePath
+export  var player_path   :NodePath
+export  var raycast_path  :NodePath
+export  var viewmodel_fov := 0.5
 
 onready var player  = get_node(player_path)
 onready var raycast = get_node(raycast_path)
+
 onready var bullet_impact  = preload("res://source/particles/bullet_impact.tscn")
 onready var blood_particle = preload("res://source/particles/blood_particle.tscn")
 onready var weapons = get_children()
@@ -17,6 +19,8 @@ func _ready():
 	if !is_network_master():
 		set_process(false)
 		set_physics_process(false)
+		return
+	translation.z -= viewmodel_fov
 
 func _physics_process(_delta:float):
 	Debug.add_line("fire rate", get_weapon().fire_rate_counter)
@@ -64,6 +68,7 @@ func _shoot():
 	var base_bullet_damage   = get_weapon().get_damage(bullet_distance)
 	print("Bullet travel distance: ", bullet_distance)
 	print("Would be damage: ", base_bullet_damage)
+	print("Target Name: ", target.name)
 	
 	# We hit the player?
 	if not target is BodyPart:
@@ -78,10 +83,17 @@ func _shoot():
 	
 	# Feed back #
 	create_blood(raycast.get_collision_point())
-	Gui.hitmark_play()      # Gives feed back to the player
+	Gui.hitmark_play()    # Gives feed back to the player
 	
 	print("Total Damage: ", bullet_damage)
-	peer.rpc_id(peer_id, "_damage", bullet_damage, get_weapon().name)
+	
+	var kill_type = get_weapon().name
+	if get_weapon().can_scope() and !get_weapon().is_scoping():
+		kill_type = "noscope"
+	if target.name == "head":
+		kill_type = "headshot"
+	
+	peer.rpc_id(peer_id, "_damage", bullet_damage, kill_type)
 
 puppet func create_bullet_impact(_location:Vector3):
 	if is_network_master():

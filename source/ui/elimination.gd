@@ -5,43 +5,53 @@ onready var anim := $anim
 func _ready():
 	modulate.a = 0
 
-func eliminated(peer_name:String, web_name:String):
+func eliminated(peer_name:String, kill_type:String):
 	var message := ""
-	web_name  = web_name.to_lower()
+	kill_type  = kill_type.to_lower()
 	peer_name = peer_name.to_lower()
 	
 	add_color_override("font_color", Color.green)
 	
 	# Kill message #
-	match web_name:
+	match kill_type:
 		"knife":
 			message = "You KNIFED %s" % peer_name 
 		"sniper":
-			message = "You PWNED %s" % peer_name 
+			message = "You SNIPED %s" % peer_name 
+		"headshot":
+			message = "You HEADSHOTTED %s!" % peer_name
+		"noscope":
+			message = "You NOSCOPED %s!" % peer_name
 		_:
-			message = "You ELIMINATED %s!" % peer_name
+			message = "You KILLED %s!" % peer_name
 	text = message
 	
 	anim.stop(true)
 	anim.play("show")
 
-func killed_by(peer_name:String, web_name:String):
+func killed_by(peer_name:String, kill_type:String):
 	var message := ""
 	
-	web_name  = web_name.to_lower()
+	kill_type  = kill_type.to_lower()
 	peer_name = peer_name.to_upper()
 	
 	add_color_override("font_color", Color.red)
 	
-	match web_name:
+	match kill_type:
 		"knife":
-			message = "%s KNIFED YOU!" % peer_name 
+			message = "%s KILLED YOU with A KNIFE!" % peer_name 
 		"sniper":
-			message = "%s PWNED YOU" % peer_name 
+			message = "%s SNIPED YOU" % peer_name 
 		"suicide":
 			message = "You took THE L!"
+		"headshot":
+			message = "%s HEADSHOTTED YOU!" % peer_name
+		"noscope":
+			message = "%s NOSCOPED YOU!" % peer_name
 		_:
 			message = "%s KILLED YOU!" % peer_name
+	
+	
 	text = message
 	
 	anim.stop(true)
