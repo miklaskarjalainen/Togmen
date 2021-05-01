@@ -1,8 +1,15 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/weapons/ak-47/AK-47.gltf" type="PackedScene" id=1]
-[ext_resource path="res://assets/weapons/weapon.gd" type="Script" id=2]
+[ext_resource path="res://assets/weapons/ak-47/texture_png.material" type="Material" id=2]
 
 [node name="AK-47" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
-base_damage = 0
+
+[node name="624f8eca-d4bf-1597-122d-cba237506550" parent="AK47" index="0"]
+material/0 = ExtResource( 2 )
+
+[node name="31325cd4-2ec1-49e2-9700-12abd52a0c1d" parent="AK47" index="3"]
+material/0 = ExtResource( 2 )
+
+[node name="a1038f9b-8830-3736-76e0-e80edd015ac0" parent="AK47" index="5"]
+material/0 = ExtResource( 2 )

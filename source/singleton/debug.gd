@@ -25,6 +25,8 @@ func _physics_process(_delta:float) -> void:
 		add_line("Peer ID", get_tree().get_network_unique_id())
 	
 	add_line("Vertices", Performance.get_monitor(13))
+	add_line("2D Draw Calls", Performance.get_monitor(19))
+	add_line("3D Draw Calls", Performance.get_monitor(17))
 
 func add_line(var_name:String, variable):
 	if !visible:

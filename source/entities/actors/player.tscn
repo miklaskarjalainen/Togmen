@@ -98,6 +98,7 @@ sfx_shoot = ExtResource( 14 )
 [node name="AK-47" parent="camera/hand" instance=ExtResource( 7 )]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 visible = false
+script = ExtResource( 9 )
 base_damage = 28
 damage_falloff = 0.05
 base_recoil = 0.2
