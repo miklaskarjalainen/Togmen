@@ -84,25 +84,30 @@ extents = Vector3( 0.328512, 0.302254, 0.729297 )
 
 [node name="8ffa5127-1c6c-c92d-fbd4-5799d78e85be" type="MeshInstance" parent="."]
 transform = Transform( 0.997564, 0, -0.0697565, 0, 1, 0, 0.0697565, 0, 0.997564, -0.345486, 0.3125, 1.08061 )
+use_in_baked_light = true
 mesh = SubResource( 1 )
 material/0 = null
 
 [node name="29d5abfa-4e82-0d99-1875-4324e367df99" type="MeshInstance" parent="."]
 transform = Transform( 0.996195, 0, 0.0871557, 0, 1, 0, -0.0871557, 0, 0.996195, 0.21875, 0.3125, 1.09375 )
+use_in_baked_light = true
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="c2bc2447-cf34-7d4c-5881-d7d6691be792" type="MeshInstance" parent="."]
 transform = Transform( 0.976296, 0, 0.21644, 0, 1, 0, -0.21644, 0, 0.976296, -0.34375, 0.3125, -0.34375 )
+use_in_baked_light = true
 mesh = SubResource( 3 )
 material/0 = null
 
 [node name="1e1b1a95-c10f-121b-a622-bbbbc777a9ab" type="MeshInstance" parent="."]
 transform = Transform( 0.991445, 0, -0.130526, 0, 1, 0, 0.130526, 0, 0.991445, 0.21875, 0.3125, -0.34375 )
+use_in_baked_light = true
 mesh = SubResource( 4 )
 material/0 = null
 
 [node name="260a0ce3-836f-58b5-09f6-a5fdef9df205" type="MeshInstance" parent="."]
+use_in_baked_light = true
 mesh = SubResource( 5 )
 material/0 = null
 

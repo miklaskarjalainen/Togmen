@@ -370,6 +370,7 @@ height = 0.602314
 [node name="barrel" type="StaticBody"]
 
 [node name="aeddced2-e0d7-30d6-78f9-020b4a0afd64" type="MeshInstance" parent="."]
+use_in_baked_light = true
 mesh = SubResource( 1 )
 material/0 = null
 material/1 = null
@@ -379,6 +380,7 @@ material/4 = null
 
 [node name="d048dddb-bbbb-bf39-1a21-daf8e28751d3" type="MeshInstance" parent="."]
 transform = Transform( 0.857167, 0, 0.515038, 0, 1, 0, -0.515038, 0, 0.857167, 0.0375, 0.634375, 0.1125 )
+use_in_baked_light = true
 mesh = SubResource( 5 )
 material/0 = null
 material/1 = null
@@ -388,6 +390,7 @@ material/4 = null
 material/5 = null
 
 [node name="a741005a-ad6c-8bfd-953e-062d207e20a2" type="MeshInstance" parent="."]
+use_in_baked_light = true
 mesh = SubResource( 6 )
 material/0 = null
 material/1 = null
@@ -396,6 +399,7 @@ material/3 = null
 material/4 = null
 
 [node name="6241056b-3699-8895-322f-ece14ac374bc" type="MeshInstance" parent="."]
+use_in_baked_light = true
 mesh = SubResource( 7 )
 material/0 = null
 material/1 = null
@@ -404,6 +408,7 @@ material/3 = null
 material/4 = null
 
 [node name="73b68e1b-58bf-d377-6e22-e240a98aaaef" type="MeshInstance" parent="."]
+use_in_baked_light = true
 mesh = SubResource( 8 )
 material/0 = null
 material/1 = null
@@ -412,6 +417,7 @@ material/3 = null
 material/4 = null
 
 [node name="ac1e5015-1119-ef95-6400-d362f01bef74" type="MeshInstance" parent="."]
+use_in_baked_light = true
 mesh = SubResource( 9 )
 material/0 = null
 

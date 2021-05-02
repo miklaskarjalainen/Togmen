@@ -28,6 +28,7 @@ use_collision = true
 
 [node name="floor" type="CSGBox" parent="world"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -44, -6, -22.6076 )
+use_in_baked_light = true
 width = 119.154
 height = 10.0
 depth = 180.425
@@ -38,6 +39,7 @@ __meta__ = {
 
 [node name="wall18" type="CSGCylinder" parent="world/floor"]
 transform = Transform( -1.5255e-09, -4.36848e-08, 1, -0.999391, 0.0348994, 0, -0.0348994, -0.999391, -4.37114e-08, 48.306, 9, 21.094 )
+use_in_baked_light = true
 operation = 2
 radius = 7.0
 height = 70.0
@@ -45,6 +47,7 @@ material = ExtResource( 1 )
 
 [node name="wall" type="CSGBox" parent="world"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5244, 18.6136, 73.5333 )
+use_in_baked_light = true
 width = 54.0
 height = 50.0
 depth = 20.0
@@ -52,6 +55,7 @@ material = ExtResource( 1 )
 
 [node name="wall4" type="CSGBox" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 20, 18.661, 23 )
+use_in_baked_light = true
 width = 82.0
 height = 50.0
 depth = 20.0
@@ -59,30 +63,35 @@ material = ExtResource( 1 )
 
 [node name="wall9" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -19.7619, 1.66103, -3.56031 )
+use_in_baked_light = true
 radius = 12.0
 height = 6.0
 material = ExtResource( 1 )
 
 [node name="wall10" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -19.7619, 19.661, -3.56031 )
+use_in_baked_light = true
 radius = 7.0
 height = 30.0
 material = ExtResource( 1 )
 
 [node name="wall11" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -66.7619, 1.66103, -28.5603 )
+use_in_baked_light = true
 radius = 12.0
 height = 6.0
 material = ExtResource( 1 )
 
 [node name="wall16" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -43.7619, 2.66103, -13.5603 )
+use_in_baked_light = true
 radius = 12.0
 height = 8.0
 material = ExtResource( 1 )
 
 [node name="wall17" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -43.7619, 8.66103, -13.5603 )
+use_in_baked_light = true
 radius = 12.0
 height = 4.0
 cone = true
@@ -90,43 +99,50 @@ material = ExtResource( 1 )
 
 [node name="wall12" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -40.694, 0.5, -45.514 )
+use_in_baked_light = true
 radius = 12.0
 height = 3.0
 material = ExtResource( 1 )
 
 [node name="wall13" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -28.694, 0.5, 19.486 )
+use_in_baked_light = true
 radius = 12.0
 height = 3.0
 material = ExtResource( 1 )
 
 [node name="wall14" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, -0.965926, 0.258819, 0, -0.258819, -0.965926, 0, 5, 0.599999, 40 )
+use_in_baked_light = true
 radius = 7.0
 height = 58.0
 material = ExtResource( 1 )
 
 [node name="wall15" type="CSGCylinder" parent="world"]
 transform = Transform( 0, 0, 1, -1, -5.96046e-08, 0, 4.47035e-08, -1, 0, 5, 7.6, -14 )
+use_in_baked_light = true
 radius = 7.0
 height = 58.0
 material = ExtResource( 1 )
 
 [node name="wall18" type="CSGCylinder" parent="world"]
 transform = Transform( 0.012989, -0.514158, 0.857597, -0.956525, -0.2563, -0.139173, 0.291359, -0.818506, -0.495134, -12, -1.4, -59 )
+use_in_baked_light = true
 radius = 7.0
 height = 64.0
 material = ExtResource( 1 )
 
 [node name="wall5" type="CSGBox" parent="world"]
 transform = Transform( -0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, -0.422618, 1.84344, 18.661, -59.2615 )
+use_in_baked_light = true
 width = 82.0
 height = 50.0
 depth = 20.0
 material = ExtResource( 1 )
 
 [node name="wall6" type="CSGBox" parent="world"]
-transform = Transform( -0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, -0.906308, -57.1566, 18.661, -73.2616 )
+transform = Transform( -0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, -0.906308, -46.6827, 20.9745, -75.9926 )
+use_in_baked_light = true
 width = 116.0
 height = 50.0
 depth = 20.0
@@ -134,6 +150,7 @@ material = ExtResource( 1 )
 
 [node name="wall7" type="CSGBox" parent="world"]
 transform = Transform( 0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, 0.422618, -91.4701, 18.661, -10.2616 )
+use_in_baked_light = true
 width = 82.0
 height = 50.0
 depth = 20.0
@@ -141,6 +158,7 @@ material = ExtResource( 1 )
 
 [node name="wall2" type="CSGBox" parent="world"]
 transform = Transform( 0.582719, 0, -0.812674, 0, 1, 0, 0.812674, 0, 0.582719, -64.2453, 18.6136, 23.5333 )
+use_in_baked_light = true
 width = 116.0
 height = 50.0
 depth = 20.0
