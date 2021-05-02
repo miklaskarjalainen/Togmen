@@ -44,6 +44,7 @@ near = 0.1
 far = 250.0
 script = ExtResource( 2 )
 PLAYER_PATH = NodePath("..")
+SCOPED_FOV = 15
 
 [node name="shoot_ray" type="RayCast" parent="camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.068396, -0.600105 )
@@ -125,7 +126,7 @@ mov_speed = 8.5
 sfx_shoot = ExtResource( 11 )
 
 [node name="player_model" parent="." instance=ExtResource( 5 )]
-transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, -1.17257, 0 )
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, -1.17, 0 )
 
 [node name="jump_timer" type="Timer" parent="."]
 wait_time = 0.1

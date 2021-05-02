@@ -30,6 +30,7 @@ func _physics_process(_delta:float):
 	_handle_weapon_switching()
 	_handle_shooting()
 
+
 func _handle_weapon_switching():
 	if Input.is_action_just_pressed("web_1"):
 		_switch_weapon(0)
@@ -44,9 +45,9 @@ func _handle_weapon_switching():
 		_switch_weapon(previous_weapon)
 
 func _handle_shooting():
-	if Input.is_action_just_pressed("shoot"):
+	if   Input.is_action_just_pressed("shoot"):
 		_shoot()
-	if Input.is_action_pressed("shoot") and get_weapon().is_auto():
+	elif Input.is_action_pressed("shoot") and get_weapon().is_auto():
 		_shoot()
 
 func _shoot():

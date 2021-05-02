@@ -32,7 +32,7 @@ func _physics_process(delta:float):
 		_do_player_movement(delta)
 		
 		_update_name(peer_name)
-		_update_position(translation, camera.rotation, rotation)
+		_update_position(translation, camera.rotation, rotation, motion)
 		_update_stats(kill_count, death_count, killstreak)
 		
 		if Input.is_action_just_pressed("suicide"):
@@ -42,9 +42,17 @@ func _physics_process(delta:float):
 		if health <= 0:
 			Gui.killed_by("", "suicide")
 			_respawn()
+	else:
+		_do_player_animations()
+
+func _do_player_animations():
+	if motion.length() > 2:
+		player_anim.play("run")
+	else:
+		player_anim.stop(true)
+		player_anim.play("idle")
 
 func _do_player_movement(delta:float):
-	
 	# Controlling #
 	var direction := Vector3()
 	if Input.is_action_pressed("forwards"):
@@ -88,7 +96,7 @@ func _do_player_movement(delta:float):
 	Debug.add_line("speed", hor_motion.length())
 	Debug.add_line("is_grounded", is_on_floor())
 	
-	motion.y = move_and_slide(motion, Vector3.UP, true, 4).y
+	motion = move_and_slide(motion, Vector3.UP, true, 4)
 
 func _respawn():
 	# Full heal
@@ -110,10 +118,11 @@ puppet func _update_name(_peer_name:String):
 		rpc("_update_name", peer_name)
 	peer_name = _peer_name
 
-puppet func _update_position(_translation:Vector3, _xrotation:Vector3, _yrotation:Vector3):
+puppet func _update_position(_translation:Vector3, _xrotation:Vector3, _yrotation:Vector3, _motion:Vector3):
 	if is_network_master():
-		rpc_unreliable("_update_position", _translation, _xrotation, _yrotation)
+		rpc_unreliable("_update_position", _translation, _xrotation, _yrotation, _motion)
 		return
+	motion          = _motion
 	translation     = _translation
 	rotation        = _yrotation
 	camera.rotation = _xrotation
