@@ -51,7 +51,7 @@ func reload(var fast := false):
 	if max_ammo == 0:
 		return
 	if fast: #Reloading without the animation
-		_on_animation_finish("reload")
+		_on_animation_finish("fast_reload")
 		return
 	if cur_ammo >= max_ammo:
 		return
@@ -190,11 +190,14 @@ func rand_vector(_min:float, _max:float) -> Vector3:
 # Signals #
 
 func _on_animation_finish(anim_name:String):
-	if !visible:
-		return
-	
-	if anim_name == "reload":
+	# Normal Reload
+	if anim_name == "reload" and visible:
 		cur_ammo = max_ammo
-	# Auto Reload
+	
+	# Fast Reload
+	if anim_name == "fast_reload":
+		cur_ammo = max_ammo
+	
+	# Auto Reload after out of ammo #
 	elif anim_name == "attack1" and cur_ammo == 0: 
 		reload()
