@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/props/barrel/barrel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/props/wooden_box/wooden_box.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/props/wooden_sheet/wooden_sheet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/props/wooden_door/wooden_door.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/materials/orange.tres" type="Material" id=5]
+[ext_resource path="res://assets/materials/sand.tres" type="Material" id=5]
+[ext_resource path="res://assets/props/ship_container/ship_container.tscn" type="PackedScene" id=6]
 
 [node name="dust2" type="Spatial"]
 
@@ -27,11 +28,8 @@ transform = Transform( 3.8637, 0, 1.03528, 0, 4, 0, -1.03528, 0, 3.8637, -4.4166
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0100937, -3.8147e-06, -0.0741062 )
 use_collision = true
 
-[node name="mid_door7" type="CSGBox" parent="a"]
-transform = Transform( 0.984729, 0, 0.174095, 0, 1, 0, -0.174095, 0, 0.984729, -63.5029, 6.85042, -50.8993 )
-width = 5.11795
-height = 5.01821
-depth = 8.82065
+[node name="ship_container" parent="a" instance=ExtResource( 6 )]
+transform = Transform( 7.98698, 0, 0.45619, 0, 8, 0, -0.45619, 0, 7.98698, -64.0896, 4.38916, -54.9929 )
 
 [node name="short_wall5" type="CSGBox" parent="a"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -49, 12.4221, -34.7656 )

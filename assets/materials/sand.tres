@@ -1,0 +1,13 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://assets/materials/sand_texture.png" type="Texture" id=1]
+
+[resource]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 1 )
+metallic_specular = 0.0
+clearcoat_enabled = true
+clearcoat = 1.0
+clearcoat_gloss = 0.5
+uv1_scale = Vector3( 0.1, 0.1, 0.1 )
+uv1_triplanar = true

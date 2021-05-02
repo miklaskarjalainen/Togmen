@@ -11,14 +11,15 @@ func _physics_process(_delta:float) -> void:
 		return
 	
 	_clear()
+	add_line("Godot Version", Engine.get_version_info()["string"])
 	add_line("FPS", Engine.get_frames_per_second())
 	
 	# Print IPs # prob should cache these?
-	for ip in IP.get_local_interfaces():
-		if ip["friendly"] == "Wi-Fi":
-			add_line("IP", ip["addresses"][1])
-		if ip["friendly"] == "Ethernet":
-			add_line("IP", ip["addresses"][1])
+	#for ip in IP.get_local_interfaces():
+	#	if ip["friendly"] == "Wi-Fi":
+	#		add_line("IP", ip["addresses"][1])
+	#	if ip["friendly"] == "Ethernet":
+	#		add_line("IP", ip["addresses"][1])
 	
 	# Peer ID #
 	if get_tree().network_peer != null:

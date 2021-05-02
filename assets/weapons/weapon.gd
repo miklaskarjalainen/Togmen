@@ -50,12 +50,12 @@ func _physics_process(delta:float):
 func reload(var fast := false):
 	if max_ammo == 0:
 		return
+	if fast: #Reloading without the animation
+		_on_animation_finish("reload")
+		return
 	if cur_ammo >= max_ammo:
 		return
 	if is_reloading():
-		return
-	if fast: #Reloading without the animation
-		_on_animation_finish("reload")
 		return
 	
 	is_scoping = false

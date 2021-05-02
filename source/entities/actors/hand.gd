@@ -16,6 +16,8 @@ var current_weapon  := 0
 var previous_weapon := 0
 
 func _ready():
+	set_network_master(int(player.name))
+	
 	if !is_network_master():
 		set_process(false)
 		set_physics_process(false)

@@ -90,7 +90,6 @@ func _do_player_movement(delta:float):
 	
 	motion.y = move_and_slide(motion, Vector3.UP, true, 4).y
 
-# ADD MESSAGES FOR HEADSHOTS AND NOSCOPES
 func _respawn():
 	# Full heal
 	health = 100

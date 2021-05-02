@@ -9,9 +9,14 @@ export var CAMERA_CLAMP := 80
 onready var player    := get_node(PLAYER_PATH)
 
 func _ready():
+	set_network_master(int(player.name))
+	
 	if is_network_master():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
+		set_process(false)
+		set_physics_process(false)
+		set_process_input(false)
 		current = false
 
 func _physics_process(delta:float):
