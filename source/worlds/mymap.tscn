@@ -1,11 +1,44 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/materials/brick.tres" type="Material" id=1]
 [ext_resource path="res://assets/props/ship_container/ship_container.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/props/barrel/barrel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/props/sprites/brown_grass.png" type="Texture" id=4]
 [ext_resource path="res://assets/materials/sand.tres" type="Material" id=5]
 
 [node name="dust2" type="Spatial"]
+
+[node name="grass" type="Spatial" parent="."]
+
+[node name="grass1" type="Sprite3D" parent="grass"]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, -61, 1.99792, -7 )
+billboard = 2
+texture = ExtResource( 4 )
+
+[node name="grass2" type="Sprite3D" parent="grass"]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, -29, 1.99792, -29 )
+billboard = 2
+texture = ExtResource( 4 )
+
+[node name="grass3" type="Sprite3D" parent="grass"]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, -15, 1.99792, 38 )
+billboard = 2
+texture = ExtResource( 4 )
+
+[node name="grass4" type="Sprite3D" parent="grass"]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, -31, 1.99792, 45 )
+billboard = 2
+texture = ExtResource( 4 )
+
+[node name="grass5" type="Sprite3D" parent="grass"]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, -24, 1.99792, -48 )
+billboard = 2
+texture = ExtResource( 4 )
+
+[node name="grass6" type="Sprite3D" parent="grass"]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, -9, 1.99792, -27 )
+billboard = 2
+texture = ExtResource( 4 )
 
 [node name="barrel" parent="." instance=ExtResource( 3 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -4, 0.808492, 0 )

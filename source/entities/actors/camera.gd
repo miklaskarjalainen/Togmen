@@ -23,11 +23,6 @@ func _physics_process(delta:float):
 	if !is_network_master():
 		return
 	
-	# Grap / Release mouse cursor #
-	if Input.is_action_just_pressed("ui_cancel"): 
-		var cur := int(Input.get_mouse_mode() != 2)
-		Input.set_mouse_mode(cur*2)
-	
 	SENSITIVITY = GameSettings.get_value("sensitivity", SENSITIVITY) # Get sensitivity
 	_handle_weapon_scoping()
 
@@ -47,7 +42,7 @@ func _input(event):
 		var is_scoping:bool = player.get_hand().get_weapon().is_scoping()
 		var new_sens = SENSITIVITY
 		if is_scoping:
-			new_sens *= 0.6
+			new_sens *= 0.4
 		rotation_degrees.x -= event.relative.y * new_sens
 		player.rotation_degrees.y -= event.relative.x * new_sens
 		rotation_degrees.x  = clamp(rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)

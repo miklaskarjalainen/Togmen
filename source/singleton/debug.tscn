@@ -6,6 +6,7 @@
 [node name="debug" type="RichTextLabel"]
 margin_right = 1024.0
 margin_bottom = 600.0
+mouse_filter = 2
 custom_fonts/normal_font = ExtResource( 2 )
 text = "this is debug thingy"
 script = ExtResource( 1 )

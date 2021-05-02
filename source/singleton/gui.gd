@@ -10,6 +10,7 @@ onready var scoreboard     := get_node("scoreboard")
 var player = null # in player.gd "ready()" method this is set
 
 func _ready():
+	Net.connect("on_server_disconnect", self, "_on_server_disconnect")
 	$hitmark.modulate.a = 0
 
 func _physics_process(_delta:float):
@@ -64,5 +65,18 @@ func _update_ammo():
 		$ammo.text = ""
 
 func _update_crosshair():
-	# Gets the crosshair color from the settings, crosshair color can be set in the settings.ini
-	$crosshair.modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
+	var is_scoping = player.get_hand().get_weapon().is_scoping()
+	if !is_scoping:
+		# Gets the crosshair color from the settings, crosshair color can be set in the settings.ini
+		$crosshair.modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
+		$scope.visible = false
+	else: # is scoping
+		var motion = player.motion.length()
+		
+		
+		$scope.visible = true
+
+# Signals #
+
+func _on_server_disconnect():
+	set_player(null)

@@ -5,6 +5,7 @@ const PORT = 25595
 signal on_connection_ready # Created a server or connected to one
 signal on_peer_connect(id)
 signal on_peer_disconnect(id)
+signal on_server_disconnect
 
 var master_name := ""
 
@@ -35,6 +36,9 @@ func create_client(ip_addr:String) -> void:
 	
 	print("Client Created IP: %s Port: %s" % [ip_addr, PORT])
 
+func destroy_client() -> void: # Disconnect
+	get_tree().network_peer = null
+	emit_signal("on_server_disconnect")
 
 # Getters / Setters #
 func set_master_name(peer_name:String):
@@ -42,6 +46,9 @@ func set_master_name(peer_name:String):
 
 func peer_quit() -> void:
 	get_tree().network_peer = null
+
+func is_client_connected() -> bool:
+	return get_tree().network_peer != null
 
 func is_host() -> bool:
 	return get_tree().is_network_server()
