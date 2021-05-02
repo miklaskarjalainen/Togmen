@@ -20,7 +20,7 @@ transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -4, 0.808492, 4.2955 )
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -5.55603, 0.808492, 3.2955 )
 
 [node name="ship_container" parent="." instance=ExtResource( 2 )]
-transform = Transform( -4.76837e-07, 0, -8, 0, 8, 0, 8, 0, -4.76837e-07, -18.3854, 1.50964, -36.6709 )
+transform = Transform( -4.76837e-07, 0, -8, 0, 8, 0, 8, 0, -4.76837e-07, -18.3854, 0.821165, -36.6709 )
 
 [node name="world" type="CSGCombiner" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15851, 1.81878, -2.70432 )
