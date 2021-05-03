@@ -5,46 +5,69 @@
 [node name="settings" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="bg" type="ColorRect" parent="."]
+[node name="resolution_label" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.815686, 0.815686, 0.815686, 0.137255 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="back" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -160.0
-margin_top = -24.0
-margin_right = 160.0
-margin_bottom = 27.0
-text = "back to titlescreen"
+margin_left = -680.0
+margin_top = -168.0
+margin_right = -354.0
+margin_bottom = -104.0
+text = "Viewport Resolution: "
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="resume" type="Button" parent="."]
-anchor_left = 0.5
+[node name="resolution_option" type="OptionButton" parent="."]
+anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -128.0
-margin_top = -128.0
-margin_right = 128.0
-margin_bottom = -77.0
-text = "resume"
+margin_left = -352.0
+margin_top = -168.0
+margin_right = -72.0
+margin_bottom = -104.0
+text = "2560x1440 [16x9]"
+items = [ "1280x1024 [5:4]", null, false, 0, false, "1280x720 [16:9]", null, false, 0, false, "1920x1080 [16:9]", null, false, 0, false, "2560x1440 [16x9]", null, false, 0, false, "3840 x 2160 [16:9]", null, false, 4, null ]
+selected = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="button_up" from="back" to="." method="_on_back_button_up"]
-[connection signal="button_up" from="resume" to="." method="_on_resume_button_up"]
+[node name="apply" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -72.0
+margin_right = -72.0
+text = "Apply"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fullscreen" type="CheckButton" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -544.0
+margin_top = -240.0
+margin_right = -264.0
+margin_bottom = -176.0
+text = "FullScreen:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="apply" to="." method="_on_apply_pressed"]

@@ -30,6 +30,12 @@ func _physics_process(_delta:float):
 	_handle_weapon_switching()
 	_handle_shooting()
 
+func _input(event):
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.button_index == BUTTON_WHEEL_UP:
+			_switch_weapon(current_weapon+1)
+		elif event.button_index == BUTTON_WHEEL_DOWN:
+			_switch_weapon(current_weapon-1)
 
 func _handle_weapon_switching():
 	if Input.is_action_just_pressed("web_1"):
@@ -40,6 +46,10 @@ func _handle_weapon_switching():
 		_switch_weapon(2)
 	if Input.is_action_just_pressed("web_4"):
 		_switch_weapon(3)
+	if Input.is_action_just_pressed("mw_up"):
+		_switch_weapon(current_weapon+1)
+	if Input.is_action_just_pressed("mw_down"):
+		_switch_weapon(current_weapon-1)
 	
 	if Input.is_action_just_pressed("quick_switch"):
 		_switch_weapon(previous_weapon)
@@ -118,6 +128,9 @@ puppet func create_blood(_location:Vector3):
 	instance.translation = _location
 
 puppet func _switch_weapon(_weapon:int):
+	# Keep the weapon id in pounds
+	_weapon = clamp(_weapon, 0, get_child_count() - 1)
+	
 	# Same weapon
 	if _weapon == current_weapon:
 		return

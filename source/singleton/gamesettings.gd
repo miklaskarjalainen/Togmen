@@ -30,9 +30,10 @@ func load_settings():
 	Engine.target_fps = get_value("target_fps", 144)
 	OS.vsync_enabled  = get_value("vsync", false)
 	OS.window_fullscreen = get_value("fullscreen", true)
-	get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_IGNORE, get_value("resolution", Vector2(1280,720))) # Loads the resolution
 
 func _add_action(action:String):
+	# Binds a button to an action 
+	
 	# Clear the action if there's already something
 	if InputMap.has_action(action):
 		InputMap.action_erase_events(action)
@@ -50,19 +51,29 @@ func _add_action(action:String):
 	elif typeof(inputs) == TYPE_STRING:
 		_add_key_to_action(action, inputs)
 
-# Adds a key to an action
 func _add_key_to_action(action:String, key:String):
+	# Adds a key to a given action
+	
 	var action_button     := InputEventKey.new()
 	action_button.scancode = OS.find_scancode_from_string(key) #read the scancode from the ini
 	InputMap.action_add_event(action, action_button)
 	print("Added action %s with button %s" % [action, key])
 
+func set_resolution(resolution:Vector2):
+	get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_IGNORE, resolution) # Loads the resolution
+
 func get_value(key:String, default = null):
+	# Returns a value with the key, if key doesn't exist returns the default value
+	# and creates the key with the value and saves it 
+	
 	if config.has_section_key("settings", key):  # if the key did exist
 		return config.get_value("settings", key, default)
 	config.set_value("settings", key, default)
 	print("Added new entry %s to settings.ini" % key)
 	return default
+
+func set_value(key:String, value):
+	config.set_value("settings", key, value)
 
 func _exit_tree():
 	config.save(SETTINGS_PATH)

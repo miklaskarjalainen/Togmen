@@ -41,7 +41,6 @@ func _on_no_pressed():
 	if hide_on_answer:
 		visible = false
 
-
 # Setters #
 func set_label_text(value:String):
 	get_node(LABEL_PATH).text = value # Set Label
@@ -54,10 +53,3 @@ func set_label_align(value:int):
 func set_label_valign(value:int):
 	get_node(LABEL_PATH).valign = value # Set Label
 	valign = value                      # Set Local Variable
-
-
-
-
-
-
-

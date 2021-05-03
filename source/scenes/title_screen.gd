@@ -1,11 +1,14 @@
 extends Control
 
-onready var confirm_popup = $confirm_popup
+export(NodePath) var player_model_path
 
+onready var player_model_anim = get_node(player_model_path).get_node("AnimationPlayer")
+onready var confirm_popup = $confirm_popup
 onready var IP_edit = $IP_edit
 onready var name_edit = $name_edit
 onready var host_btn = $host
 onready var join_btn = $join
+
 
 func _ready():
 	GameWorld.current_gamestate = GameWorld.GameState.TitleScreen
@@ -19,6 +22,9 @@ func _ready():
 	IP_edit.text = GameSettings.get_value("default_ip", "127.0.0.1")
 
 func _physics_process(delta:float) -> void:
+	# Player Idle Animation
+	player_model_anim.play("showoff")
+	
 	# Enabling / Disabling Buttons #
 	host_btn.disabled = true
 	join_btn.disabled = true
@@ -30,7 +36,6 @@ func _physics_process(delta:float) -> void:
 	# Ask the user if they really want to quit #
 	if Input.is_action_just_pressed("ui_cancel"):
 		confirm_popup.toggle_pop()
-
 
 # Signals #
 func _on_popup_answer(answered_yes:bool):

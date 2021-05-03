@@ -52,7 +52,7 @@ func _do_player_animations():
 		player_anim.play("run")
 	else:
 		player_anim.stop(true)
-		player_anim.play("idle")
+		player_anim.play("showoff")
 
 func _do_player_movement(delta:float):
 	# Controlling #
@@ -80,7 +80,7 @@ func _do_player_movement(delta:float):
 	if hor_motion.length() > move_spd: 
 		motion.x = (hor_motion.normalized() * move_spd).x
 		motion.z = (hor_motion.normalized() * move_spd).z
-	elif hor_motion.length() < 0.8 and direction == Vector3() and is_on_floor(): # Rounds speeds of 0.1231 to 0
+	elif hor_motion.length() < 1.4 and direction == Vector3() and is_on_floor(): # Rounds speeds of 0.1231 to 0
 		motion.x = 0
 		motion.z = 0
 	

@@ -12,12 +12,6 @@ func _physics_process(_delta:float) -> void:
 	
 	_clear()
 	add_line("Godot Version", Engine.get_version_info()["string"])
-	
-	var res := Vector2()
-	res.x = ProjectSettings.get("display/window/size/width")
-	res.y = ProjectSettings.get("display/window/size/height")
-	
-	add_line("Resolution", res)
 	add_line("FPS", Engine.get_frames_per_second())
 	
 	# Peer ID #

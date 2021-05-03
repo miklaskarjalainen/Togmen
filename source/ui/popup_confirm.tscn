@@ -3,7 +3,6 @@
 [ext_resource path="res://source/ui/popup_confirm.gd" type="Script" id=1]
 
 [node name="pop_confirm" type="PopupDialog"]
-visible = true
 anchor_right = 0.2
 anchor_bottom = 0.267
 margin_bottom = -0.240021
