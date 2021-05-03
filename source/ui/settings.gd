@@ -3,7 +3,9 @@ extends Control
 
 func _physics_process(delta:float):
 	# Grap / Release mouse cursor #
-	if Input.is_action_just_pressed("ui_cancel"): 
+	if Input.is_action_just_pressed("ui_cancel") and GameWorld.is_ingame(): 
+		print(GameWorld.is_ingame())
+		print(GameWorld.is_in_titlescreen())
 		var cur := int(Input.get_mouse_mode() != 2)
 		Input.set_mouse_mode(cur*2)
 	
