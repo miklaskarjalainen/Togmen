@@ -12,10 +12,14 @@ var player = null # in player.gd "ready()" method this is set
 func _ready():
 	Net.connect("on_server_disconnect", self, "_on_server_disconnect")
 	$hitmark.modulate.a = 0
+	visible = false
 
 func _physics_process(_delta:float):
-	if player == null: # if player isn't set yet
+	if player == null or not visible: # if player isn't set yet, or the ui is not visible
 		return
+	
+	if Input.is_action_just_pressed("toggle_ui"):
+		visible = not visible
 	
 	_update_health()
 	_update_ammo()
@@ -27,6 +31,7 @@ func register_peer(peer_node):
 	scoreboard.add_entry(peer_node)
 
 func set_player(_player):
+	visible = true if _player != null else false # Makes the title screen visible if the player is not null
 	player = _player
 
 func hitmark_play():
@@ -70,10 +75,7 @@ func _update_crosshair():
 		# Gets the crosshair color from the settings, crosshair color can be set in the settings.ini
 		$crosshair.modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
 		$scope.visible = false
-	else: # is scoping
-		var motion = player.motion.length()
-		
-		
+	else: # is scoping 
 		$scope.visible = true
 
 # Signals #

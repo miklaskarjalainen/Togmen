@@ -48,6 +48,7 @@ GameWorld="*res://source/singleton/world.gd"
 
 window/size/width=1280
 window/size/height=720
+window/stretch/mode="viewport"
 
 [gui]
 
@@ -161,6 +162,11 @@ quick_switch={
 toggle_scoreboard={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777218,"unicode":0,"echo":false,"script":null)
+ ]
+}
+toggle_ui={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777244,"unicode":0,"echo":false,"script":null)
  ]
 }
 

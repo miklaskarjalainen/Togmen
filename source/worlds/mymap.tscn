@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/materials/brick.tres" type="Material" id=1]
 [ext_resource path="res://assets/props/ship_container/ship_container.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/props/barrel/barrel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/props/sprites/brown_grass.png" type="Texture" id=4]
 [ext_resource path="res://assets/materials/sand.tres" type="Material" id=5]
+[ext_resource path="res://source/entities/mesh_visibility_toggler.gd" type="Script" id=6]
 
 [node name="dust2" type="Spatial"]
 
@@ -42,18 +43,28 @@ texture = ExtResource( 4 )
 
 [node name="barrel" parent="." instance=ExtResource( 3 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -4, 0.808492, 0 )
+script = ExtResource( 6 )
+hide_distance = 90.0
 
 [node name="barrel2" parent="." instance=ExtResource( 3 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -4, 0.808492, 2.06144 )
+script = ExtResource( 6 )
+hide_distance = 90.0
 
 [node name="barrel3" parent="." instance=ExtResource( 3 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -4, 0.808492, 4.2955 )
+script = ExtResource( 6 )
+hide_distance = 90.0
 
 [node name="barrel4" parent="." instance=ExtResource( 3 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -5.55603, 0.808492, 3.2955 )
+script = ExtResource( 6 )
+hide_distance = 90.0
 
 [node name="ship_container" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.76837e-07, 0, -8, 0, 8, 0, 8, 0, -4.76837e-07, -18.3854, 0.821165, -36.6709 )
+script = ExtResource( 6 )
+hide_distance = 100.0
 
 [node name="world" type="CSGCombiner" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15851, 1.81878, -2.70432 )

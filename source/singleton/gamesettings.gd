@@ -29,6 +29,8 @@ func load_settings():
 	# Set some settings
 	Engine.target_fps = get_value("target_fps", 144)
 	OS.vsync_enabled  = get_value("vsync", false)
+	OS.window_fullscreen = get_value("fullscreen", true)
+	get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_IGNORE, get_value("resolution", Vector2(1280,720))) # Loads the resolution
 
 func _add_action(action:String):
 	# Clear the action if there's already something
