@@ -10,12 +10,18 @@ func _ready():
 	IP_edit.text = GameSettings.get_value("default_ip", "127.0.0.1")
 
 func _physics_process(delta:float) -> void:
+	
+	# Enabling / Disabling Buttons #
 	host_btn.disabled = true
 	join_btn.disabled = true
 	if !name_edit.text.empty() and name_edit.text.length() < 17:
 		host_btn.disabled = false
 		if IP_edit.text.is_valid_ip_address():
 			join_btn.disabled = false
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().quit()
+
 
 # Signals #
 func _on_host_pressed():
