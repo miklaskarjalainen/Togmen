@@ -19,6 +19,8 @@ var death_count     := 0         # how many times have died
 var killstreak      := 0         # how many peers killed in a row without dying
 
 func _ready():
+	GameWorld.current_gamestate = GameWorld.GameState.InGame
+	
 	Gui.register_peer(self) # Adds this node to the scoreboard
 	
 	if is_network_master():

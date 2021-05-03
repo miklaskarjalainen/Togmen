@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://assets/weapons/weapon.gd"
+}, {
+"base": "PopupDialog",
+"class": "YesPopupDialog",
+"language": "GDScript",
+"path": "res://source/ui/popup_confirm.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
 "BodyPart": "",
-"Weapon": ""
+"Weapon": "",
+"YesPopupDialog": ""
 }
 
 [application]

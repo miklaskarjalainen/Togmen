@@ -1,6 +1,18 @@
 extends Node
 
-var peer_holder
+var peer_holder # peers node in source/scenes/game.tscn
+var current_gamestate = GameState.TitleScreen
+
+enum GameState{
+	TitleScreen,
+	InGame,
+}
+
+func is_ingame() -> bool:
+	return current_gamestate == GameState.InGame
+
+func is_in_titlescreen() -> bool:
+	return current_gamestate == GameState.TitleScreen
 
 func get_peer(id:int):
 	assert(peer_holder)
