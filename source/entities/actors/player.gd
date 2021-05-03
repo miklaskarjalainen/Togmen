@@ -3,7 +3,7 @@ extends Actor
 const ACCEL_SPD     := 120
 const AIR_ACCEL_SPD := 40
 const JUMP_STR      := 12
-const JUMP_MOV_BOOST:= 1 # Also known as bhopping
+const JUMP_MOV_BOOST:= 0.4 # Also known as bhopping
 const GRAVITY       := 24
 
 onready var camera     := $camera
@@ -12,7 +12,7 @@ onready var player_anim = get_node("player_model/AnimationPlayer")
 
 var peer_name       := ""        # "nickname"
 var motion          := Vector3() # current movement motion
-var move_spd:int     = 15        # maximum allowed movement speed, changes with different weapons
+var move_spd        := 15.0        # maximum allowed movement speed, changes with different weapons
 
 var kill_count      := 0         # how many kills
 var death_count     := 0         # how many times have died
@@ -78,6 +78,9 @@ func _do_player_movement(delta:float):
 	if hor_motion.length() > move_spd: 
 		motion.x = (hor_motion.normalized() * move_spd).x
 		motion.z = (hor_motion.normalized() * move_spd).z
+	elif hor_motion.length() < 0.8 and direction == Vector3() and is_on_floor(): # Rounds speeds of 0.1231 to 0
+		motion.x = 0
+		motion.z = 0
 	
 	# Jumping #
 	if Input.is_action_just_pressed("jump"):
