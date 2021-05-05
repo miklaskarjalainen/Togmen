@@ -8,11 +8,17 @@ const GRAVITY       := 24
 
 onready var camera     := $camera
 onready var jump_timer := $jump_timer
-onready var player_anim = get_node("player_model/AnimationPlayer")
+onready var player_anim:= get_node("player_model/AnimationPlayer")
 
-var peer_name       := ""        # "nickname"
+var peer_data := {
+	"id":0,
+	"peer_name":"",
+	"skin":0,
+}
+
 var motion          := Vector3() # current movement motion
-var move_spd        := 15.0        # maximum allowed movement speed, changes with different weapons
+var move_spd        := 15.0      # maximum allowed movement speed, changes with different weapons
+var is_crouching    := false
 
 var kill_count      := 0         # how many kills
 var death_count     := 0         # how many times have died
@@ -20,22 +26,23 @@ var killstreak      := 0         # how many peers killed in a row without dying
 
 func _ready():
 	GameWorld.current_gamestate = GameWorld.GameState.InGame
-	
 	Gui.register_peer(self) # Adds this node to the scoreboard
 	
 	if is_network_master():
-		$player_model.visible = false
+		Net.rpc("_register_peer", Net.data)
+		$player_model.hide()
 		$hitbox.queue_free()
-		peer_name = Net.master_name
 		Gui.set_player(self) # Makes the gui show this players health and ammo
+	else:
+		$player_model.hide_arms()
 
 func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
 		_do_player_movement(delta)
 		
-		_update_name(peer_name)
-		_update_position(translation, camera.rotation, rotation, motion)
-		_update_stats(kill_count, death_count, killstreak)
+		_update_look(camera.rotation, rotation)
+		_update_position(translation, motion, is_crouching)
+		_update_stats(kill_count, death_count, killstreak, health)
 		
 		if Input.is_action_just_pressed("suicide"):
 			_respawn()
@@ -48,11 +55,29 @@ func _physics_process(delta:float):
 		_do_player_animations()
 
 func _do_player_animations():
-	if motion.length() > 2:
-		player_anim.play("run")
+	if player_anim == null:
+		return
+	if is_network_master():
+		return
+	
+	# Crouching #
+	if is_crouching:
+		if has_node("hitbox"):
+			$hitbox/anim.play("crouch")
+		$camera.translation.y = 0.856
 	else:
-		player_anim.stop(true)
-		player_anim.play("showoff")
+		if has_node("hitbox"):
+			$hitbox/anim.play("stand")
+		$camera.translation.y = 1.425
+	
+	# Animations #
+	if is_crouching:
+		player_anim.play("crouch_run")
+	else:
+		if motion.length() > 2:
+			player_anim.play("run")
+		else:
+			player_anim.play("idle")
 
 func _do_player_movement(delta:float):
 	# Controlling #
@@ -67,7 +92,7 @@ func _do_player_movement(delta:float):
 		direction += global_transform.basis.x
 	
 	# If grounded acceleration / de-acceleration
-	if is_on_floor():
+	if is_grounded():
 		motion += direction.normalized() * ACCEL_SPD * delta
 		motion.x = lerp(motion.x, 0.0, 0.1)
 		motion.z = lerp(motion.z, 0.0, 0.1)
@@ -80,7 +105,7 @@ func _do_player_movement(delta:float):
 	if hor_motion.length() > move_spd: 
 		motion.x = (hor_motion.normalized() * move_spd).x
 		motion.z = (hor_motion.normalized() * move_spd).z
-	elif hor_motion.length() < 1.4 and direction == Vector3() and is_on_floor(): # Rounds speeds of 0.1231 to 0
+	elif hor_motion.length() < 1.4 and direction == Vector3() and is_grounded(): # Rounds speeds of 0.1231 to 0
 		motion.x = 0
 		motion.z = 0
 	
@@ -89,17 +114,25 @@ func _do_player_movement(delta:float):
 		jump_timer.start()
 	
 	# Bhopping, small speed bost if doing accurate jumps #
-	if is_on_floor() and jump_timer.is_stopped():
-		move_spd = get_hand().get_weapon().get_mov_speed()
-	if !jump_timer.is_stopped() and is_on_floor():
-		motion.y += JUMP_STR
+	if is_grounded() and jump_timer.is_stopped():  # If grounded reset current max speed
+		move_spd = get_hand().get_weapon().get_mov_speed() - (int(is_crouching) * 4)
+	if !jump_timer.is_stopped() and is_grounded(): # If grounded and pressed space with in ~0.1s, jump
+		motion.y = JUMP_STR
 		move_spd += JUMP_MOV_BOOST
 	
+	# Crouching #
+	if Input.is_action_pressed("crouch"):
+		is_crouching = true
+	else:
+		is_crouching = false
+	
 	# Gravity #
-	motion.y -= GRAVITY * delta;
+	motion.y -= GRAVITY * delta
 	
 	Debug.add_line("speed", hor_motion.length())
-	Debug.add_line("is_grounded", is_on_floor())
+	Debug.add_line("is_grounded", is_grounded())
+	Debug.add_line("is_crouching", is_crouching)
+	Debug.add_line("is_host", Net.is_host())
 	
 	motion = move_and_slide(motion, Vector3.UP, true, 4)
 
@@ -118,71 +151,98 @@ func _respawn():
 	global_transform = get_parent().get_spawn()
 
 # Networking #
-puppet func _update_name(_peer_name:String):
+puppet func _update_look(_xrotation:Vector3, _yrotation:Vector3):
 	if is_network_master():
-		rpc("_update_name", peer_name)
-	peer_name = _peer_name
-
-puppet func _update_position(_translation:Vector3, _xrotation:Vector3, _yrotation:Vector3, _motion:Vector3):
-	if is_network_master():
-		rpc_unreliable("_update_position", _translation, _xrotation, _yrotation, _motion)
+		rpc_unreliable("_update_look", _xrotation, _yrotation)
 		return
-	motion          = _motion
-	translation     = _translation
 	rotation        = _yrotation
 	camera.rotation = _xrotation
 
-puppet func _update_stats(_kills:int, _deaths:int, _killstreak:int):
+puppet func _update_position(_translation:Vector3, _motion:Vector3, _crouching:bool):
 	if is_network_master():
-		rpc("_update_stats", _kills, _deaths, _killstreak)
+		rpc_unreliable("_update_position", _translation, _motion, _crouching)
+		return
+	is_crouching    = _crouching
+	motion          = _motion
+	translation     = _translation
+
+puppet func _update_stats(_kills:int, _deaths:int, _killstreak:int, _health:int):
+	if is_network_master():
+		rpc("_update_stats", _kills, _deaths, _killstreak, _health)
 		return
 	kill_count  = _kills
 	death_count = _deaths
 	killstreak  = _killstreak
+	health      = _health
 
 puppet func _update_killstreak(_count:int):
+	# This peer's killstreak got updated #
+	
 	if _count >= 5:
 		if is_network_master():
-			rpc("_update_killstreak", _count)
-		Gui.show_killstreak(peer_name, _count)
+			rpc("_update_killstreak", _count)  # Player, broadcast others about player's new killstreak
+		Gui.show_killstreak(peer_data["peer_name"], _count) # If a peer show that someone else has a killstreak going
 
 puppet func _ended_killstreak(_ender:String, _count:int):
+	# This peer's killstreak was ended #
+	
 	if _count >= 5:
-		if is_network_master():
-			rpc("_ended_killstreak", _ender, _count)
-		Gui.ended_killstreak(_ender, peer_name, _count)
+		if is_network_master(): 
+			rpc("_ended_killstreak", _ender, _count)    # Player, broadcast others that your killstreak was ended
+		Gui.ended_killstreak(_ender, peer_data["peer_name"], _count) # If a peer show that someone else's killstreak was ended
 
 master func _damage(dmg:int, var kill_type := ""):
-	var by_who := get_tree().get_rpc_sender_id()
+	# This peer received damage from a peer #
 	
+	# Handle the damage #
+	var by_who := get_tree().get_rpc_sender_id() # The peer's id who damaged the player
 	health -= dmg
 	print("damaged: %s, by: %s" % [dmg, by_who])
 	
-	if health <= 0:
-		var killer_name = get_peer_name(by_who)
-		
-		Gui.killed_by(killer_name, kill_type)
+	if health <= 0: # If the player died
+		# Inform the peer who killed us, that they killed us #
 		get_peer(by_who).rpc_id(by_who, "_eliminated_peer", get_unique_id(), kill_type)
-		_ended_killstreak(killer_name, killstreak)
 		
-		_respawn()
+		# If we had a killstreak bigger than 4, then tell who ended it #
+		var killer_name = GameWorld.get_peer_name(by_who)
+		_ended_killstreak(killer_name, killstreak) 
+		
+		# Show gui, also inform who killed the player # 
+		Gui.killed_by(killer_name, kill_type)
+		_respawn() # Respawn the player
 
-master func _eliminated_peer(id:int, var kill_type := ""):
+master func _eliminated_peer(peer_id:int, var kill_type := ""):
+	# The player has eliminated peer with the given id #
+	
+	var peer_name = GameWorld.get_peer_name(peer_id)
+	
+	# Update Stats #
 	kill_count += 1
 	killstreak += 1
+	
+	# If killstreak is bigger than 4, then it's broadcasted to all peers #
 	_update_killstreak(killstreak)
 	
-	Gui.eliminated(get_peer_name(id), kill_type)
+	# Show the eliminated gui #
+	Gui.eliminated(peer_name, kill_type)
 
 # Getters / Setters #
+func set_skin(idx:int):
+	$player_model.set_skin(idx)
+
+func is_grounded() -> bool:
+	return is_on_floor() or $is_grounded.is_colliding()
+
+func is_dead() -> bool:
+	return health <= 0
+
 func get_peer(id:int):
 	return GameWorld.get_peer(id)
 
-func get_peer_name(var id := get_unique_id()) -> String:
-	return GameWorld.get_peer_name(id)
-
 func get_unique_id() -> int:
+	# Gets this peer's id
 	return int(name)
 
 func get_hand():
+	# Gets the node which holds all of the guns 
 	return $camera/hand

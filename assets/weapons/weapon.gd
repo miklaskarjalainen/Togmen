@@ -14,8 +14,8 @@ export(bool)                 var can_scope      = false
 export(int, 0, 256, 1)       var max_range      = 256
 export(float, 1, 15, 0.5)    var mov_speed      = 15.0
 
-export var  sfx_shoot   :AudioStream
-export var  sfx_reload  :AudioStream
+export  var sfx_shoot   :AudioStream
+export  var sfx_reload  :AudioStream
 onready var sfx_scope   := preload("res://assets/sfx/scope.ogg")
 
 onready var player       = get_node("../../../") # Needed to calculate the recoil
@@ -26,6 +26,7 @@ var fire_rate_counter   := 0.0
 
 func _ready():
 	anim.connect("animation_finished", self, "_on_animation_finish")
+	player.get_node("player_model").connect("on_skin_changed", self, "_init_handtextures")
 
 func _physics_process(delta:float):
 	# Counts down the firerate timer #
@@ -93,6 +94,18 @@ func _handle_scoping():
 		if can_scope:
 			_play_sfx("scope")
 			is_scoping = not is_scoping
+
+func _init_handtextures(material:Material):
+	print("Init hand textures")
+	if has_node("left_hand"):
+		for child in $left_hand.get_children():
+			if !child is MeshInstance: # A gun and not a hand
+				 continue
+			child.set_material_override(material)
+		for child in $right_hand.get_children():
+			if !child is MeshInstance: # A gun and not a hand
+				 continue
+			child.set_material_override(material)
 
 puppet func _play_anim(anim_name:String):
 	if is_network_master(): # Gun animations shows on other's games aswell

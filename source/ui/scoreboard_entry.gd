@@ -26,7 +26,7 @@ func update_entry():
 	if peer_node == null:
 		return
 	
-	name_label.text       = peer_node.peer_name
+	name_label.text       = peer_node.peer_data["peer_name"]
 	kills_label.text      = str(peer_node.kill_count)
 	deaths_label.text     = str(peer_node.death_count)
 	killstreak_label.text = str(peer_node.killstreak)

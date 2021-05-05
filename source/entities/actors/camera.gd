@@ -2,6 +2,7 @@ extends Camera
 
 export var PLAYER_PATH:NodePath
 export var SENSITIVITY  := 0.15
+export var SCOPED_SENS  := 0.6
 export var NORMAL_FOV   := 70
 export var SCOPED_FOV   := 30
 export var CAMERA_CLAMP := 80
@@ -23,7 +24,8 @@ func _physics_process(delta:float):
 	if !is_network_master():
 		return
 	
-	SENSITIVITY = GameSettings.get_value("sensitivity", SENSITIVITY) # Get sensitivity
+	SENSITIVITY = GameSettings.get_value("sensitivity", SENSITIVITY)        # Get sensitivity
+	SCOPED_SENS = GameSettings.get_value("scoped_sensitivity", SCOPED_SENS) # Get scoped sensitivity
 	_handle_weapon_scoping()
 
 func _handle_weapon_scoping():
@@ -36,13 +38,12 @@ func _handle_weapon_scoping():
 	fov = NORMAL_FOV
 
 func _input(event):
-	
 	# Mouse look #
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == 2:
 		var is_scoping:bool = player.get_hand().get_weapon().is_scoping()
 		var new_sens = SENSITIVITY
 		if is_scoping:
-			new_sens *= 0.4
+			new_sens *= SCOPED_SENS
 		rotation_degrees.x -= event.relative.y * new_sens
 		player.rotation_degrees.y -= event.relative.x * new_sens
 		rotation_degrees.x  = clamp(rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)

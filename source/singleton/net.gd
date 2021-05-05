@@ -3,11 +3,16 @@ extends Node
 const PORT = 25595
 
 signal on_connection_ready # Created a server or connected to one
-signal on_peer_connect(id)
+signal on_peer_connect(data)
 signal on_peer_disconnect(id)
 signal on_server_disconnect
 
 var master_name := ""
+var data := {
+	"id":0,
+	"peer_name":master_name,
+	"skin":0,
+}
 
 func _ready():
 	get_tree().connect("network_peer_connected",    self, "_on_peer_connect")
@@ -25,6 +30,7 @@ func create_server() -> void:
 	var peer := NetworkedMultiplayerENet.new()
 	peer.create_server(PORT, max_players)
 	get_tree().network_peer = peer
+	data["id"] = get_tree().get_network_unique_id()
 	
 	print("Server created, port: ", PORT)
 	emit_signal("on_connection_ready")
@@ -33,6 +39,7 @@ func create_client(ip_addr:String) -> void:
 	var peer := NetworkedMultiplayerENet.new()
 	peer.create_client(ip_addr, PORT)
 	get_tree().network_peer = peer
+	data["id"] = get_tree().get_network_unique_id()
 	
 	print("Client Created IP: %s Port: %s" % [ip_addr, PORT])
 
@@ -56,7 +63,7 @@ func is_host() -> bool:
 # Signals #
 func _on_peer_connect(id:int) -> void:
 	print("Player %s connected" % id)
-	emit_signal("on_peer_connect", id)
+	#emit_signal("on_peer_connect", id)
 
 func _on_peer_disconnect(id:int) -> void:
 	print("Player %s disconnected" % id)
@@ -64,6 +71,7 @@ func _on_peer_disconnect(id:int) -> void:
 
 func _on_connection_success() -> void:
 	print("Connected to the server")
+	print("Peer register sent")
 	emit_signal("on_connection_ready")
 
 func _on_connection_fail() -> void:
@@ -71,3 +79,8 @@ func _on_connection_fail() -> void:
 
 func _on_server_disconnect() -> void:
 	print("Disconnected from the server")
+
+# Remotes 
+master func _register_peer(peer_data:Dictionary):
+	print(str(peer_data), " Registered!")
+	emit_signal("on_peer_connect", peer_data)

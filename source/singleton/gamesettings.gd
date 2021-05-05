@@ -26,7 +26,7 @@ func load_settings():
 	for action_name in config.get_section_keys("actions"):
 		_add_action(action_name)
 	
-	# Set some settings
+	# Set video settings
 	Engine.target_fps = get_value("target_fps", 144)
 	OS.vsync_enabled  = get_value("vsync", false)
 	OS.window_fullscreen = get_value("fullscreen", true)

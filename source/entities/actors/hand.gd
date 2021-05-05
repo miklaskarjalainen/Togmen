@@ -2,11 +2,13 @@ extends Spatial
 
 # Todo: add swing
 export  var player_path   :NodePath
+export  var player_model_path   :NodePath
 export  var raycast_path  :NodePath
 export  var viewmodel_fov := 0.5
 
-onready var player  = get_node(player_path)
-onready var raycast = get_node(raycast_path)
+onready var player       = get_node(player_path)
+onready var player_model = get_node(player_model_path)
+onready var raycast      = get_node(raycast_path)
 
 onready var bullet_impact  = preload("res://source/particles/bullet_impact.tscn")
 onready var blood_particle = preload("res://source/particles/blood_particle.tscn")
@@ -27,6 +29,7 @@ func _ready():
 func _physics_process(_delta:float):
 	Debug.add_line("fire rate", get_weapon().fire_rate_counter)
 	
+	_handle_hand_animations()
 	_handle_weapon_switching()
 	_handle_shooting()
 
@@ -37,6 +40,15 @@ func _input(event):
 		elif event.button_index == BUTTON_WHEEL_DOWN:
 			_switch_weapon(current_weapon-1)
 
+func _handle_hand_animations():
+	if !get_weapon().has_node("left_hand"):
+		return
+	
+	var left_rotation = get_weapon().get_node("left_hand").rotation
+	var right_rotation = get_weapon().get_node("right_hand").rotation
+	player_model.get_node("left_hand").rotation = left_rotation
+	player_model.get_node("right_hand").rotation = right_rotation
+
 func _handle_weapon_switching():
 	if Input.is_action_just_pressed("web_1"):
 		_switch_weapon(0)
@@ -46,10 +58,6 @@ func _handle_weapon_switching():
 		_switch_weapon(2)
 	if Input.is_action_just_pressed("web_4"):
 		_switch_weapon(3)
-	if Input.is_action_just_pressed("mw_up"):
-		_switch_weapon(current_weapon+1)
-	if Input.is_action_just_pressed("mw_down"):
-		_switch_weapon(current_weapon-1)
 	
 	if Input.is_action_just_pressed("quick_switch"):
 		_switch_weapon(previous_weapon)

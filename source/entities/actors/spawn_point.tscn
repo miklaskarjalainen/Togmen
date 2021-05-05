@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/props/player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/entities/actors/spawn_point.gd" type="Script" id=2]
+
+[node name="spawn_point" type="Position3D"]
+script = ExtResource( 2 )
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+transform = Transform( -3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 0, 0, 0 )
+
+[node name="finder" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+enabled = true
+collision_mask = 5

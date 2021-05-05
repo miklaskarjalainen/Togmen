@@ -1,8 +1,9 @@
 extends Control
 
+signal on_settings_pressed
 export(NodePath) var player_model_path
 
-onready var player_model_anim = get_node(player_model_path).get_node("AnimationPlayer")
+onready var player_model = get_node(player_model_path)
 onready var confirm_popup = $confirm_popup
 onready var IP_edit = $IP_edit
 onready var name_edit = $name_edit
@@ -23,7 +24,7 @@ func _ready():
 
 func _physics_process(delta:float) -> void:
 	# Player Idle Animation
-	player_model_anim.play("showoff")
+	player_model.get_node("AnimationPlayer").play("idle")
 	
 	# Enabling / Disabling Buttons #
 	host_btn.disabled = true
@@ -44,12 +45,22 @@ func _on_popup_answer(answered_yes:bool):
 		return
 
 func _on_host_pressed():
+	Net.data["peer_name"] = name_edit.text
+	Net.data["skin"] = $skins.selected
 	Net.create_server()
 
 func _on_join_pressed():
 	var ip:String = IP_edit.text
+	Net.data["peer_name"] = name_edit.text
+	Net.data["skin"] = $skins.selected
 	Net.create_client(ip)
 
+func _on_settings_pressed():
+	emit_signal("on_settings_pressed")
+
 func _on_connection_ready():
-	Net.set_master_name(name_edit.text)
 	get_tree().change_scene("res://source/scenes/game.tscn")
+
+func _on_skin_selected(index:int):
+	player_model.set_skin(index)
+	
