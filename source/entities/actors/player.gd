@@ -29,7 +29,9 @@ func _ready():
 	Gui.register_peer(self) # Adds this node to the scoreboard
 	
 	if is_network_master():
-		Net.rpc("_register_peer", Net.data)
+		Net.connect("on_peer_connect", self, "_on_peer_connect")
+		rpc("_register", Net.data)
+		
 		$player_model.hide()
 		$hitbox.queue_free()
 		Gui.set_player(self) # Makes the gui show this players health and ammo
@@ -226,6 +228,10 @@ master func _eliminated_peer(peer_id:int, var kill_type := ""):
 	# Show the eliminated gui #
 	Gui.eliminated(peer_name, kill_type)
 
+puppet func _register(_data:Dictionary):
+	peer_data = _data
+	set_skin(_data["skin"])
+
 # Getters / Setters #
 func set_skin(idx:int):
 	$player_model.set_skin(idx)
@@ -246,3 +252,7 @@ func get_unique_id() -> int:
 func get_hand():
 	# Gets the node which holds all of the guns 
 	return $camera/hand
+
+# Signals #
+func _on_peer_connect(id:int):
+	rpc_id(id, "_register", peer_data)

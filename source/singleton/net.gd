@@ -3,14 +3,14 @@ extends Node
 const PORT = 25595
 
 signal on_connection_ready # Created a server or connected to one
-signal on_peer_connect(data)
+signal on_peer_connect(id)
 signal on_peer_disconnect(id)
 signal on_server_disconnect
 
 var master_name := ""
 var data := {
 	"id":0,
-	"peer_name":master_name,
+	"peer_name":"",
 	"skin":0,
 }
 
@@ -63,7 +63,7 @@ func is_host() -> bool:
 # Signals #
 func _on_peer_connect(id:int) -> void:
 	print("Player %s connected" % id)
-	#emit_signal("on_peer_connect", id)
+	emit_signal("on_peer_connect", id)
 
 func _on_peer_disconnect(id:int) -> void:
 	print("Player %s disconnected" % id)
@@ -80,7 +80,3 @@ func _on_connection_fail() -> void:
 func _on_server_disconnect() -> void:
 	print("Disconnected from the server")
 
-# Remotes 
-master func _register_peer(peer_data:Dictionary):
-	print(str(peer_data), " Registered!")
-	emit_signal("on_peer_connect", peer_data)

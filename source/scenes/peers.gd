@@ -21,7 +21,6 @@ func _physics_process(_delta:float):
 	Debug.add_line("players", get_child_count())
 
 func get_spawn() -> Transform:
-	
 	# Gets a random spawn
 	var spawns := current_map.get_node("spawns").get_children()
 	var valid_spawns := []
@@ -65,6 +64,7 @@ func _create_peer(data:Dictionary):
 	if has_node(str(data["id"])):
 		push_warning("tried to create same peer twice!")
 		return
+	print("Created Peer: ", data)
 	
 	var instance  = PEER.instance()
 	instance.name = str(data["id"])
@@ -75,24 +75,42 @@ func _create_peer(data:Dictionary):
 	instance.set_network_master(data["id"])
 	add_child(instance)
 
+func _create_peer_id(id:int):
+	if has_node(str(id)):
+		push_warning("tried to create same peer twice!")
+		return
+	print("Created Peer: ", id)
+	
+	var instance  = PEER.instance()
+	instance.name = str(id)
+	instance.global_transform = get_spawn()
+	instance.set_as_toplevel(true)
+	instance.set_network_master(id)
+	add_child(instance)
+
 # Networking #
 master func _update_peers(list:Array):
 	print("Received: ", str(list))
 	for data in list:
+		_create_peer_id(data)
+
+master func _on_peer_register(data:Dictionary):
+	if has_node(str(data["id"])):
+		get_node(str(data["id"])).register(data)
+	else:
 		_create_peer(data)
 
 # Signals #
-
-func _on_peer_connect(data:Dictionary):
+func _on_peer_connect(id:int):
 	if Net.is_host(): # Game host sends a list of current peers to the new peer
 		var peer_list := []
 		for child in get_children():
-			peer_list.append(child.peer_data)
+			peer_list.append(int(child.name))
 		
-		print("Sent: %s to %s" % [peer_list, data["id"]])
-		rpc_id(int(data["id"]), "_update_peers", peer_list)
+		print("Sent: %s to %s" % [peer_list, id])
+		rpc_id(id, "_update_peers", peer_list)
 	
-	_create_peer(data)
+	_create_peer_id(id)
 
 func _on_peer_disconnect(id:int):
 	_delete_peer(id)
