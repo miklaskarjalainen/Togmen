@@ -28,7 +28,18 @@ func _exit_tree():
 func create_server() -> void:
 	var max_players = GameSettings.get_value("max_players", 5)
 	var peer := NetworkedMultiplayerENet.new()
-	peer.create_server(PORT, max_players)
+	var err = peer.create_server(PORT, max_players)
+	
+	match err:
+		OK:
+			pass
+		ERR_CANT_CREATE:
+			print("The port is already being used")
+			return
+		_:
+			print("An error occurred, ", err)
+			return
+	
 	get_tree().network_peer = peer
 	data["id"] = get_tree().get_network_unique_id()
 	
@@ -37,7 +48,10 @@ func create_server() -> void:
 
 func create_client(ip_addr:String) -> void:
 	var peer := NetworkedMultiplayerENet.new()
-	peer.create_client(ip_addr, PORT)
+	var err = peer.create_client(ip_addr, PORT)
+	if err != OK:
+		print("An error occurred, ", err)
+	
 	get_tree().network_peer = peer
 	data["id"] = get_tree().get_network_unique_id()
 	

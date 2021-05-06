@@ -208,6 +208,10 @@ sfx_shoot = ExtResource( 11 )
 transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, -1.17, 0 )
 script = ExtResource( 15 )
 
+[node name="respawn_timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [node name="jump_timer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
@@ -273,3 +277,5 @@ multiplier = 0.7
 [node name="coll" type="CollisionShape" parent="hitbox/legs"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3023, 0 )
 shape = SubResource( 7 )
+
+[connection signal="timeout" from="respawn_timer" to="." method="_on_respawn_timer_timeout"]

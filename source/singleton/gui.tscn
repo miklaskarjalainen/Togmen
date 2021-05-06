@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/sfx/hitmark.ogg" type="AudioStream" id=1]
 [ext_resource path="res://assets/theme/Alphakind_large.tres" type="DynamicFont" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://source/ui/scoreboard.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/props/sprites/scope.png" type="Texture" id=7]
 [ext_resource path="res://source/ui/pause_menu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://source/ui/crosshair.gd" type="Script" id=9]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, -4.27972, 0, 0, Vector2( 0.633333, 0 ), 0.038961, 0.0, 0, 0 ]
@@ -118,7 +119,7 @@ tracks/1/keys = {
 [node name="gui" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( -134, 366 )
+rect_pivot_offset = Vector2( 640, 360 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -151,68 +152,67 @@ __meta__ = {
 }
 
 [node name="crosshair" type="Control" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -16.0
-margin_top = -16.0
-margin_right = 16.0
-margin_bottom = 16.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 640, 360 )
+mouse_filter = 2
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_group_": true,
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="right" type="ColorRect" parent="crosshair"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 6.0
-margin_top = -2.0
-margin_right = 16.0
-margin_bottom = 2.0
+anchor_left = 0.505
+anchor_top = 0.497
+anchor_right = 0.512
+anchor_bottom = 0.503
+margin_left = -0.400024
+margin_top = 0.160004
+margin_right = 0.639954
+margin_bottom = -0.160004
+rect_pivot_offset = Vector2( 10, 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="left" type="ColorRect" parent="crosshair"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -16.0
-margin_top = -2.0
-margin_right = -6.0
-margin_bottom = 2.0
+anchor_left = 0.487
+anchor_top = 0.497
+anchor_right = 0.495
+anchor_bottom = 0.503
+margin_left = 0.639954
+margin_top = 0.160004
+margin_right = 0.399963
+margin_bottom = -0.160004
+rect_pivot_offset = Vector2( 0, 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="top" type="ColorRect" parent="crosshair"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -2.0
-margin_top = -16.0
-margin_right = 2.0
-margin_bottom = -6.0
+anchor_left = 0.498
+anchor_top = 0.478
+anchor_right = 0.502
+anchor_bottom = 0.492
+margin_left = 0.559937
+margin_top = -0.160004
+margin_right = -0.560059
+margin_bottom = -0.240021
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="bottom" type="ColorRect" parent="crosshair"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -2.0
-margin_top = 6.0
-margin_right = 2.0
-margin_bottom = 16.0
+anchor_left = 0.498
+anchor_top = 0.508
+anchor_right = 0.502
+anchor_bottom = 0.522
+margin_left = 0.559937
+margin_top = 0.23999
+margin_right = -0.560059
+margin_bottom = 0.160004
+rect_pivot_offset = Vector2( 2, 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -321,9 +321,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -512.0
-margin_top = -310.0
+margin_top = -312.0
 margin_right = 512.0
-margin_bottom = -6.0
+margin_bottom = -8.0
 rect_pivot_offset = Vector2( 512, 152 )
 custom_fonts/font = ExtResource( 2 )
 text = "THIS IS A DEFAULT MESSAGE"
@@ -352,6 +352,7 @@ __meta__ = {
 }
 
 [node name="pause_menu" parent="." instance=ExtResource( 8 )]
+visible = false
 
 [connection signal="animation_finished" from="killstreak/anim" to="killstreak" method="_on_animation_finished"]
 [connection signal="animation_finished" from="elimination/anim" to="elimination" method="_on_anim_animation_finished"]

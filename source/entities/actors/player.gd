@@ -16,6 +16,7 @@ var peer_data := {
 	"skin":0,
 }
 
+var killer           = null      # Reference to the node who killed us
 var motion          := Vector3() # current movement motion
 var move_spd        := 15.0      # maximum allowed movement speed, changes with different weapons
 var is_crouching    := false
@@ -41,6 +42,7 @@ func _ready():
 func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
 		_do_player_movement(delta)
+		_do_death_camera(delta)
 		
 		_update_look(camera.rotation, rotation)
 		_update_position(translation, motion, is_crouching)
@@ -50,7 +52,7 @@ func _physics_process(delta:float):
 			_respawn()
 		if Input.is_action_just_pressed("hurt"):
 			health -= 10
-		if health <= 0:
+		if health <= 0 and killer == null:
 			Gui.killed_by("", "suicide")
 			_respawn()
 	_do_player_animations()
@@ -138,7 +140,17 @@ func _do_player_movement(delta:float):
 	
 	motion = move_and_slide(motion, Vector3.UP, true, 4)
 
+func _do_death_camera(delta:float):
+	if killer != null:
+		var time        := 1
+		var goto:Vector3 = killer.get_node("camera").global_transform.origin
+		$camera.look_at(goto, Vector3.UP)
+		$camera.global_transform.origin = $camera.global_transform.origin.linear_interpolate(goto, time * delta)
+
 func _respawn():
+	# Reset killer
+	killer = null
+	
 	# Full heal
 	health = 100
 	
@@ -150,6 +162,9 @@ func _respawn():
 	death_count += 1
 	
 	# Respawn
+	$camera.translation.x = 0
+	$camera.translation.z = 0
+	$camera.translation.y = 0
 	global_transform = get_parent().get_spawn()
 
 # Networking #
@@ -193,6 +208,10 @@ puppet func _ended_killstreak(_ender:String, _count:int):
 			rpc("_ended_killstreak", _ender, _count)    # Player, broadcast others that your killstreak was ended
 		Gui.ended_killstreak(_ender, peer_data["peer_name"], _count) # If a peer show that someone else's killstreak was ended
 
+puppet func _register(_data:Dictionary):
+	peer_data = _data
+	set_skin(_data["skin"])
+
 master func _damage(dmg:int, var kill_type := ""):
 	# This peer received damage from a peer #
 	
@@ -202,8 +221,10 @@ master func _damage(dmg:int, var kill_type := ""):
 	print("damaged: %s, by: %s" % [dmg, by_who])
 	
 	if health <= 0: # If the player died
+		killer = get_peer(by_who)
+		
 		# Inform the peer who killed us, that they killed us #
-		get_peer(by_who).rpc_id(by_who, "_eliminated_peer", get_unique_id(), kill_type)
+		killer.rpc_id(by_who, "_eliminated_peer", get_unique_id(), kill_type)
 		
 		# If we had a killstreak bigger than 4, then tell who ended it #
 		var killer_name = GameWorld.get_peer_name(by_who)
@@ -211,7 +232,7 @@ master func _damage(dmg:int, var kill_type := ""):
 		
 		# Show gui, also inform who killed the player # 
 		Gui.killed_by(killer_name, kill_type)
-		_respawn() # Respawn the player
+		$respawn_timer.start() # after which the player respawns
 
 master func _eliminated_peer(peer_id:int, var kill_type := ""):
 	# The player has eliminated peer with the given id #
@@ -227,10 +248,6 @@ master func _eliminated_peer(peer_id:int, var kill_type := ""):
 	
 	# Show the eliminated gui #
 	Gui.eliminated(peer_name, kill_type)
-
-puppet func _register(_data:Dictionary):
-	peer_data = _data
-	set_skin(_data["skin"])
 
 # Getters / Setters #
 func set_skin(idx:int):
@@ -256,3 +273,6 @@ func get_hand():
 # Signals #
 func _on_peer_connect(id:int):
 	rpc_id(id, "_register", peer_data)
+
+func _on_respawn_timer_timeout():
+	_respawn()

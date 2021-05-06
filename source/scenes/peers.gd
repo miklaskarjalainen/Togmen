@@ -69,10 +69,12 @@ func _create_peer(data:Dictionary):
 	var instance  = PEER.instance()
 	instance.name = str(data["id"])
 	instance.peer_data = data
-	instance.global_transform = get_spawn()
 	instance.set_skin(data["skin"])
 	instance.set_as_toplevel(true)
+	instance.global_transform = get_spawn()
+	
 	instance.set_network_master(data["id"])
+	
 	add_child(instance)
 
 func _create_peer_id(id:int):
@@ -89,10 +91,11 @@ func _create_peer_id(id:int):
 	add_child(instance)
 
 # Networking #
-master func _update_peers(list:Array):
+master func _update_peers(list:PoolIntArray):
 	print("Received: ", str(list))
-	for data in list:
-		_create_peer_id(data)
+	
+	for id in list:
+		_create_peer_id(id)
 
 master func _on_peer_register(data:Dictionary):
 	if has_node(str(data["id"])):

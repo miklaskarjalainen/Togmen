@@ -24,7 +24,6 @@ func _physics_process(_delta:float):
 	
 	_update_health()
 	_update_ammo()
-	_update_crosshair()
 
 # Methods #
 
@@ -69,15 +68,6 @@ func _update_ammo():
 		$ammo.text = str(cur_weapon.get_cur_ammo())
 	else:
 		$ammo.text = ""
-
-func _update_crosshair():
-	var is_scoping = player.get_hand().get_weapon().is_scoping()
-	if !is_scoping:
-		# Gets the crosshair color from the settings, crosshair color can be set in the settings.ini
-		$crosshair.modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
-		$scope.visible = false
-	else: # is scoping 
-		$scope.visible = true
 
 # Signals #
 
