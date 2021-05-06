@@ -26,6 +26,7 @@ func _physics_process(delta:float):
 	
 	SENSITIVITY = GameSettings.get_value("sensitivity", SENSITIVITY)        # Get sensitivity
 	SCOPED_SENS = GameSettings.get_value("scoped_sensitivity", SCOPED_SENS) # Get scoped sensitivity
+	
 	_handle_weapon_scoping()
 
 func _handle_weapon_scoping():

@@ -53,13 +53,10 @@ func _physics_process(delta:float):
 		if health <= 0:
 			Gui.killed_by("", "suicide")
 			_respawn()
-	else:
-		_do_player_animations()
+	_do_player_animations()
 
 func _do_player_animations():
 	if player_anim == null:
-		return
-	if is_network_master():
 		return
 	
 	# Crouching #
@@ -71,6 +68,9 @@ func _do_player_animations():
 		if has_node("hitbox"):
 			$hitbox/anim.play("stand")
 		$camera.translation.y = 1.425
+	
+	if is_network_master():
+		return
 	
 	# Animations #
 	if is_crouching:
