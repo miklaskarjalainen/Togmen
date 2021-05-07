@@ -9,6 +9,7 @@ export(float, 0, 0.5, 0.01)  var damage_falloff = 0.0  # per 1 unit
 export(float, 0, 1.2, 0.02)  var base_recoil    = 0.10
 export(float, 0, 1.0, 0.02)  var inaccuracy     = 0.10
 export(float, 0.01, 2, 0.01) var fire_rate      = 0.14  # seconds
+export(float, 0.01, 2, 0.01) var recovery_time  = 0.20  # since shot, how long does it take to get full accuracy back
 export(bool)                 var is_auto        = false
 export(bool)                 var can_scope      = false
 export(int, 0, 256, 1)       var max_range      = 256
@@ -23,15 +24,18 @@ onready var anim         = $AnimationPlayer
 onready var cur_ammo:int = max_ammo
 var is_scoping          := false
 var fire_rate_counter   := 0.0
+var recovery_counter    := 0.0
 
 func _ready():
 	anim.connect("animation_finished", self, "_on_animation_finish")
 	player.get_node("player_model").connect("on_skin_changed", self, "_init_handtextures")
 
 func _physics_process(delta:float):
-	# Counts down the firerate timer #
+	# Counts down the counters #
 	if fire_rate_counter > 0.0:
 		fire_rate_counter -= delta
+	if recovery_counter > 0.0:
+		recovery_counter -= delta
 	
 	if !visible:           # Not current weapon
 		is_scoping = false
@@ -141,6 +145,7 @@ puppet func _play_sfx(sfx_name:String):
 
 # Getters / Setters #
 func get_recoil() -> Vector3:
+	var RECOVERY_MULTIPLIER  = 2
 	var JUMP_MULTIPLAIER     = 8
 	var MOVEMENT_MULTIPLAYER = 3
 	var NOSCOPE_PENALTY      = 4
@@ -163,6 +168,14 @@ func get_recoil() -> Vector3:
 	# No Scopes #
 	if can_scope() and !is_scoping():
 		recoil += rand_vector(-NOSCOPE_PENALTY, NOSCOPE_PENALTY)
+	
+	# Recovery Time #
+	if recovery_counter > 0:
+		var recover_recoil:float = recovery_counter * RECOVERY_MULTIPLIER
+		var r := rand_vector(-recover_recoil, recover_recoil)
+		print("Added recovery, ",r)
+		recoil += r
+	recovery_counter = recovery_time
 	
 	print("Recoil was", recoil)
 	return recoil

@@ -1,4 +1,5 @@
 extends Position3D
+class_name PlayerSpawn
 
 const RAY_LENGTH = 100
 onready var finder = $finder

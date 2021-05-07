@@ -53,6 +53,8 @@ func killed_by(peer_name:String, kill_type:String):
 	elimination.killed_by(peer_name, kill_type)
 
 func _update_health():
+	$health.visible = not player.is_dead()
+	
 	# Displays player's current health
 	var health:int = player.health
 	var text_color := Color(0,0,0,1)
@@ -62,6 +64,8 @@ func _update_health():
 	$health.text = str(health)
 
 func _update_ammo():
+	$ammo.visible = not player.is_dead()
+	
 	# Displays player's current ammo
 	var cur_weapon = player.get_hand().get_weapon()
 	if cur_weapon.get_max_ammo() != 0:

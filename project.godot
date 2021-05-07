@@ -20,6 +20,16 @@ _global_script_classes=[ {
 "path": "res://source/entities/actors/body_part.gd"
 }, {
 "base": "Spatial",
+"class": "Consumable",
+"language": "GDScript",
+"path": "res://source/entities/consumables/medkit.gd"
+}, {
+"base": "Position3D",
+"class": "PlayerSpawn",
+"language": "GDScript",
+"path": "res://source/entities/actors/spawn_point.gd"
+}, {
+"base": "Spatial",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://assets/weapons/weapon.gd"
@@ -32,6 +42,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Actor": "",
 "BodyPart": "",
+"Consumable": "",
+"PlayerSpawn": "",
 "Weapon": "",
 "YesPopupDialog": ""
 }
@@ -189,6 +201,24 @@ crouch={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"unicode":0,"echo":false,"script":null)
  ]
+}
+peak_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
+peak_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+toggle_debug={
+"deadzone": 0.5,
+"events": [  ]
+}
+hurt={
+"deadzone": 0.5,
+"events": [  ]
 }
 
 [layer_names]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/materials/brick.tres" type="Material" id=1]
 [ext_resource path="res://assets/props/ship_container/ship_container.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/materials/sand.tres" type="Material" id=5]
 [ext_resource path="res://source/entities/mesh_visibility_toggler.gd" type="Script" id=6]
 [ext_resource path="res://source/entities/actors/spawn_point.tscn" type="PackedScene" id=7]
+[ext_resource path="res://source/entities/consumables/medkit.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ProceduralSky" id=1]
 radiance_size = 0
@@ -36,6 +37,9 @@ adjustment_enabled = true
 
 [node name="env" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
+
+[node name="medkit" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.9383, -3.98479, -6.86275 )
 
 [node name="grass" type="Spatial" parent="."]
 
@@ -95,7 +99,7 @@ script = ExtResource( 6 )
 hide_distance = 100.0
 
 [node name="ship_container2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 8, 0, -1.27146e-07, 0, 12.8, 0, -6.67014e-07, 0, -41.9684, 7.6146, -3.17883, 16.3291 )
+transform = Transform( 8, 0, -1.27146e-07, 0, 12.8, 0, -8.203e-07, 0, -51.6131, 7.6146, -6.69465, 14.4701 )
 script = ExtResource( 6 )
 hide_distance = 100.0
 
@@ -251,6 +255,9 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8.0388,
 
 [node name="spawn_point2" parent="spawns" instance=ExtResource( 7 )]
 transform = Transform( -0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, -29.6526, 1.59643, -41.65 )
+
+[node name="spawn_point7" parent="spawns" instance=ExtResource( 7 )]
+transform = Transform( -0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0.193508, 0.291859, -3.65 )
 
 [node name="spawn_point3" parent="spawns" instance=ExtResource( 7 )]
 transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -49.6526, 1.59643, -61.65 )

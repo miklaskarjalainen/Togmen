@@ -28,6 +28,7 @@ func _ready():
 
 func _physics_process(_delta:float):
 	Debug.add_line("fire rate", get_weapon().fire_rate_counter)
+	Debug.add_line("recovery time", get_weapon().recovery_counter)
 	
 	_handle_hand_animations()
 	_handle_weapon_switching()
@@ -41,6 +42,8 @@ func _input(event):
 			_switch_weapon(current_weapon-1)
 
 func _handle_hand_animations():
+	visible = false if player.is_dead() else true # Hide arms if the player is dead
+	
 	if !get_weapon().has_node("left_hand"):
 		return
 	
@@ -50,6 +53,9 @@ func _handle_hand_animations():
 	player_model.get_node("right_hand").rotation = right_rotation
 
 func _handle_weapon_switching():
+	if player.is_dead():
+		return
+	
 	if Input.is_action_just_pressed("web_1"):
 		_switch_weapon(0)
 	if Input.is_action_just_pressed("web_2"):
@@ -63,6 +69,9 @@ func _handle_weapon_switching():
 		_switch_weapon(previous_weapon)
 
 func _handle_shooting():
+	if player.is_dead():
+		return
+	
 	if   Input.is_action_just_pressed("shoot"):
 		_shoot()
 	elif Input.is_action_pressed("shoot") and get_weapon().is_auto():
@@ -101,6 +110,10 @@ func _shoot():
 	var bullet_damage:int = target.get_multiplier() * base_bullet_damage
 	var peer              = target.get_peer()
 	var peer_id:int       = target.get_peer_id()
+	
+	# If isn't alive 
+	if peer.is_dead():
+		return
 	
 	# Feed back #
 	create_blood(raycast.get_collision_point())

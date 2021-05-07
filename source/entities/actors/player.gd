@@ -48,8 +48,6 @@ func _physics_process(delta:float):
 		_update_position(translation, motion, is_crouching)
 		_update_stats(kill_count, death_count, killstreak, health)
 		
-		if Input.is_action_just_pressed("suicide"):
-			_respawn()
 		if Input.is_action_just_pressed("hurt"):
 			health -= 10
 		if health <= 0 and killer == null:
@@ -59,6 +57,8 @@ func _physics_process(delta:float):
 
 func _do_player_animations():
 	if player_anim == null:
+		return
+	if is_dead():
 		return
 	
 	# Crouching #
@@ -142,7 +142,7 @@ func _do_player_movement(delta:float):
 
 func _do_death_camera(delta:float):
 	if killer != null:
-		var time        := 1
+		var time        := 2
 		var goto:Vector3 = killer.get_node("camera").global_transform.origin
 		$camera.look_at(goto, Vector3.UP)
 		$camera.global_transform.origin = $camera.global_transform.origin.linear_interpolate(goto, time * delta)
@@ -162,9 +162,8 @@ func _respawn():
 	death_count += 1
 	
 	# Respawn
-	$camera.translation.x = 0
-	$camera.translation.z = 0
-	$camera.translation.y = 0
+	$camera.translation = Vector3()
+	$camera.rotation    = Vector3()
 	global_transform = get_parent().get_spawn()
 
 # Networking #
@@ -191,6 +190,10 @@ puppet func _update_stats(_kills:int, _deaths:int, _killstreak:int, _health:int)
 	death_count = _deaths
 	killstreak  = _killstreak
 	health      = _health
+	if health <= 0:
+		visible = false
+	else:
+		visible = true
 
 puppet func _update_killstreak(_count:int):
 	# This peer's killstreak got updated #
@@ -220,7 +223,7 @@ master func _damage(dmg:int, var kill_type := ""):
 	health -= dmg
 	print("damaged: %s, by: %s" % [dmg, by_who])
 	
-	if health <= 0: # If the player died
+	if is_dead() and $respawn_timer.is_stopped(): # If the player died
 		killer = get_peer(by_who)
 		
 		# Inform the peer who killed us, that they killed us #

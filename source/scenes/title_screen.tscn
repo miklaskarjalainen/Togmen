@@ -14,6 +14,7 @@ sky_top_color = Color( 0.137255, 0.0980392, 0.0313726, 1 )
 sky_horizon_color = Color( 0.701961, 0.588235, 0.427451, 1 )
 sky_curve = 0.173868
 sun_latitude = 20.0
+sun_longitude = 22.39
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
@@ -64,12 +65,18 @@ bus = "music"
 [node name="settings" parent="title_screenpages" instance=ExtResource( 6 )]
 visible = false
 
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.956849, -0.145293, 0.251654, -0.290585, -0.478425, 0.828656, 0, -0.866025, -0.5, -1, 4, -3 )
+light_color = Color( 0.996078, 0.964706, 0.752941, 1 )
+light_bake_mode = 0
+shadow_enabled = true
+
 [node name="camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.978148, -0.207912, 0, 0.207912, 0.978148, 0, 1.5, 2 )
 current = true
 
 [node name="player_model" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.819152, 0, -0.573577, 0, 1, 0, 0.573577, 0, 0.819152, 1.3749, 0.993007, 0 )
+transform = Transform( 0.819152, 0, -0.573577, 0, 1, 0, 0.573577, 0, 0.819152, 1.3749, 0.984639, 0 )
 script = ExtResource( 7 )
 
 [node name="floor" type="CSGMesh" parent="."]
@@ -91,11 +98,6 @@ mesh = SubResource( 4 )
 [node name="floor3" type="CSGMesh" parent="."]
 transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.0934, 3, -7 )
 mesh = SubResource( 5 )
-
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, -1, 4, -3 )
-light_color = Color( 0.996078, 0.964706, 0.752941, 1 )
-shadow_enabled = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, -1, 1.36326, -1 )
