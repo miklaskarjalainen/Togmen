@@ -27,6 +27,8 @@ func set_skin(index:int):
 			change_skin(load("res://assets/props/player/skins/galaxy.material"))
 		2:
 			change_skin(load("res://assets/props/player/skins/cosmonaut.material"))
+		3:
+			change_skin(load("res://assets/props/player/skins/smily.material"))
 		_:
 			change_skin(load("res://assets/props/player/skin_png.material"))
 

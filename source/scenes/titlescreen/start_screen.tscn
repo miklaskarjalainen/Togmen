@@ -119,7 +119,7 @@ margin_right = -24.0
 margin_bottom = -40.0
 action_mode = 1
 text = "Astronaut"
-items = [ "Astronaut", null, false, 0, null, "Galaxy", null, false, 1, null, "Cosmonaut", null, false, 2, null ]
+items = [ "Astronaut", null, false, 0, null, "Galaxy", null, false, 1, null, "Cosmonaut", null, false, 2, null, "Smily", null, false, 3, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
