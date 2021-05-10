@@ -17,7 +17,8 @@ var peer_data := {
 	"skin":0,
 }
 
-var killer           = null      # Reference to the node who killed us
+var killer_path:NodePath = ""      # Reference to the node who killed us
+
 var motion          := Vector3() # current movement motion
 var move_spd        := 15.0      # maximum allowed movement speed, changes with different weapons
 var is_crouching    := false
@@ -51,7 +52,7 @@ func _physics_process(delta:float):
 		
 		if Input.is_action_just_pressed("hurt"):
 			health -= 10
-		if health <= 0 and killer == null:
+		if health <= 0 and get_killer() == null:
 			Gui.killed_by("", "suicide")
 			_respawn()
 	_do_player_animations()
@@ -142,6 +143,7 @@ func _do_player_movement(delta:float):
 	motion = move_and_slide(motion, Vector3.UP, true, 4)
 
 func _do_death_camera(delta:float):
+	var killer = get_killer()
 	if killer != null:
 		var time        := 2
 		var goto:Vector3 = killer.get_node("camera").global_transform.origin
@@ -150,7 +152,7 @@ func _do_death_camera(delta:float):
 
 func _respawn():
 	# Reset killer
-	killer = null
+	killer_path = ""
 	
 	# Full heal
 	health = 100
@@ -191,10 +193,7 @@ puppet func _update_stats(_kills:int, _deaths:int, _killstreak:int, _health:int)
 	death_count = _deaths
 	killstreak  = _killstreak
 	health      = _health
-	if health <= 0:
-		visible = false
-	else:
-		visible = true
+	visible = true if health > 0 else false
 
 puppet func _update_killstreak(_count:int):
 	# This peer's killstreak got updated #
@@ -225,10 +224,10 @@ master func _damage(dmg:int, var kill_type := ""):
 	print("damaged: %s, by: %s" % [dmg, by_who])
 	
 	if is_dead() and $respawn_timer.is_stopped(): # If the player died
-		killer = get_peer(by_who)
+		killer_path = get_peer(by_who).get_path()
 		
 		# Inform the peer who killed us, that they killed us #
-		killer.rpc_id(by_who, "_eliminated_peer", get_unique_id(), kill_type)
+		get_killer().rpc_id(by_who, "_eliminated_peer", get_unique_id(), kill_type)
 		
 		# If we had a killstreak bigger than 4, then tell who ended it #
 		var killer_name = GameWorld.get_peer_name(by_who)
@@ -265,6 +264,11 @@ func is_dead() -> bool:
 
 func get_peer(id:int):
 	return GameWorld.get_peer(id)
+
+func get_killer():
+	if killer_path == "":
+		return null
+	return get_node_or_null(killer_path)
 
 func get_unique_id() -> int:
 	# Gets this peer's id
