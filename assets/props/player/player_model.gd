@@ -39,7 +39,7 @@ func change_skin(material:Material):
 				for second in child.get_children():
 					_change_material(second, material)
 	
-	emit_signal("on_skin_changed", material)
+	call_deferred("emit_signal", "on_skin_changed", material)
 
 func _change_material(node, material):
 	node.set_material_override(material)

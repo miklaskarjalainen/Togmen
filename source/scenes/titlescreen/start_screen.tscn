@@ -117,6 +117,7 @@ margin_left = -264.0
 margin_top = -112.0
 margin_right = -24.0
 margin_bottom = -40.0
+action_mode = 1
 text = "Astronaut"
 items = [ "Astronaut", null, false, 0, null, "Galaxy", null, false, 1, null, "Cosmonaut", null, false, 2, null ]
 selected = 0
