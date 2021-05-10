@@ -1,18 +1,28 @@
 extends NetObject
 class_name Consumable
 
-# TODO MAKE THIS RELIABLE FOR NETWORKING #
-
 onready var respawn_timer = get_node("respawn")
+onready var area          = get_node("hitbox")
+onready var anim          = get_node("model/AnimationPlayer")
 
 func _ready():
 	visible = false
-	respawn_timer.start()
-	connect("peer_interact", self, "_on_peer_interact")
-	anim.connect("animation_finished", self, "_on_animation_finish")
+	
+	if is_network_master():
+		anim.connect("animation_finished", self, "_on_animation_finish")
+		respawn_timer.start()
 
-# Signals #
-func _on_peer_interact(id:int):
+# Remotes #
+puppet func remote_anim(anim_name:String):
+	if anim == null or anim_name == "":
+		return
+	
+	if is_network_master():
+		rpc("remote_anim", anim_name)
+		return
+	anim.play(anim_name)
+
+puppet func remote_interact(id:int):
 	if !visible:
 		return
 	
@@ -22,6 +32,8 @@ func _on_peer_interact(id:int):
 	if is_network_master():
 		anim.play("pickup")
 		respawn_timer.start()
+
+# Signals #
 
 func _on_respawn():
 	if is_network_master():
@@ -35,4 +47,11 @@ func _on_animation_finish(anim_name:String):
 		anim.play("idle")
 	elif anim_name == "idle":
 		anim.play("idle")
-	pass
+
+func _on_body_enter(body):
+	if !is_network_master():
+		return
+	if not body is Peer:
+		return
+	var id = body.get_unique_id()
+	remote_interact(id)

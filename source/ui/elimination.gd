@@ -22,6 +22,8 @@ func eliminated(peer_name:String, kill_type:String):
 			message = "You HEADSHOTTED %s!" % peer_name
 		"noscope":
 			message = "You NOSCOPED %s!" % peer_name
+		"grenade":
+			message = "You NADED %s!" % peer_name
 		_:
 			message = "You KILLED %s!" % peer_name
 	text = message
@@ -48,6 +50,8 @@ func killed_by(peer_name:String, kill_type:String):
 			message = "%s HEADSHOTTED YOU!" % peer_name
 		"noscope":
 			message = "%s NOSCOPED YOU!" % peer_name
+		"grenade":
+			message = "%s NADED YOU!" % peer_name
 		_:
 			message = "%s KILLED YOU!" % peer_name
 	

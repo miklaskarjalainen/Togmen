@@ -11,8 +11,6 @@ onready var camera     := $camera
 onready var jump_timer := $jump_timer
 onready var player_anim:= get_node("player_model/AnimationPlayer")
 
-onready var grenade := preload("res://assets/weapons/grenade/grenade.tscn")
-
 var peer_data := {
 	"id":0,
 	"peer_name":"",
@@ -59,9 +57,7 @@ func _physics_process(delta:float):
 		if health <= 0 and get_killer() == null:
 			Gui.killed_by("", "suicide")
 			_respawn()
-		
-		if Input.is_action_just_pressed("throw_grenade"):
-			throw_grenade()
+	
 	_do_player_animations()
 
 func _do_player_animations():
@@ -176,14 +172,6 @@ func _respawn():
 	$camera.rotation    = Vector3()
 	global_transform = get_parent().get_spawn()
 
-func throw_grenade():
-	var instance = grenade.instance()
-	add_child(instance)
-	instance.set_as_toplevel(true)
-	instance.global_transform.origin = $camera.global_transform.origin
-	instance.rotation = $camera.rotation
-	
-
 # Networking #
 puppet func _update_look(_xrotation:Vector3, _yrotation:Vector3):
 	if is_network_master():
@@ -231,6 +219,9 @@ puppet func _register(_data:Dictionary):
 	set_skin(_data["skin"])
 
 master func _damage(dmg:int, var kill_type := ""):
+	if !is_network_master():
+		rpc_id(get_unique_id(), "_damage", dmg, kill_type)
+		return
 	# This peer received damage from a peer #
 	
 	# Handle the damage #

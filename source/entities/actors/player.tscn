@@ -150,6 +150,7 @@ __meta__ = {
 player_path = NodePath("../..")
 player_model_path = NodePath("../../player_model")
 raycast_path = NodePath("../shoot_ray")
+grenade_dir_path = NodePath("../grenade_dir")
 viewmodel_fov = 0.2
 
 [node name="Knife" parent="camera/hand" instance=ExtResource( 6 )]
@@ -205,6 +206,9 @@ fire_rate = 0.9
 can_scope = true
 mov_speed = 8.5
 sfx_shoot = ExtResource( 11 )
+
+[node name="grenade_dir" type="Position3D" parent="camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
 
 [node name="player_model" parent="." instance=ExtResource( 5 )]
 transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, -1.17, 0 )

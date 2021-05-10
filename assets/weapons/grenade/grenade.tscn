@@ -1,61 +1,77 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/weapons/grenade/grenade_model.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/weapons/grenade/grenade.gd" type="Script" id=2]
 
-[sub_resource type="PhysicsMaterial" id=2]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.2
-bounce = 0.5
+bounce = 0.6
 
-[sub_resource type="CapsuleShape" id=1]
-radius = 0.101852
-height = 0.0848977
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.990909 ), 0.0, -0.182664, 0, 0, Vector2( 0.99537, 0.0090909 ), -2.82273, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="SphereShape" id=10]
+radius = 0.4059
+
+[sub_resource type="Curve" id=4]
 _data = [ Vector2( 0.00347222, 0.675 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.4847, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=4]
-curve = SubResource( 3 )
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=6]
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 8.0
-damping = 25.0
-scale_curve = SubResource( 4 )
+initial_velocity = 45.0
+initial_velocity_random = 0.2
+damping = 120.0
+scale_curve = SubResource( 5 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=7]
 flags_transparent = true
-albedo_color = Color( 0.356863, 0.356863, 0.356863, 0.490196 )
+albedo_color = Color( 0.356863, 0.356863, 0.356863, 0.780392 )
 
-[sub_resource type="SphereMesh" id=7]
-material = SubResource( 6 )
+[sub_resource type="SphereMesh" id=8]
+material = SubResource( 7 )
+
+[sub_resource type="SphereShape" id=9]
+radius = 9.24667
 
 [node name="grenade" type="RigidBody"]
-mass = 10.0
-physics_material_override = SubResource( 2 )
-linear_velocity = Vector3( 10, 0, 10 )
+collision_layer = 0
+mass = 5.0
+physics_material_override = SubResource( 1 )
+linear_velocity = Vector3( 0, 0, 10 )
+linear_damp = 0.25
+angular_velocity = Vector3( 10, 0, 0 )
 script = ExtResource( 2 )
+fuse_time = 2.2
+damage_falloff = SubResource( 2 )
 
 [node name="grenade" parent="." instance=ExtResource( 1 )]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.126417, -0.0627784 )
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.238076, -0.102698 )
 
 [node name="collisiion" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0654462, -0.0177574, -0.00665565 )
-shape = SubResource( 1 )
+shape = SubResource( 10 )
 
 [node name="smoke" type="Particles" parent="."]
-emitting = false
-amount = 16
-one_shot = true
+amount = 48
 explosiveness = 0.9
-process_material = SubResource( 5 )
-draw_pass_1 = SubResource( 7 )
+process_material = SubResource( 6 )
+draw_pass_1 = SubResource( 8 )
 
-[node name="explode" type="Timer" parent="."]
-wait_time = 3.5
+[node name="fuse_time" type="Timer" parent="."]
+wait_time = 10.0
 one_shot = true
 autostart = true
 
-[connection signal="timeout" from="explode" to="." method="_on_explode_timeout"]
+[node name="hitbox" type="Area" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="sphere" type="CollisionShape" parent="hitbox"]
+shape = SubResource( 9 )
+
+[connection signal="timeout" from="fuse_time" to="." method="_on_explode_timeout"]

@@ -1,17 +1,21 @@
 extends Spatial
+class_name Player
 
 # Todo: add swing
-export  var player_path   :NodePath
-export  var player_model_path   :NodePath
-export  var raycast_path  :NodePath
+export  var player_path       :NodePath
+export  var player_model_path :NodePath
+export  var raycast_path      :NodePath
+export  var grenade_dir_path  :NodePath
 export  var viewmodel_fov := 0.5
 
 onready var player       = get_node(player_path)
 onready var player_model = get_node(player_model_path)
 onready var raycast      = get_node(raycast_path)
+onready var grenade_dir  = get_node(grenade_dir_path)
 
-onready var bullet_impact  = preload("res://source/particles/bullet_impact.tscn")
-onready var blood_particle = preload("res://source/particles/blood_particle.tscn")
+onready var bullet_impact := preload("res://source/particles/bullet_impact.tscn")
+onready var blood_particle:= preload("res://source/particles/blood_particle.tscn")
+onready var grenade       := preload("res://assets/weapons/grenade/grenade.tscn")
 onready var weapons = get_children()
 
 var current_weapon  := 0
@@ -76,6 +80,8 @@ func _handle_shooting():
 		_shoot()
 	elif Input.is_action_pressed("shoot") and get_weapon().is_auto():
 		_shoot()
+	if Input.is_action_just_pressed("throw_grenade") and grenade_dir.get_child_count() == 0:
+		_throw_grenade()
 
 func _shoot():
 	# Returns false if there's something preventing from shooting like,
@@ -128,6 +134,17 @@ func _shoot():
 		kill_type = "headshot"
 	
 	peer.rpc_id(peer_id, "_damage", bullet_damage, kill_type)
+
+puppet func _throw_grenade():
+	if is_network_master():
+		rpc("_throw_grenade")
+	var instance = grenade.instance()
+	var direction:Vector3
+	direction -= global_transform.basis.x
+	
+	grenade_dir.add_child(instance)
+	instance.set_network_master(int(player.name))
+	instance.setup_grenade(get_parent())
 
 puppet func create_bullet_impact(_location:Vector3):
 	if is_network_master():

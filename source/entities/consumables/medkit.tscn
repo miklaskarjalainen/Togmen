@@ -4,12 +4,10 @@
 [ext_resource path="res://source/entities/consumables/medkit.gd" type="Script" id=2]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.399371, 1.09415, 0.444423 )
+extents = Vector3( 0.876779, 1.09415, 0.891215 )
 
 [node name="medkit" type="Spatial"]
 script = ExtResource( 2 )
-anim_path = NodePath("model/AnimationPlayer")
-area_path = NodePath("hitbox")
 
 [node name="hitbox" type="Area" parent="."]
 collision_layer = 0
@@ -29,6 +27,7 @@ transform = Transform( 0.882948, -0.469472, 0, 0.469472, 0.882948, 0, 0, 0, 1, 0
 wait_time = 10.0
 one_shot = true
 
+[connection signal="body_entered" from="hitbox" to="." method="_on_body_enter"]
 [connection signal="timeout" from="respawn" to="." method="_on_respawn"]
 
 [editable path="model"]
