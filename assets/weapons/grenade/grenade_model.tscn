@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/weapons/grenade/grenade.gltf" type="PackedScene" id=1]
+
+[node name="grenade" instance=ExtResource( 1 )]

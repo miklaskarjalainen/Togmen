@@ -61,6 +61,8 @@ func _update_health():
 	text_color.r = health_color_r.interpolate(health/100.0)
 	text_color.g = health_color_g.interpolate(health/100.0)
 	$health.modulate = text_color
+	
+	
 	$health.text = str(health)
 
 func _update_ammo():
