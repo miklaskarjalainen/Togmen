@@ -1,4 +1,5 @@
 extends Actor
+class_name Peer
 
 const ACCEL_SPD     := 120
 const AIR_ACCEL_SPD := 40

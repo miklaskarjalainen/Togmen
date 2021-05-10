@@ -39,7 +39,7 @@ adjustment_enabled = true
 environment = SubResource( 2 )
 
 [node name="medkit" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.9383, -3.98479, -6.86275 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.9383, 7.16988, -6.86275 )
 
 [node name="grass" type="Spatial" parent="."]
 

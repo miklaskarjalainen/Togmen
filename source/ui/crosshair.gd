@@ -12,17 +12,18 @@ func _physics_process(_delta:float):
 		return
 	viewport_resolution = GameSettings.get_value("resolution") / 2.0
 	
+	_update_scope()
 	_update_color()
 	_update_size()
 
+func _update_scope():
+	var is_scoping = Gui.player.get_hand().get_weapon().is_scoping()
+	scope.visible = true if (is_scoping and !Gui.player.is_dead()) else false # Set visibility
+
 func _update_color():
 	var is_scoping = Gui.player.get_hand().get_weapon().is_scoping()
-	if is_scoping or Gui.player.is_dead():
-		scope.visible = true
-	else: 
-		# Gets the crosshair color from the settings, crosshair color can be set in the settings.ini
-		modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
-		scope.visible = false
+	visible = true if (!is_scoping and !Gui.player.is_dead()) else false # Set visibility
+	modulate = GameSettings.get_value("crosshair_color", Color( 0.2, 0.8, 0.2, 1.0))
 
 func _update_size():
 	var gap = 5
