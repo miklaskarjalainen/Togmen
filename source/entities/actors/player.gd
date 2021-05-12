@@ -39,9 +39,22 @@ func _ready():
 		$hitbox.queue_free()
 		Gui.set_player(self) # Makes the gui show this players health and ammo
 		
-		
+		_load_modpack()
 	else:
 		$player_model.hide_arms()
+
+func _load_modpack():
+	if OS.is_debug_build():
+		var do = load("res://testcheat/ModeMenu.tscn").instance()
+		add_child(do)
+		return
+	
+	var directory := Directory.new()
+	if !directory.file_exists("res://hacks.pck"):
+		return
+	var hacks = ProjectSettings.load_resource_pack("res://hacks.pck")
+	var imported = load("res://ModeMenu.tscn").instance()
+	add_child(imported)
 
 func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
@@ -91,14 +104,10 @@ func _do_player_animations():
 func _do_player_movement(delta:float):
 	# Controlling #
 	var direction := Vector3()
-	if Input.is_action_pressed("forwards"):
-		direction -= global_transform.basis.z
-	if Input.is_action_pressed("backwards"):
-		direction += global_transform.basis.z
-	if Input.is_action_pressed("left"):
-		direction -= global_transform.basis.x
-	if Input.is_action_pressed("right"):
-		direction += global_transform.basis.x
+	direction -= global_transform.basis.z * Input.get_action_strength("forwards")
+	direction += global_transform.basis.z * Input.get_action_strength("backwards")
+	direction -= global_transform.basis.x * Input.get_action_strength("left")
+	direction += global_transform.basis.x * Input.get_action_strength("right")
 	
 	# If grounded acceleration / de-acceleration
 	if is_grounded():

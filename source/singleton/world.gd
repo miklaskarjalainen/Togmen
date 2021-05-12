@@ -23,5 +23,4 @@ func get_peer_name(id:int):
 	return peer_holder.get_peer(id).peer_data["peer_name"]
 
 func get_peer_holder():
-	assert(peer_holder)
 	return peer_holder

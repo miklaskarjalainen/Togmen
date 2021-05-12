@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://testcheat/ModeMenu.gd" type="Script" id=1]
+
+[node name="cheat" type="Control"]
+anchor_right = 0.25
+anchor_bottom = 0.533
+margin_bottom = 0.23996
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="modmenu" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="ColorRect" parent="modmenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.658824 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="aimbot" type="CheckBox" parent="modmenu"]
+margin_left = 48.0
+margin_top = 56.0
+margin_right = 182.0
+margin_bottom = 104.0
+text = "Aimbot"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wallhack" type="CheckBox" parent="modmenu"]
+margin_left = 48.0
+margin_top = 104.0
+margin_right = 220.0
+margin_bottom = 152.0
+text = "WallHack"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="players" type="RichTextLabel" parent="modmenu"]
+margin_top = 208.0
+margin_right = 320.0
+margin_bottom = 384.0
