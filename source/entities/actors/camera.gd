@@ -2,6 +2,7 @@ extends Camera
 
 export var PLAYER_PATH:NodePath
 export var SENSITIVITY  := 0.15
+export var CONTROLLER_SENS := 125
 export var SCOPED_SENS  := 0.6
 export var NORMAL_FOV   := 70
 export var SCOPED_FOV   := 30
@@ -19,6 +20,16 @@ func _ready():
 		set_physics_process(false)
 		set_process_input(false)
 		current = false
+
+func _process(delta:float):
+	var motion := Vector3()
+	motion.x = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
+	motion.y = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
+	
+	rotation_degrees.x        -= motion.x * delta * CONTROLLER_SENS
+	player.rotation_degrees.y -= motion.y * delta * CONTROLLER_SENS
+	rotation_degrees.x  = clamp(rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)
+	
 
 func _physics_process(delta:float):
 	if !is_network_master():
@@ -48,4 +59,5 @@ func _input(event):
 		rotation_degrees.x -= event.relative.y * new_sens
 		player.rotation_degrees.y -= event.relative.x * new_sens
 		rotation_degrees.x  = clamp(rotation_degrees.x, -CAMERA_CLAMP, CAMERA_CLAMP)
-
+	if event is InputEventJoypadMotion:
+		print(event.axis_value)

@@ -69,6 +69,11 @@ func _handle_weapon_switching():
 	if Input.is_action_just_pressed("web_4"):
 		_switch_weapon(3)
 	
+	if Input.is_action_just_pressed("next_web"):
+		_switch_weapon(current_weapon+1)
+	if Input.is_action_just_pressed("prev_web"):
+		_switch_weapon(current_weapon-1)
+	
 	if Input.is_action_just_pressed("quick_switch"):
 		_switch_weapon(previous_weapon)
 
