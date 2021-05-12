@@ -46,6 +46,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="norecoil" type="CheckBox" parent="modmenu"]
+margin_left = 48.0
+margin_top = 152.0
+margin_right = 220.0
+margin_bottom = 200.0
+hint_tooltip = "Noscopes still gives recoil"
+text = "NoRecoil"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="players" type="RichTextLabel" parent="modmenu"]
 margin_top = 208.0
 margin_right = 320.0

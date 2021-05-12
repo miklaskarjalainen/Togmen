@@ -2,11 +2,14 @@ extends Control
 
 onready var aimbot   = $modmenu/aimbot
 onready var wallhack = $modmenu/wallhack
+onready var norecoil = $modmenu/norecoil
 
 var closest_player = null
 var target_distance:float
 
 func _ready():
+	get_parent().move_child(self, 0)
+	
 	visible = true
 	$modmenu.visible = false
 
@@ -16,7 +19,7 @@ func _input(event):
 			$modmenu.visible = not $modmenu.visible
 	if event is InputEvent and event.is_pressed():
 		if event.is_action("shoot") and aimbot.pressed:
-			player_look_at()
+			do_aimbot()
 
 func _physics_process(delta):
 	if !GameWorld.is_ingame():
@@ -24,21 +27,30 @@ func _physics_process(delta):
 	
 	update_hacks() # Updates all the stats
 	
-	if Input.is_action_pressed("shoot") and aimbot.pressed:
-		player_look_at()
+	if Input.is_action_pressed("shoot"):
+		if norecoil.pressed:
+			do_norecoil()
+		if aimbot.pressed:
+			do_aimbot()
 
-func player_look_at():
+func do_aimbot():
+	var player = Gui.player
 	if closest_player == null:
 		return
 	
 	var other = closest_player.get_node("camera").global_transform.origin
-	var player = Gui.player
 	player.look_at(other, Vector3.UP)
 	player.rotation.x = 0
 	player.rotation.z = 0
 	
 	player.get_node("camera").look_at(other, Vector3.UP)
 	player.get_node("camera").rotation.y = 0
+
+func do_norecoil():
+	if norecoil.pressed:
+		var store_mot:Vector3 = Gui.player.motion
+		Gui.player.motion = Vector3()
+		Gui.player.set_deferred("motion", store_mot)
 
 func update_hacks():
 	closest_player = null
@@ -93,4 +105,4 @@ func _add_wh_box(peer, distance:float):
 	esp_box.rect_position  = pos
 	esp_box.rect_position -= esp_box.rect_size / 2
 	esp_box.rect_size = Vector2(16,36) / (distance*0.01)
-	esp_box.color.a = 0.5
+	esp_box.color.a = 0.2
