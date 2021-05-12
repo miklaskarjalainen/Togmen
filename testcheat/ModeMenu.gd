@@ -3,6 +3,7 @@ extends Control
 onready var aimbot   = $modmenu/aimbot
 onready var wallhack = $modmenu/wallhack
 onready var norecoil = $modmenu/norecoil
+onready var bhop     = $modmenu/bhop
 
 var closest_player = null
 var target_distance:float
@@ -32,6 +33,14 @@ func _physics_process(delta):
 			do_norecoil()
 		if aimbot.pressed:
 			do_aimbot()
+	if bhop.pressed:
+		do_bhop()
+
+func do_norecoil():
+	if norecoil.pressed:
+		var store_mot:Vector3 = Gui.player.motion
+		Gui.player.motion = Vector3()
+		Gui.player.set_deferred("motion", store_mot)
 
 func do_aimbot():
 	var player = Gui.player
@@ -46,11 +55,9 @@ func do_aimbot():
 	player.get_node("camera").look_at(other, Vector3.UP)
 	player.get_node("camera").rotation.y = 0
 
-func do_norecoil():
-	if norecoil.pressed:
-		var store_mot:Vector3 = Gui.player.motion
-		Gui.player.motion = Vector3()
-		Gui.player.set_deferred("motion", store_mot)
+func do_bhop():
+	if Input.is_action_pressed("jump"):
+		Gui.player.get_node("jump_timer").start()
 
 func update_hacks():
 	closest_player = null
@@ -65,7 +72,10 @@ func update_hacks():
 			continue
 		
 		# Do WH #
-		var peer_distance = peer.get_node("camera").global_transform.origin.distance_to(Gui.player.global_transform.origin)     
+		var head = peer.get_node_or_null("camera")
+		if head == null:
+			return
+		var peer_distance = head.global_transform.origin.distance_to(Gui.player.global_transform.origin)     
 		_add_wh_box(peer, peer_distance)
 		
 		# Get Closest To Player #
