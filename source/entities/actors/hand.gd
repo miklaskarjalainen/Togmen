@@ -133,10 +133,10 @@ func _shoot():
 	print("Total Damage: ", bullet_damage)
 	
 	var kill_type = get_weapon().name
-	if get_weapon().can_scope() and !get_weapon().is_scoping():
-		kill_type = "noscope"
 	if target.name == "head":
 		kill_type = "headshot"
+	if get_weapon().can_scope() and !get_weapon().is_scoping():
+		kill_type = "noscope"
 	
 	peer.rpc_id(peer_id, "_damage", bullet_damage, kill_type)
 
