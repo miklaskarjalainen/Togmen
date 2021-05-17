@@ -12,6 +12,10 @@ func _ready():
 		anim.connect("animation_finished", self, "_on_animation_finish")
 		respawn_timer.start()
 
+func _physics_process(_delta:float):
+	if !anim.is_playing():
+		anim.play("idle")
+
 # Remotes #
 puppet func remote_anim(anim_name:String):
 	if anim == null or anim_name == "":

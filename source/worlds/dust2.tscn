@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/props/barrel/barrel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/props/wooden_box/wooden_box.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/props/wooden_door/wooden_door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/materials/sand.tres" type="Material" id=5]
 [ext_resource path="res://assets/props/ship_container/ship_container.tscn" type="PackedScene" id=6]
+[ext_resource path="res://source/entities/actors/spawn_point.tscn" type="PackedScene" id=8]
 
 [node name="map" type="Spatial"]
 
@@ -215,29 +216,14 @@ transform = Transform( -1.68739e-07, 3.86344e-08, -3.5, -1.32476, 3.2396, 9.9628
 
 [node name="spawns" type="Spatial" parent="."]
 
-[node name="topmid" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.33796, -37.973 )
+[node name="top_mid" parent="spawns" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.08893, -37.973 )
 
-[node name="tspawn" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8195, 17.1262, -100.037 )
+[node name="top_mid2" parent="spawns" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.582791, 32.3869 )
 
-[node name="ct" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62141, 20.7513 )
-
-[node name="tunnel" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3997, 3.23607, 5.78772 )
-
-[node name="short" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.274, 7.33796, 9.13908 )
-
-[node name="asite" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -129.183, 7.33796, 80.2448 )
-
-[node name="longdoors" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -57.8001, 7.33796, -49.3545 )
-
-[node name="long" type="Position3D" parent="spawns"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96.4251, 7.33796, -22.9945 )
+[node name="top_mid3" parent="spawns" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1256, 1.33075, 24.3691 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.983502, -0.00638581, 0.180784, -0.174955, -0.287616, 0.94163, 0.0459834, -0.957725, -0.283988, 0, 10.2832, 0 )

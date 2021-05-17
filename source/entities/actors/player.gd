@@ -32,8 +32,7 @@ func _ready():
 	Gui.register_peer(self) # Adds this node to the scoreboard
 	
 	if is_network_master():
-		Net.connect("on_peer_connect", self, "_on_peer_connect")
-		rpc("_register", Net.data)
+		GameWorld.connect("on_game_end", self, "_on_game_end")
 		
 		$player_model.hide()
 		$hitbox.queue_free()
@@ -41,6 +40,7 @@ func _ready():
 		
 		_load_modpack()
 	else:
+		rpc_id(get_unique_id(), "_request_register") # when this non master peer is ready ask peer info from the real player
 		$player_model.hide_arms()
 
 func _load_modpack():
@@ -223,9 +223,13 @@ puppet func _ended_killstreak(_ender:String, _count:int):
 			rpc("_ended_killstreak", _ender, _count)    # Player, broadcast others that your killstreak was ended
 		Gui.ended_killstreak(_ender, peer_data["peer_name"], _count) # If a peer show that someone else's killstreak was ended
 
-puppet func _register(_data:Dictionary):
-	peer_data = _data
-	set_skin(_data["skin"])
+puppet func _register(dict:Dictionary):
+	peer_data = dict
+	set_skin(peer_data["skin"])
+
+master func _request_register():
+	var id := get_tree().get_rpc_sender_id()
+	rpc_id(id, "_register", peer_data)
 
 master func _damage(dmg:int, var kill_type := ""):
 	if !is_network_master():
@@ -294,8 +298,8 @@ func get_hand():
 	return $camera/hand
 
 # Signals #
-func _on_peer_connect(id:int):
-	rpc_id(id, "_register", peer_data)
+func _on_game_end():
+	Engine.time_scale = 0.08
 
 func _on_respawn_timer_timeout():
 	_respawn()

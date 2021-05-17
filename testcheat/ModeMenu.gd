@@ -23,6 +23,7 @@ func _input(event):
 			do_aimbot()
 
 func _physics_process(delta):
+	return
 	if !GameWorld.is_ingame():
 		return
 	

@@ -1,5 +1,4 @@
 extends Spatial
-class_name Player
 
 # Todo: add swing
 export  var player_path       :NodePath

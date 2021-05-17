@@ -30,6 +30,7 @@ func create_server() -> void:
 	var peer := NetworkedMultiplayerENet.new()
 	var err = peer.create_server(PORT, max_players)
 	
+	# Catch an error
 	match err:
 		OK:
 			pass
@@ -40,6 +41,7 @@ func create_server() -> void:
 			print("An error occurred, ", err)
 			return
 	
+	# Set current network peer and save the id
 	get_tree().network_peer = peer
 	data["id"] = get_tree().get_network_unique_id()
 	
@@ -85,8 +87,6 @@ func _on_peer_disconnect(id:int) -> void:
 
 func _on_connection_success() -> void:
 	print("Connected to the server")
-	print("Peer register sent")
-	emit_signal("on_connection_ready")
 
 func _on_connection_fail() -> void:
 	print("Connection failed, lol ur bad")

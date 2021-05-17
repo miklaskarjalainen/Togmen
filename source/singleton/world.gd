@@ -1,5 +1,7 @@
 extends Node
 
+signal on_game_end # Called by timer in gui.tscn
+
 var peer_holder # peers node in source/scenes/game.tscn
 var current_gamestate = GameState.TitleScreen
 

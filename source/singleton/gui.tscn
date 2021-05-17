@@ -138,6 +138,8 @@ script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+winlabel_path = NodePath("../win_label")
+scoreboard_path = NodePath("../scoreboard")
 
 [node name="second" type="Timer" parent="timer"]
 autostart = true
@@ -162,6 +164,22 @@ margin_right = 282.0
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.101961, 0, 1, 1 )
 text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="win_label" type="Label" parent="."]
+anchor_top = 0.089
+anchor_right = 1.0
+anchor_bottom = 0.356
+margin_top = -0.0800018
+margin_bottom = -0.320007
+rect_pivot_offset = Vector2( 640, 96 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.341176, 0.564706, 0.0392157, 1 )
+text = "Player WON!"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -355,6 +373,7 @@ anims/show = SubResource( 7 )
 
 [node name="scoreboard" parent="." instance=ExtResource( 6 )]
 visible = false
+gametimer_path = NodePath("../timer")
 
 [node name="scope" type="TextureRect" parent="."]
 visible = false

@@ -3,7 +3,7 @@ extends Node
 const SETTINGS_PATH = "res://settings.ini"
 var   config := ConfigFile.new()
 
-remote var match_settings :=  {
+var match_settings :=  {
 	"map":"",     # Map scene path
 	"matchtime":0,# In minutes
 	"matchtype":0 # For the future, currently unused
@@ -67,10 +67,14 @@ func _add_key_to_action(action:String, key:String):
 	InputMap.action_add_event(action, action_button)
 	print("Added action %s with button %s" % [action, key])
 
+remote func set_matchsettings(dict:Dictionary):
+	match_settings = dict
+	Net.emit_signal("on_connection_ready")
+
 # Signals #
 func _on_peer_connect(id:int):
 	if Net.is_host():
-		rset_id(id, "match_settings", match_settings)
+		rpc_id(id, "set_matchsettings", match_settings)
 
 # Setters / Getters #
 func set_resolution(resolution:Vector2):

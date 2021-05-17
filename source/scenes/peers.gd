@@ -4,7 +4,7 @@ extends Spatial
 
 const PEER = preload("res://source/entities/actors/player.tscn")
 
-onready var current_map = null
+var current_map = null
 
 func _ready():
 	var id = get_tree().get_network_unique_id()
@@ -14,6 +14,7 @@ func _ready():
 	get_parent().connect("on_map_load", self, "_on_map_load")
 	Net.connect("on_peer_connect", self, "_on_peer_connect")
 	Net.connect("on_peer_disconnect", self, "_on_peer_disconnect")
+	rpc_id(1, "_requested_playerlist")
 
 func _physics_process(_delta:float):
 	Debug.add_line("players", get_child_count())
@@ -101,20 +102,23 @@ master func _on_peer_register(data:Dictionary):
 	else:
 		_create_peer(data)
 
+master func _requested_playerlist():
+	if !Net.is_host(): # Game host sends a list of current peers to the new peer
+		return
+	
+	# Construct the peer list
+	var peer_list := []
+	for child in get_children():
+		peer_list.append(int(child.name))
+	var id = get_tree().get_rpc_sender_id()
+	rpc_id(id, "_update_peers", peer_list)
+
 # Signals #
 func _on_map_load(map):
 	current_map = map
 	_create_peer(Net.data)
 
 func _on_peer_connect(id:int):
-	if Net.is_host(): # Game host sends a list of current peers to the new peer
-		var peer_list := []
-		for child in get_children():
-			peer_list.append(int(child.name))
-		
-		print("Sent: %s to %s" % [peer_list, id])
-		rpc_id(id, "_update_peers", peer_list)
-	
 	_create_peer_id(id)
 
 func _on_peer_disconnect(id:int):

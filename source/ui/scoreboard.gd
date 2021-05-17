@@ -1,7 +1,10 @@
 extends Control
 
+export var gametimer_path:NodePath
+
 onready var entry = load("res://source/ui/scoreboard_entry.tscn")
 onready var entries = $entries
+onready var gametimer = get_node(gametimer_path)
 
 func _ready():
 	visible = false
@@ -22,7 +25,24 @@ func add_entry(peer_node): # Added in player.gd ready()
 	entries.add_child(instance)
 
 func remove_entry(id:int):
-	entries.get_node(str(id)).queue_free()
+	if gametimer.minutes >= 1:
+		entries.get_node(str(id)).queue_free()
+		return
+	entries.get_node(str(id)).visible = false # if someone left right when the game was ending, he's score still will be stored.
+
+# Getters / Setters #
+func get_peer_with_most_kills():
+	var current:Peer = null
+	for child in entries.get_children():
+		var peer:Peer = child.peer_node
+		if peer == null:
+			continue
+		
+		if current == null:
+			current = peer
+		elif current.kill_count < peer.kill_count:
+			current = peer
+	return current
 
 # Signals #
 func _on_peer_disconnect(id:int):
