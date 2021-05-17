@@ -3,8 +3,16 @@ extends Node
 const SETTINGS_PATH = "res://settings.ini"
 var   config := ConfigFile.new()
 
+remote var match_settings :=  {
+	"map":"",     # Map scene path
+	"matchtime":0,# In minutes
+	"matchtype":0 # For the future, currently unused
+}
+
 func _ready():
+	set_network_master(1)
 	load_settings()
+	Net.connect("on_peer_connect", self, "_on_peer_connect")
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("reload_settings"):
@@ -59,6 +67,12 @@ func _add_key_to_action(action:String, key:String):
 	InputMap.action_add_event(action, action_button)
 	print("Added action %s with button %s" % [action, key])
 
+# Signals #
+func _on_peer_connect(id:int):
+	if Net.is_host():
+		rset_id(id, "match_settings", match_settings)
+
+# Setters / Getters #
 func set_resolution(resolution:Vector2):
 	get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_IGNORE, resolution) # Loads the resolution
 

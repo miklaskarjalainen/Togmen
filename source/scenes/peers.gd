@@ -4,25 +4,23 @@ extends Spatial
 
 const PEER = preload("res://source/entities/actors/player.tscn")
 
-export  var current_map_path : NodePath
-onready var current_map := get_node(current_map_path)
+onready var current_map = null
 
 func _ready():
 	var id = get_tree().get_network_unique_id()
 	set_network_master(id)
 	
 	GameWorld.peer_holder = self
+	get_parent().connect("on_map_load", self, "_on_map_load")
 	Net.connect("on_peer_connect", self, "_on_peer_connect")
 	Net.connect("on_peer_disconnect", self, "_on_peer_disconnect")
-	
-	_create_peer(Net.data)
 
 func _physics_process(_delta:float):
 	Debug.add_line("players", get_child_count())
 
 func get_spawn() -> Transform:
 	# Gets a random spawn
-	var spawns := current_map.get_node("spawns").get_children()
+	var spawns:Array = current_map.get_node("spawns").get_children()
 	var valid_spawns := []
 	
 	for spawn in spawns:
@@ -104,6 +102,10 @@ master func _on_peer_register(data:Dictionary):
 		_create_peer(data)
 
 # Signals #
+func _on_map_load(map):
+	current_map = map
+	_create_peer(Net.data)
+
 func _on_peer_connect(id:int):
 	if Net.is_host(): # Game host sends a list of current peers to the new peer
 		var peer_list := []

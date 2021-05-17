@@ -1,39 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://source/worlds/mymap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/scenes/peers.gd" type="Script" id=2]
-
-[sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.552941, 0.823529, 0.0705882, 1 )
-metallic = 0.16
-
-[sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.870588, 0.231373, 0.231373, 1 )
-metallic = 1.0
-roughness = 0.9
+[ext_resource path="res://source/scenes/game.gd" type="Script" id=3]
 
 [node name="game" type="Spatial"]
+script = ExtResource( 3 )
 
 [node name="peers" type="Spatial" parent="."]
 script = ExtResource( 2 )
-current_map_path = NodePath("../map")
-
-[node name="map" parent="." instance=ExtResource( 1 )]
-
-[node name="CSGCombiner" type="CSGCombiner" parent="."]
-visible = false
-use_collision = true
-collision_mask = 0
-
-[node name="floor" type="CSGBox" parent="CSGCombiner"]
-width = 148.422
-height = 0.289016
-depth = 146.13
-material = SubResource( 1 )
-
-[node name="floor2" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( -0.181504, 0, 0, 0, 1, 0, 0, 0, -0.175125, -11.9318, 2.54131, -14.9318 )
-width = 148.422
-height = 0.289016
-depth = 146.13
-material = SubResource( 2 )

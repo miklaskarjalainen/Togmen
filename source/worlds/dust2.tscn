@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/materials/sand.tres" type="Material" id=5]
 [ext_resource path="res://assets/props/ship_container/ship_container.tscn" type="PackedScene" id=6]
 
-[node name="dust2" type="Spatial"]
+[node name="map" type="Spatial"]
 
 [node name="wooden_door" parent="." instance=ExtResource( 4 )]
 transform = Transform( 5.51617, 0, 8.34098, 0, 10, 0, -8.34098, 0, 5.51617, 4.07608, -0.254483, 16.1138 )

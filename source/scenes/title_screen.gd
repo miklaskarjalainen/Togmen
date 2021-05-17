@@ -1,6 +1,7 @@
 extends Control
 
 signal on_settings_pressed
+signal on_host_pressed
 export(NodePath) var player_model_path
 
 onready var player_model = get_node(player_model_path)
@@ -47,7 +48,7 @@ func _on_popup_answer(answered_yes:bool):
 func _on_host_pressed():
 	Net.data["peer_name"] = name_edit.text
 	Net.data["skin"] = $skins.selected
-	Net.create_server()
+	emit_signal("on_host_pressed")
 
 func _on_join_pressed():
 	var ip:String = IP_edit.text

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/sfx/hitmark.ogg" type="AudioStream" id=1]
 [ext_resource path="res://assets/theme/Alphakind_large.tres" type="DynamicFont" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/props/sprites/scope.png" type="Texture" id=7]
 [ext_resource path="res://source/ui/pause_menu.tscn" type="PackedScene" id=8]
 [ext_resource path="res://source/ui/crosshair.gd" type="Script" id=9]
+[ext_resource path="res://source/ui/ingame_timer.gd" type="Script" id=10]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, -4.27972, 0, 0, Vector2( 0.633333, 0 ), 0.038961, 0.0, 0, 0 ]
@@ -126,6 +127,20 @@ __meta__ = {
 }
 health_color_r = SubResource( 1 )
 health_color_g = SubResource( 2 )
+
+[node name="timer" type="Label" parent="."]
+margin_right = 1280.0
+margin_bottom = 40.0
+text = "Time: mm:ss"
+align = 1
+valign = 1
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="second" type="Timer" parent="timer"]
+autostart = true
 
 [node name="health" type="Label" parent="."]
 anchor_top = 1.0
@@ -354,5 +369,6 @@ __meta__ = {
 [node name="pause_menu" parent="." instance=ExtResource( 8 )]
 visible = false
 
+[connection signal="timeout" from="timer/second" to="timer" method="_on_second"]
 [connection signal="animation_finished" from="killstreak/anim" to="killstreak" method="_on_animation_finished"]
 [connection signal="animation_finished" from="elimination/anim" to="elimination" method="_on_anim_animation_finished"]

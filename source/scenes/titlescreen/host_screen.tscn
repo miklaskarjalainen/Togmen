@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://source/scenes/titlescreen/host_screen.gd" type="Script" id=1]
+
+[node name="host_screen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="maps" type="ItemList" parent="."]
+margin_left = 1000.0
+margin_top = 128.0
+margin_right = 1216.0
+margin_bottom = 232.0
+items = [ "Mars", null, false, "Dust2", null, false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="match_time" type="SpinBox" parent="."]
+margin_left = 1000.0
+margin_top = 312.0
+margin_right = 1216.0
+margin_bottom = 360.0
+min_value = 3.0
+max_value = 30.0
+value = 3.0
+allow_lesser = true
+align = 1
+suffix = "Min"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="host" type="Button" parent="."]
+margin_left = 1008.0
+margin_top = 424.0
+margin_right = 1216.0
+margin_bottom = 528.0
+text = "Host"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="back" type="Button" parent="."]
+margin_left = 32.0
+margin_top = 608.0
+margin_right = 248.0
+margin_bottom = 680.0
+text = "Back"
+
+[connection signal="button_up" from="host" to="." method="_on_host_pressed"]
+[connection signal="button_up" from="back" to="." method="_on_back_pressed"]
