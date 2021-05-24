@@ -5,17 +5,20 @@ export  var player_path       :NodePath
 export  var player_model_path :NodePath
 export  var raycast_path      :NodePath
 export  var grenade_dir_path  :NodePath
+export  var animation_player  :NodePath
 export  var viewmodel_fov := 0.5
 
 onready var player       = get_node(player_path)
 onready var player_model = get_node(player_model_path)
 onready var raycast      = get_node(raycast_path)
 onready var grenade_dir  = get_node(grenade_dir_path)
+onready var anim         = get_node(animation_player)
 
 onready var bullet_impact := preload("res://source/particles/bullet_impact.tscn")
 onready var blood_particle:= preload("res://source/particles/blood_particle.tscn")
 onready var grenade       := preload("res://assets/weapons/grenade/grenade.tscn")
 onready var weapons = get_children()
+onready var hand_startpos := translation
 
 var current_weapon  := 0
 var previous_weapon := 0
@@ -32,6 +35,12 @@ func _ready():
 func _physics_process(_delta:float):
 	Debug.add_line("fire rate", get_weapon().fire_rate_counter)
 	Debug.add_line("recovery time", get_weapon().recovery_counter)
+	
+	if !anim.is_playing() and player.motion.length() > 2.0:
+		anim.play("move")
+	elif player.motion.length() < 2.0:
+		anim.stop()
+		translation = hand_startpos
 	
 	_handle_hand_animations()
 	_handle_weapon_switching()

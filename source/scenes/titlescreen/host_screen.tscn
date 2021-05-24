@@ -15,7 +15,7 @@ margin_left = 1000.0
 margin_top = 128.0
 margin_right = 1216.0
 margin_bottom = 232.0
-items = [ "Mars", null, false, "Dust2", null, false ]
+items = [ "Marsic", null, false, "Dust2", null, false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }

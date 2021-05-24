@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://source/entities/actors/player.gd" type="Script" id=1]
 [ext_resource path="res://source/entities/actors/camera.gd" type="Script" id=2]
@@ -15,6 +15,23 @@
 [ext_resource path="res://assets/weapons/knife/shoot.ogg" type="AudioStream" id=13]
 [ext_resource path="res://assets/weapons/deagle/shoot.ogg" type="AudioStream" id=14]
 [ext_resource path="res://assets/props/player/player_model.gd" type="Script" id=15]
+
+[sub_resource type="Animation" id=8]
+resource_name = "move"
+length = 1.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.8, 1.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.5, -0.6, -0.3 ), Vector3( 0.405867, -0.581113, -0.3 ), Vector3( 0.367981, -0.602496, -0.3 ), Vector3( 0.439551, -0.608809, -0.3 ), Vector3( 0.5, -0.6, -0.3 ) ]
+}
 
 [sub_resource type="CylinderShape" id=1]
 radius = 0.529663
@@ -151,6 +168,7 @@ player_path = NodePath("../..")
 player_model_path = NodePath("../../player_model")
 raycast_path = NodePath("../shoot_ray")
 grenade_dir_path = NodePath("../grenade_dir")
+animation_player = NodePath("../hand_animation")
 viewmodel_fov = 0.2
 
 [node name="Knife" parent="camera/hand" instance=ExtResource( 6 )]
@@ -206,6 +224,10 @@ fire_rate = 0.9
 can_scope = true
 mov_speed = 8.5
 sfx_shoot = ExtResource( 11 )
+
+[node name="hand_animation" type="AnimationPlayer" parent="camera"]
+root_node = NodePath("../hand")
+anims/move = SubResource( 8 )
 
 [node name="grenade_dir" type="Position3D" parent="camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )

@@ -171,7 +171,7 @@ func _respawn():
 	
 	# Reload all guns
 	for gun in get_hand().get_children():
-		if gun is Weapon: # There're also particles :/
+		if gun is Weapon: # Do only for weapons
 			gun.reload(true)
 	killstreak  = 0
 	death_count += 1

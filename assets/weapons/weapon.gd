@@ -41,7 +41,7 @@ func _physics_process(delta:float):
 		is_scoping = false
 		return
 	
-	if !anim.is_playing(): # Idle animation
+	if !anim.is_playing():
 		_play_anim("idle")
 	
 	_handle_reloading()

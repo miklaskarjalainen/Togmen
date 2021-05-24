@@ -13,11 +13,11 @@ func _physics_process(delta:float):
 func get_map_path(idx:int) -> String:
 	match idx:
 		0:
-			return "res://source/worlds/mymap.tscn"
+			return "res://source/worlds/marsic.tscn"
 		1:
 			return "res://source/worlds/dust2.tscn"
 		_:
-			return "res://source/worlds/mymap.tscn"
+			return "res://source/worlds/marsic.tscn"
 
 # Signals #
 

@@ -5,6 +5,7 @@ onready var hostscreen  = $hostscreen
 onready var settings    = $settings
 
 func _ready():
+	Engine.time_scale   = 1
 	_on_back_pressed()
 
 func _on_back_pressed():

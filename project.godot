@@ -34,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/entities/actors/player.gd"
 }, {
-"base": "Spatial",
-"class": "Player",
-"language": "GDScript",
-"path": "res://source/entities/actors/hand.gd"
-}, {
 "base": "Position3D",
 "class": "PlayerSpawn",
 "language": "GDScript",
@@ -60,7 +55,6 @@ _global_script_class_icons={
 "Consumable": "",
 "NetObject": "",
 "Peer": "",
-"Player": "",
 "PlayerSpawn": "",
 "Weapon": "",
 "YesPopupDialog": ""
@@ -79,6 +73,7 @@ GameSettings="*res://source/singleton/gamesettings.gd"
 Gui="*res://source/singleton/gui.tscn"
 Debug="*res://source/singleton/debug.tscn"
 GameWorld="*res://source/singleton/world.gd"
+VirginSlayer="*res://source/singleton/VirginSlayer/VirginSlayer.gd"
 
 [display]
 
