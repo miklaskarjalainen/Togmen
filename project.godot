@@ -73,7 +73,6 @@ GameSettings="*res://source/singleton/gamesettings.gd"
 Gui="*res://source/singleton/gui.tscn"
 Debug="*res://source/singleton/debug.tscn"
 GameWorld="*res://source/singleton/world.gd"
-VirginSlayer="*res://source/singleton/VirginSlayer/VirginSlayer.gd"
 
 [display]
 

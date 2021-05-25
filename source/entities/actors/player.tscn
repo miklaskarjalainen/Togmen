@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://source/entities/actors/player.gd" type="Script" id=1]
 [ext_resource path="res://source/entities/actors/camera.gd" type="Script" id=2]
@@ -16,7 +16,25 @@
 [ext_resource path="res://assets/weapons/deagle/shoot.ogg" type="AudioStream" id=14]
 [ext_resource path="res://assets/props/player/player_model.gd" type="Script" id=15]
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
+resource_name = "idle"
+length = 0.05
+tracks/0/type = "method"
+tracks/0/path = NodePath("../hand_animation/hand_back")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start"
+} ]
+}
+
+[sub_resource type="Animation" id=1]
 resource_name = "move"
 length = 1.2
 step = 0.05
@@ -33,15 +51,14 @@ tracks/0/keys = {
 "values": [ Vector3( 0.5, -0.6, -0.3 ), Vector3( 0.405867, -0.581113, -0.3 ), Vector3( 0.367981, -0.602496, -0.3 ), Vector3( 0.439551, -0.608809, -0.3 ), Vector3( 0.5, -0.6, -0.3 ) ]
 }
 
-[sub_resource type="CylinderShape" id=1]
+[sub_resource type="CylinderShape" id=2]
 radius = 0.529663
 height = 2.33291
 
-[sub_resource type="RayShape" id=2]
+[sub_resource type="RayShape" id=3]
 length = 0.749077
 
-[sub_resource type="Animation" id=3]
-resource_name = "crouch"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("head:translation")
 tracks/0/interp = 1
@@ -79,8 +96,7 @@ tracks/2/keys = {
 "values": [ Vector3( 0, -2.14997, 0.297996 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "stand"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("legs:translation")
 tracks/0/interp = 1
@@ -118,13 +134,13 @@ tracks/2/keys = {
 "values": [ Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 0.322585, 0.355724, 0.357955 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=7]
 extents = Vector3( 0.400058, 0.547262, 0.175902 )
 
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 0.353813, 0.534643, 0.185526 )
 
 [node name="Player" type="KinematicBody"]
@@ -227,7 +243,10 @@ sfx_shoot = ExtResource( 11 )
 
 [node name="hand_animation" type="AnimationPlayer" parent="camera"]
 root_node = NodePath("../hand")
-anims/move = SubResource( 8 )
+anims/idle = SubResource( 9 )
+anims/move = SubResource( 1 )
+
+[node name="hand_back" type="Tween" parent="camera/hand_animation"]
 
 [node name="grenade_dir" type="Position3D" parent="camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
@@ -250,12 +269,12 @@ __meta__ = {
 [node name="coll" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.677288, 0 )
 visible = false
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="ray_foot" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.53529, 0 )
 visible = false
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="is_grounded" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.535, 0 )
@@ -275,8 +294,8 @@ legs: x0.6"
 }
 
 [node name="anim" type="AnimationPlayer" parent="hitbox"]
-anims/crouch = SubResource( 3 )
-anims/stand = SubResource( 4 )
+anims/crouch = SubResource( 4 )
+anims/stand = SubResource( 5 )
 
 [node name="head" type="Area" parent="hitbox"]
 script = ExtResource( 4 )
@@ -285,7 +304,7 @@ multiplier = 2.5
 
 [node name="coll" type="CollisionShape" parent="hitbox/head"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44798, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="body" type="Area" parent="hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.590608, 0 )
@@ -294,7 +313,7 @@ player_path = NodePath("../..")
 
 [node name="coll" type="CollisionShape" parent="hitbox/body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15548, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="legs" type="Area" parent="hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.86818, 0 )
@@ -304,6 +323,6 @@ multiplier = 0.7
 
 [node name="coll" type="CollisionShape" parent="hitbox/legs"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3023, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [connection signal="timeout" from="respawn_timer" to="." method="_on_respawn_timer_timeout"]

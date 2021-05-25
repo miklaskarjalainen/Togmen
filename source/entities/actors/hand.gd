@@ -36,11 +36,6 @@ func _physics_process(_delta:float):
 	Debug.add_line("fire rate", get_weapon().fire_rate_counter)
 	Debug.add_line("recovery time", get_weapon().recovery_counter)
 	
-	if !anim.is_playing() and player.motion.length() > 2.0:
-		anim.play("move")
-	elif player.motion.length() < 2.0:
-		anim.stop()
-		translation = hand_startpos
 	
 	_handle_hand_animations()
 	_handle_weapon_switching()
@@ -59,10 +54,14 @@ func _handle_hand_animations():
 	if !get_weapon().has_node("left_hand"):
 		return
 	
-	var left_rotation = get_weapon().get_node("left_hand").rotation
-	var right_rotation = get_weapon().get_node("right_hand").rotation
-	player_model.get_node("left_hand").rotation = left_rotation
-	player_model.get_node("right_hand").rotation = right_rotation
+	if !anim.is_playing() and player.motion.length() > 2.0:
+		anim.play("move")
+	elif player.motion.length() < 2.0:
+		var hide_arms : Tween = anim.get_node("hand_back")
+		anim.stop()
+		hide_arms.interpolate_property(self, "translation", translation, hand_startpos, 0.1)
+		hide_arms.start()
+		#translation = hand_startpos
 
 func _handle_weapon_switching():
 	if player.is_dead():

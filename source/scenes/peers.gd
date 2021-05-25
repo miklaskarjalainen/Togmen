@@ -68,13 +68,11 @@ func _create_peer(data:Dictionary):
 	var instance  = PEER.instance()
 	instance.name = str(data["id"])
 	instance.peer_data = data
-	instance.set_skin(data["skin"])
 	instance.set_as_toplevel(true)
 	instance.global_transform = get_spawn()
-	
 	instance.set_network_master(data["id"])
-	
-	add_child(instance)
+	instance.set_skin(data["skin"])
+	add_child(instance) 
 
 func _create_peer_id(id:int):
 	if has_node(str(id)):

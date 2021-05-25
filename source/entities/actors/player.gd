@@ -38,9 +38,11 @@ func _ready():
 		$hitbox.queue_free()
 		Gui.set_player(self) # Makes the gui show this players health and ammo
 		
-		_load_modpack()
+		#_load_modpack()
+		rpc("_register", peer_data)
 	else:
-		rpc_id(get_unique_id(), "_request_register") # when this non master peer is ready ask peer info from the real player
+		print("Requested peerinfo")
+		rpc_id( self.get_unique_id() , "_request_register") # when this non master peer is ready ask peer info from the real player
 		$player_model.hide_arms()
 
 func _load_modpack():
@@ -139,10 +141,7 @@ func _do_player_movement(delta:float):
 		move_spd += JUMP_MOV_BOOST
 	
 	# Crouching #
-	if Input.is_action_pressed("crouch"):
-		is_crouching = true
-	else:
-		is_crouching = false
+	is_crouching = true if Input.is_action_pressed("crouch") else false
 	
 	# Gravity #
 	motion.y -= GRAVITY * delta
@@ -224,11 +223,13 @@ puppet func _ended_killstreak(_ender:String, _count:int):
 		Gui.ended_killstreak(_ender, peer_data["peer_name"], _count) # If a peer show that someone else's killstreak was ended
 
 puppet func _register(dict:Dictionary):
+	print("register, got: ", dict)
 	peer_data = dict
 	set_skin(peer_data["skin"])
 
 master func _request_register():
 	var id := get_tree().get_rpc_sender_id()
+	print("gave info to: ", id, " which was ", peer_data)
 	rpc_id(id, "_register", peer_data)
 
 master func _damage(dmg:int, var kill_type := ""):
@@ -258,7 +259,6 @@ master func _damage(dmg:int, var kill_type := ""):
 
 master func _eliminated_peer(peer_id:int, var kill_type := ""):
 	# The player has eliminated peer with the given id #
-	
 	var peer_name = GameWorld.get_peer_name(peer_id)
 	
 	# Update Stats #
@@ -273,7 +273,7 @@ master func _eliminated_peer(peer_id:int, var kill_type := ""):
 
 # Getters / Setters #
 func set_skin(idx:int):
-	$player_model.set_skin(idx)
+	$player_model.call_deferred("set_skin", idx)
 
 func is_grounded() -> bool:
 	return is_on_floor() or $is_grounded.is_colliding()
