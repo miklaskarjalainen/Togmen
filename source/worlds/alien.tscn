@@ -1,0 +1,135 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/materials/AlienStone/AlienStone.tres" type="Material" id=1]
+[ext_resource path="res://assets/materials/PurpleCyrstal/PurpleCrystal.tres" type="Material" id=2]
+[ext_resource path="res://source/entities/actors/spawn_point.tscn" type="PackedScene" id=5]
+
+[sub_resource type="ProceduralSky" id=1]
+radiance_size = 0
+sky_top_color = Color( 0.215686, 0.152941, 0.0431373, 1 )
+sky_horizon_color = Color( 0.701961, 0.588235, 0.427451, 1 )
+sky_curve = 0.173868
+sun_latitude = 20.0
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+ambient_light_sky_contribution = 0.78
+fog_color = Color( 0.0509804, 0.658824, 0.0627451, 1 )
+fog_sun_color = Color( 0.843137, 0.94902, 0.647059, 1 )
+fog_depth_begin = 85.0
+fog_depth_end = 200.0
+fog_depth_curve = 1.7411
+auto_exposure_scale = 0.01
+ssao_enabled = true
+ssao_quality = 0
+ssao_blur = 1
+adjustment_enabled = true
+
+[node name="map" type="Spatial"]
+
+[node name="env" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="world" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15851, 1.81878, -2.70432 )
+use_collision = true
+
+[node name="floor" type="CSGBox" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, -85 )
+use_in_baked_light = true
+width = 164.0
+height = 10.0
+depth = 168.0
+material = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="wall4" type="CSGBox" parent="world"]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -18.4418, 29.661, -100 )
+use_in_baked_light = true
+width = 190.0
+height = 50.0
+depth = 20.0
+material = ExtResource( 2 )
+
+[node name="wall8" type="CSGCylinder" parent="world"]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -73.2582, 23.661, -85.8091 )
+use_in_baked_light = true
+radius = 9.0
+height = 38.0
+material = ExtResource( 2 )
+
+[node name="wall9" type="CSGCylinder" parent="world"]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -73.2582, 10.661, -85.8091 )
+use_in_baked_light = true
+radius = 14.0
+material = ExtResource( 2 )
+
+[node name="wall10" type="CSGCylinder" parent="world"]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -94.2582, 7.661, -94.8091 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall11" type="CSGCylinder" parent="world"]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -52.2582, 7.661, -92.8091 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall12" type="CSGCylinder" parent="world"]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -66.2582, 7.661, -62.8266 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall5" type="CSGBox" parent="world"]
+transform = Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -117.442, 29.661, -59 )
+use_in_baked_light = true
+width = 128.0
+height = 50.0
+depth = 20.0
+material = ExtResource( 2 )
+
+[node name="wall7" type="CSGBox" parent="world"]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -27.4418, 29.661, -31 )
+use_in_baked_light = true
+width = 122.0
+height = 50.0
+depth = 20.0
+material = ExtResource( 2 )
+
+[node name="wall6" type="CSGBox" parent="world"]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -116.442, 29.661, -152 )
+use_in_baked_light = true
+width = 86.0
+height = 50.0
+depth = 20.0
+material = ExtResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.0161515, 0.908494, -0.417587, 0.0351127, 0.417899, 0.907815, 0.999253, 0, -0.0386494, -6.23938, 10.2832, 0 )
+light_color = Color( 0.992157, 0.980392, 0.952941, 1 )
+light_energy = 1.2
+light_specular = 0.0
+light_cull_mask = 4293918721
+shadow_enabled = true
+shadow_color = Color( 0.741176, 0.741176, 0.741176, 1 )
+shadow_bias = 0.2
+
+[node name="spawns" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 11, -80 )
+
+[node name="spawn_point2" parent="spawns" instance=ExtResource( 5 )]
+transform = Transform( -0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, -29.6526, -3.29583, -41.65 )
+
+[node name="spawn_point7" parent="spawns" instance=ExtResource( 5 )]
+transform = Transform( -0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0.252426, -3.62131, -3.6044 )
+
+[node name="spawn_point3" parent="spawns" instance=ExtResource( 5 )]
+transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -49.6526, -3.61905, -61.65 )
+
+[node name="spawn_point4" parent="spawns" instance=ExtResource( 5 )]
+transform = Transform( -0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -83.6526, -3.1115, -32.65 )
