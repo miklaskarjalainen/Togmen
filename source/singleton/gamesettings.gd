@@ -31,8 +31,9 @@ func load_settings():
 		push_warning("Error loading settings: %s" % err)
 	
 	# Map all the keys into actions
-	for action_name in config.get_section_keys("actions"):
-		_add_action(action_name)
+	if config.has_section("actions"):
+		for action_name in config.get_section_keys("actions"):
+			_add_action(action_name)
 	
 	# Set video settings
 	Engine.target_fps = get_value("target_fps", 144)

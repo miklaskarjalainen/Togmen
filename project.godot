@@ -19,15 +19,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/entities/actors/body_part.gd"
 }, {
-"base": "NetObject",
-"class": "Consumable",
-"language": "GDScript",
-"path": "res://source/entities/consumables/medkit.gd"
-}, {
 "base": "Spatial",
 "class": "NetObject",
 "language": "GDScript",
-"path": "res://source/entities/NetObject.gd"
+"path": "res://source/entities/net_object.gd"
 }, {
 "base": "Actor",
 "class": "Peer",
@@ -52,7 +47,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Actor": "",
 "BodyPart": "",
-"Consumable": "",
 "NetObject": "",
 "Peer": "",
 "PlayerSpawn": "",

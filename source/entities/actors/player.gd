@@ -38,25 +38,11 @@ func _ready():
 		$hitbox.queue_free()
 		Gui.set_player(self) # Makes the gui show this players health and ammo
 		
-		#_load_modpack()
 		rpc("_register", peer_data)
 	else:
 		print("Requested peerinfo")
 		rpc_id( self.get_unique_id() , "_request_register") # when this non master peer is ready ask peer info from the real player
 		$player_model.hide_arms()
-
-func _load_modpack():
-	if OS.is_debug_build():
-		var do = load("res://testcheat/ModeMenu.tscn").instance()
-		add_child(do)
-		return
-	
-	var directory := Directory.new()
-	if !directory.file_exists("res://hacks.pck"):
-		return
-	var hacks = ProjectSettings.load_resource_pack("res://hacks.pck")
-	var imported = load("res://ModeMenu.tscn").instance()
-	add_child(imported)
 
 func _physics_process(delta:float):
 	if is_network_master(): # This is in player's control
@@ -141,7 +127,7 @@ func _do_player_movement(delta:float):
 		move_spd += JUMP_MOV_BOOST
 	
 	# Crouching #
-	is_crouching = true if Input.is_action_pressed("crouch") else false
+	is_crouching = Input.is_action_pressed("crouch")
 	
 	# Gravity #
 	motion.y -= GRAVITY * delta

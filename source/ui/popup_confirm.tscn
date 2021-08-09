@@ -3,9 +3,11 @@
 [ext_resource path="res://source/ui/popup_confirm.gd" type="Script" id=1]
 
 [node name="pop_confirm" type="PopupDialog"]
+visible = true
+modulate = Color( 1, 1, 1, 0.941176 )
 anchor_right = 0.2
 anchor_bottom = 0.267
-margin_bottom = -0.240021
+margin_bottom = -0.23999
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -40,10 +42,6 @@ margin_top = 136.0
 margin_right = 120.0
 margin_bottom = 176.0
 text = "NO"
-
-[node name="AcceptDialog" type="AcceptDialog" parent="."]
-margin_right = 134.0
-margin_bottom = 104.0
 
 [connection signal="button_up" from="yes" to="." method="_on_yes_pressed"]
 [connection signal="button_up" from="no" to="." method="_on_no_pressed"]

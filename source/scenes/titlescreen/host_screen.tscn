@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://source/scenes/titlescreen/host_screen.gd" type="Script" id=1]
+[ext_resource path="res://assets/theme/Alphakind_medium.tres" type="DynamicFont" id=2]
 
 [node name="host_screen" type="Control"]
 anchor_right = 1.0
@@ -10,21 +11,61 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="maps_title" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -248.0
+margin_top = -416.0
+margin_right = -16.0
+margin_bottom = -368.0
+custom_fonts/font = ExtResource( 2 )
+text = "Maps:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="match_time_title" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -248.0
+margin_top = -224.0
+margin_right = -16.0
+margin_bottom = -184.0
+custom_fonts/font = ExtResource( 2 )
+text = "Game Time:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="maps" type="ItemList" parent="."]
-margin_left = 1000.0
-margin_top = 128.0
-margin_right = 1216.0
-margin_bottom = 232.0
-items = [ "Marsic", null, false, "Dust2", null, false ]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -248.0
+margin_top = -368.0
+margin_right = -16.0
+margin_bottom = -264.0
+items = [ "Marsic", null, false, "Alientus", null, false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="match_time" type="SpinBox" parent="."]
-margin_left = 1000.0
-margin_top = 312.0
-margin_right = 1216.0
-margin_bottom = 360.0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -248.0
+margin_top = -184.0
+margin_right = -16.0
+margin_bottom = -136.0
 min_value = 3.0
 max_value = 30.0
 value = 3.0
@@ -36,20 +77,26 @@ __meta__ = {
 }
 
 [node name="host" type="Button" parent="."]
-margin_left = 1008.0
-margin_top = 424.0
-margin_right = 1216.0
-margin_bottom = 528.0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -248.0
+margin_top = -112.0
+margin_right = -32.0
+margin_bottom = -48.0
 text = "Host"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="back" type="Button" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
 margin_left = 32.0
-margin_top = 608.0
+margin_top = -112.0
 margin_right = 248.0
-margin_bottom = 680.0
+margin_bottom = -48.0
 text = "Back"
 
 [connection signal="button_up" from="host" to="." method="_on_host_pressed"]

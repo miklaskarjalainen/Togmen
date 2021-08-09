@@ -64,6 +64,7 @@ bus = "music"
 [node name="titlescreen" parent="title_screenpages" instance=ExtResource( 1 )]
 
 [node name="hostscreen" parent="title_screenpages" instance=ExtResource( 2 )]
+visible = false
 
 [node name="settings" parent="title_screenpages" instance=ExtResource( 6 )]
 visible = false

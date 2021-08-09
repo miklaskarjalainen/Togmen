@@ -57,7 +57,7 @@ func _update_health():
 	
 	# Displays player's current health
 	var health:int = player.health
-	var text_color := Color(0,0,0,1)
+	var text_color := Color(0,0,0,0.47)
 	text_color.r = health_color_r.interpolate(health/100.0)
 	text_color.g = health_color_g.interpolate(health/100.0)
 	$health.modulate = text_color

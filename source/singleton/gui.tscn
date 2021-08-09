@@ -145,25 +145,36 @@ scoreboard_path = NodePath("../scoreboard")
 autostart = true
 
 [node name="health" type="Label" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -78.0
-margin_right = 160.0
+modulate = Color( 1, 1, 1, 0.701961 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -176.0
+margin_top = 40.0
+margin_right = -16.0
+margin_bottom = 120.0
 custom_fonts/font = ExtResource( 2 )
 text = "100"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ammo" type="Label" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 122.0
-margin_top = -78.0
-margin_right = 282.0
+modulate = Color( 1, 1, 1, 0.470588 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 32.0
+margin_top = 40.0
+margin_right = 192.0
+margin_bottom = 120.0
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.101961, 0, 1, 1 )
 text = "100"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -185,6 +196,7 @@ __meta__ = {
 }
 
 [node name="crosshair" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( 640, 360 )

@@ -15,7 +15,7 @@ func get_map_path(idx:int) -> String:
 		0:
 			return "res://source/worlds/marsic.tscn"
 		1:
-			return "res://source/worlds/alien.tscn"
+			return "res://source/worlds/alientus.tscn"
 		_:
 			return "res://source/worlds/marsic.tscn"
 

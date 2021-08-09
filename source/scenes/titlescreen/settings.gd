@@ -70,5 +70,3 @@ func _get_res_idx(resolution:Vector2) -> int:
 			return 4
 		_:
 			return 0
-
-

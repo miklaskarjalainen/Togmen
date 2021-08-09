@@ -12,14 +12,12 @@ __meta__ = {
 }
 
 [node name="resolution_label" type="Label" parent="."]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -680.0
-margin_top = -240.0
-margin_right = -354.0
-margin_bottom = -176.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -328.0
+margin_right = 374.0
+margin_bottom = -264.0
 text = "Viewport Resolution: "
 align = 1
 valign = 1
@@ -28,14 +26,12 @@ __meta__ = {
 }
 
 [node name="resolution_option" type="OptionButton" parent="."]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -352.0
-margin_top = -240.0
-margin_right = -72.0
-margin_bottom = -176.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 376.0
+margin_top = -328.0
+margin_right = 656.0
+margin_bottom = -264.0
 text = "2560x1440 [16x9]"
 items = [ "1280x1024 [5:4]", null, false, 0, false, "1280x720 [16:9]", null, false, 0, false, "1920x1080 [16:9]", null, false, 0, false, "2560x1440 [16x9]", null, false, 0, false, "3840 x 2160 [16:9]", null, false, 4, null ]
 selected = 3
@@ -44,26 +40,24 @@ __meta__ = {
 }
 
 [node name="fullscreen" type="CheckButton" parent="."]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -544.0
-margin_top = -320.0
-margin_right = -264.0
-margin_bottom = -256.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -256.0
+margin_right = 328.0
+margin_bottom = -192.0
 text = "FullScreen:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="sensitivity_label" type="Label" parent="."]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 32.0
-margin_top = -328.0
-margin_right = 480.0
-margin_bottom = -264.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -192.0
+margin_right = 496.0
+margin_bottom = -128.0
 text = "Sensitivity: xx"
 align = 1
 valign = 1
@@ -72,12 +66,12 @@ __meta__ = {
 }
 
 [node name="sensitivity_slider" type="HSlider" parent="."]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 32.0
-margin_top = -264.0
-margin_right = 480.0
-margin_bottom = -248.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -136.0
+margin_right = 496.0
+margin_bottom = -120.0
 min_value = 0.05
 max_value = 1.0
 step = 0.05
@@ -88,12 +82,12 @@ __meta__ = {
 }
 
 [node name="scoped_label" type="Label" parent="."]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 32.0
-margin_top = -240.0
-margin_right = 480.0
-margin_bottom = -176.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -120.0
+margin_right = 496.0
+margin_bottom = -56.0
 text = "Multiplier: xx"
 align = 1
 valign = 1
@@ -102,12 +96,12 @@ __meta__ = {
 }
 
 [node name="scoped_slider" type="HSlider" parent="."]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 32.0
-margin_top = -176.0
-margin_right = 480.0
-margin_bottom = -160.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = -64.0
+margin_right = 496.0
+margin_bottom = -48.0
 min_value = 0.05
 max_value = 1.0
 step = 0.05

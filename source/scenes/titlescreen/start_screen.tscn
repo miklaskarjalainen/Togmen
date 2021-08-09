@@ -40,7 +40,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 40.0
 margin_top = -184.0
-margin_right = 448.0
+margin_right = 616.0
 margin_bottom = -120.0
 placeholder_text = "Name"
 __meta__ = {
@@ -52,7 +52,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 40.0
 margin_top = -104.0
-margin_right = 448.0
+margin_right = 616.0
 margin_bottom = -40.0
 placeholder_text = "Ip-Address"
 __meta__ = {
@@ -62,9 +62,9 @@ __meta__ = {
 [node name="host" type="Button" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 456.0
+margin_left = 632.0
 margin_top = -184.0
-margin_right = 592.0
+margin_right = 808.0
 margin_bottom = -120.0
 text = "host"
 __meta__ = {
@@ -74,9 +74,9 @@ __meta__ = {
 [node name="join" type="Button" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 456.0
+margin_left = 632.0
 margin_top = -104.0
-margin_right = 592.0
+margin_right = 808.0
 margin_bottom = -40.0
 text = "join"
 __meta__ = {
@@ -84,15 +84,13 @@ __meta__ = {
 }
 
 [node name="btn_settings" type="Button" parent="."]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -256.0
-margin_top = -232.0
-margin_right = -64.0
-margin_bottom = -168.0
-text = "settings"
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = -264.0
+margin_right = 344.0
+margin_bottom = -200.0
+text = "Settings"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -109,18 +107,28 @@ margin_bottom = 80.24
 text = "Quit?"
 
 [node name="skins" type="OptionButton" parent="."]
-anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -264.0
-margin_top = -112.0
-margin_right = -24.0
-margin_bottom = -40.0
+margin_left = 504.0
+margin_top = -264.0
+margin_right = 808.0
+margin_bottom = -200.0
+shortcut_in_tooltip = false
 action_mode = 1
 text = "Astronaut"
+align = 1
 items = [ "Astronaut", null, false, 0, null, "Galaxy", null, false, 1, null, "Cosmonaut", null, false, 2, null, "Smily", null, false, 3, null ]
 selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title" type="Label" parent="skins"]
+anchor_right = 1.0
+margin_top = -40.0
+text = "Skin"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
