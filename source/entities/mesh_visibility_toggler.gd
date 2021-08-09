@@ -1,5 +1,8 @@
 extends Spatial
 
+# Hides the object this script is attached to when the local player is far
+# enough from the object.
+
 export(float, 0, 256, 0.2) var hide_distance := 80.0
 
 func _physics_process(_delta):

@@ -4,8 +4,13 @@ class_name NetObject
 # When a class inherits from this one the net code will be         #
 # Automatically handled by this script, Giffi (Miklas Karjalainen) #
 
+# Currently only used by the grenade, also this script barely works >.< #
+
 signal peer_interact(id)
 
+# If the "real" object is handled by a peer or by the host
+# e.g Grenade by the thrower (aka peer), but
+# things like medkits or other "for all" objects by the host.
 export var bool_handled_by_host := true
 
 func _ready():
@@ -41,4 +46,3 @@ puppet func remote_position(position:Vector3):
 		rpc("remote_position", position)
 		return
 	global_transform.origin = position
-
