@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/materials/AlienStone/AlienStone.tres" type="Material" id=1]
 [ext_resource path="res://assets/materials/PurpleCyrstal/PurpleCrystal.tres" type="Material" id=2]
-[ext_resource path="res://source/entities/actors/spawn_point.tscn" type="PackedScene" id=5]
+[ext_resource path="res://source/entities/actors/spawn_point.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ProceduralSky" id=1]
 radiance_size = 0
@@ -36,7 +36,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15851, 1.81878, -2.70432 )
 use_collision = true
 
 [node name="floor" type="CSGBox" parent="world"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, -85 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -57.6891, 0, -85 )
 use_in_baked_light = true
 width = 164.0
 height = 10.0
@@ -47,7 +47,7 @@ __meta__ = {
 }
 
 [node name="wall4" type="CSGBox" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -18.4418, 29.661, -100 )
+transform = Transform( -0.707107, 0, 0.707107, 0.0989846, 0.990154, 0.0989846, -0.700145, 0.139985, -0.700145, -18.4418, 14.3462, -109.676 )
 use_in_baked_light = true
 width = 190.0
 height = 50.0
@@ -57,7 +57,7 @@ material = ExtResource( 2 )
 [node name="wall8" type="CSGCylinder" parent="world"]
 transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -73.2582, 23.661, -85.8091 )
 use_in_baked_light = true
-radius = 9.0
+radius = 7.0
 height = 38.0
 material = ExtResource( 2 )
 
@@ -79,14 +79,74 @@ use_in_baked_light = true
 radius = 6.0
 material = ExtResource( 2 )
 
+[node name="wall20" type="CSGCylinder" parent="world"]
+transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -130.325, 10.661, -113.363 )
+use_in_baked_light = true
+radius = 14.0
+material = ExtResource( 2 )
+
+[node name="wall21" type="CSGCylinder" parent="world"]
+transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -101.857, 7.62785, -112.287 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall23" type="CSGCylinder" parent="world"]
+transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -59.2591, 7.62785, -112.287 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall22" type="CSGCylinder" parent="world"]
+transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -114.966, 7.661, -96.6097 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
 [node name="wall12" type="CSGCylinder" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -66.2582, 7.661, -62.8266 )
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -22.7631, 7.661, -62.8266 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall14" type="CSGCylinder" parent="world"]
+transform = Transform( -0.357944, 0, -0.933743, 0, 1, 0, 0.933743, 0, -0.357944, -70.3524, 10.661, -39.5894 )
+use_in_baked_light = true
+radius = 14.0
+material = ExtResource( 2 )
+
+[node name="wall16" type="CSGCylinder" parent="world"]
+transform = Transform( -0.357944, 0, -0.933743, 0, 1, 0, 0.933743, 0, -0.357944, -85.2961, 7.661, -55.9199 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall17" type="CSGCylinder" parent="world"]
+transform = Transform( -0.357944, 0, -0.933743, 0, 1, 0, 0.933743, 0, -0.357944, -52.2112, 7.661, -55.3403 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall15" type="CSGCylinder" parent="world"]
+transform = Transform( 0.242989, 0, 0.97003, 0, 1, 0, -0.97003, 0, 0.242989, -95.9294, 10.661, -151.293 )
+use_in_baked_light = true
+radius = 14.0
+material = ExtResource( 2 )
+
+[node name="wall18" type="CSGCylinder" parent="world"]
+transform = Transform( 0.242989, 0, 0.97003, 0, 1, 0, -0.97003, 0, 0.242989, -78.9988, 7.661, -134.877 )
+use_in_baked_light = true
+radius = 6.0
+material = ExtResource( 2 )
+
+[node name="wall19" type="CSGCylinder" parent="world"]
+transform = Transform( 0.242989, 0, 0.97003, 0, 1, 0, -0.97003, 0, 0.242989, -107.94, 7.661, -133.473 )
 use_in_baked_light = true
 radius = 6.0
 material = ExtResource( 2 )
 
 [node name="wall5" type="CSGBox" parent="world"]
-transform = Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -117.442, 29.661, -59 )
+transform = Transform( -0.5, 0, 0.866025, 0.0521755, 0.998183, 0.0301236, -0.864452, 0.0602472, -0.499092, -117.442, 23.7998, -59 )
 use_in_baked_light = true
 width = 128.0
 height = 50.0
@@ -94,7 +154,7 @@ depth = 20.0
 material = ExtResource( 2 )
 
 [node name="wall7" type="CSGBox" parent="world"]
-transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -27.4418, 29.661, -31 )
+transform = Transform( 0.864468, 0.0599336, 0.499101, -0.051904, 0.998202, -0.0299668, -0.5, 0, 0.866025, -27.4418, 24.9204, -31 )
 use_in_baked_light = true
 width = 122.0
 height = 50.0
@@ -122,14 +182,17 @@ shadow_bias = 0.2
 [node name="spawns" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 11, -80 )
 
-[node name="spawn_point2" parent="spawns" instance=ExtResource( 5 )]
+[node name="spawn_point2" parent="spawns" instance=ExtResource( 3 )]
 transform = Transform( -0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, -29.6526, -3.29583, -41.65 )
 
-[node name="spawn_point7" parent="spawns" instance=ExtResource( 5 )]
+[node name="spawn_point7" parent="spawns" instance=ExtResource( 3 )]
 transform = Transform( -0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0.252426, -3.62131, -3.6044 )
 
-[node name="spawn_point3" parent="spawns" instance=ExtResource( 5 )]
-transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -49.6526, -3.61905, -61.65 )
+[node name="spawn_point3" parent="spawns" instance=ExtResource( 3 )]
+transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -52.7783, 3.82409, -71.7758 )
 
-[node name="spawn_point4" parent="spawns" instance=ExtResource( 5 )]
+[node name="spawn_point5" parent="spawns" instance=ExtResource( 3 )]
+transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -52.7783, -3.17903, -71.7758 )
+
+[node name="spawn_point4" parent="spawns" instance=ExtResource( 3 )]
 transform = Transform( -0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -83.6526, -3.1115, -32.65 )

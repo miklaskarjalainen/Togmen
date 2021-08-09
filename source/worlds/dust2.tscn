@@ -178,7 +178,7 @@ depth = 23.1222
 material = ExtResource( 5 )
 
 [node name="mid_wall6" type="CSGBox" parent="mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.54316, 22.4055, -68.6109 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81596, 22.4397, -68.5069 )
 width = 7.81308
 height = 8.0
 depth = 23.1222

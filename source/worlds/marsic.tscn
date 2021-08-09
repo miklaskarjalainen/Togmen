@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://source/entities/mesh_visibility_toggler.gd" type="Script" id=1]
 [ext_resource path="res://assets/materials/brick.tres" type="Material" id=2]
 [ext_resource path="res://assets/materials/sand.tres" type="Material" id=3]
 [ext_resource path="res://assets/props/ship_container/ship_container.tscn" type="PackedScene" id=4]
 [ext_resource path="res://source/entities/actors/spawn_point.tscn" type="PackedScene" id=5]
-[ext_resource path="res://source/entities/consumables/medkit.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/props/barrel/barrel.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/props/sprites/brown_grass.png" type="Texture" id=8]
 
@@ -37,9 +36,6 @@ adjustment_enabled = true
 
 [node name="env" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
-
-[node name="medkit" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.9383, 7.16988, -6.86275 )
 
 [node name="grass" type="Spatial" parent="."]
 
