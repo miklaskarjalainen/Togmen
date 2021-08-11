@@ -25,10 +25,11 @@ func add_entry(peer_node): # Added in player.gd ready()
 	entries.add_child(instance)
 
 func remove_entry(id:int):
-	if gametimer.minutes >= 1:
+	if gametimer.seconds > 15: # Delete if there's more than 15 seconds of gametime left
 		entries.get_node(str(id)).queue_free()
 		return
-	entries.get_node(str(id)).visible = false # if someone left right when the game was ending, he's score still will be stored.
+	# Keep if under 15 seconds of gametime left don't remove, so they can be displayed as a winner.
+	entries.get_node(str(id)).visible = false
 
 # Getters / Setters #
 func get_peer_with_most_kills():

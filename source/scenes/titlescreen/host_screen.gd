@@ -27,5 +27,5 @@ func _on_back_pressed():
 func _on_host_pressed():
 	GameSettings.match_settings["map"]       = get_map_path($maps.get_selected_items()[0])
 	GameSettings.match_settings["matchtime"] = $match_time.value
-	print(str(GameSettings.match_settings))
+	print("Match Settings: ", str(GameSettings.match_settings))
 	Net.create_server()

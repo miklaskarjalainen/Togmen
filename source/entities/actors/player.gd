@@ -32,8 +32,6 @@ func _ready():
 	Gui.register_peer(self) # Adds this node to the scoreboard
 	
 	if is_network_master():
-		GameWorld.connect("on_game_end", self, "_on_game_end")
-		
 		$player_model.hide()
 		$hitbox.queue_free()
 		Gui.set_player(self) # Makes the gui show this players health and ammo
@@ -284,8 +282,5 @@ func get_hand():
 	return $camera/hand
 
 # Signals #
-func _on_game_end():
-	Engine.time_scale = 0.08
-
 func _on_respawn_timer_timeout():
 	_respawn()

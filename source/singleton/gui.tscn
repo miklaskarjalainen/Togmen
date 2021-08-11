@@ -129,9 +129,9 @@ health_color_r = SubResource( 1 )
 health_color_g = SubResource( 2 )
 
 [node name="timer" type="Label" parent="."]
-margin_right = 1280.0
+anchor_right = 1.0
 margin_bottom = 40.0
-text = "Time: mm:ss"
+text = "Game Time: mm:ss"
 align = 1
 valign = 1
 script = ExtResource( 10 )
