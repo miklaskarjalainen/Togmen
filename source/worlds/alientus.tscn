@@ -6,19 +6,25 @@
 
 [sub_resource type="ProceduralSky" id=1]
 radiance_size = 0
-sky_top_color = Color( 0.215686, 0.152941, 0.0431373, 1 )
-sky_horizon_color = Color( 0.701961, 0.588235, 0.427451, 1 )
+sky_top_color = Color( 0.313726, 0.427451, 0.0431373, 1 )
+sky_horizon_color = Color( 0.835294, 0.913725, 0.658824, 1 )
 sky_curve = 0.173868
+sun_color = Color( 0.796078, 0.415686, 0.0823529, 1 )
 sun_latitude = 20.0
+sun_angle_min = 2.0
+sun_angle_max = 50.0
+sun_curve = 0.023326
+sun_energy = 4.0
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
 background_sky = SubResource( 1 )
 ambient_light_sky_contribution = 0.78
+fog_enabled = true
 fog_color = Color( 0.0509804, 0.658824, 0.0627451, 1 )
 fog_sun_color = Color( 0.843137, 0.94902, 0.647059, 1 )
-fog_depth_begin = 85.0
-fog_depth_end = 200.0
+fog_depth_begin = 45.0
+fog_depth_end = 150.0
 fog_depth_curve = 1.7411
 auto_exposure_scale = 0.01
 ssao_enabled = true
@@ -35,118 +41,27 @@ environment = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15851, 1.81878, -2.70432 )
 use_collision = true
 
-[node name="floor" type="CSGBox" parent="world"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -57.6891, 0, -85 )
+[node name="floor2" type="CSGCylinder" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -79.9627, 7.83417, -93.2899 )
 use_in_baked_light = true
-width = 164.0
-height = 10.0
-depth = 168.0
+radius = 71.6494
+height = 7.70084
+cone = true
 material = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="wall4" type="CSGBox" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0.0989846, 0.990154, 0.0989846, -0.700145, 0.139985, -0.700145, -18.4418, 14.3462, -109.676 )
+transform = Transform( -0.707107, 0, 0.707107, 0.0989846, 0.990154, 0.0989846, -0.700145, 0.139985, -0.700145, -24.708, -5.54936, -101.164 )
 use_in_baked_light = true
 width = 190.0
 height = 50.0
 depth = 20.0
 material = ExtResource( 2 )
 
-[node name="wall8" type="CSGCylinder" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -73.2582, 23.661, -85.8091 )
-use_in_baked_light = true
-radius = 7.0
-height = 38.0
-material = ExtResource( 2 )
-
-[node name="wall9" type="CSGCylinder" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -73.2582, 10.661, -85.8091 )
-use_in_baked_light = true
-radius = 14.0
-material = ExtResource( 2 )
-
-[node name="wall10" type="CSGCylinder" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -94.2582, 7.661, -94.8091 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall11" type="CSGCylinder" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -52.2582, 7.661, -92.8091 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall20" type="CSGCylinder" parent="world"]
-transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -130.325, 10.661, -113.363 )
-use_in_baked_light = true
-radius = 14.0
-material = ExtResource( 2 )
-
-[node name="wall21" type="CSGCylinder" parent="world"]
-transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -101.857, 7.62785, -112.287 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall23" type="CSGCylinder" parent="world"]
-transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -59.2591, 7.62785, -112.287 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall22" type="CSGCylinder" parent="world"]
-transform = Transform( 0.702004, 0, 0.712173, 0, 1, 0, -0.712173, 0, 0.702004, -114.966, 7.661, -96.6097 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall12" type="CSGCylinder" parent="world"]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -22.7631, 7.661, -62.8266 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall14" type="CSGCylinder" parent="world"]
-transform = Transform( -0.357944, 0, -0.933743, 0, 1, 0, 0.933743, 0, -0.357944, -70.3524, 10.661, -39.5894 )
-use_in_baked_light = true
-radius = 14.0
-material = ExtResource( 2 )
-
-[node name="wall16" type="CSGCylinder" parent="world"]
-transform = Transform( -0.357944, 0, -0.933743, 0, 1, 0, 0.933743, 0, -0.357944, -85.2961, 7.661, -55.9199 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall17" type="CSGCylinder" parent="world"]
-transform = Transform( -0.357944, 0, -0.933743, 0, 1, 0, 0.933743, 0, -0.357944, -52.2112, 7.661, -55.3403 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall15" type="CSGCylinder" parent="world"]
-transform = Transform( 0.242989, 0, 0.97003, 0, 1, 0, -0.97003, 0, 0.242989, -95.9294, 10.661, -151.293 )
-use_in_baked_light = true
-radius = 14.0
-material = ExtResource( 2 )
-
-[node name="wall18" type="CSGCylinder" parent="world"]
-transform = Transform( 0.242989, 0, 0.97003, 0, 1, 0, -0.97003, 0, 0.242989, -78.9988, 7.661, -134.877 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
-[node name="wall19" type="CSGCylinder" parent="world"]
-transform = Transform( 0.242989, 0, 0.97003, 0, 1, 0, -0.97003, 0, 0.242989, -107.94, 7.661, -133.473 )
-use_in_baked_light = true
-radius = 6.0
-material = ExtResource( 2 )
-
 [node name="wall5" type="CSGBox" parent="world"]
-transform = Transform( -0.5, 0, 0.866025, 0.0521755, 0.998183, 0.0301236, -0.864452, 0.0602472, -0.499092, -117.442, 23.7998, -59 )
+transform = Transform( -0.5, 0, 0.866025, 0.0521755, 0.998183, 0.0301236, -0.864452, 0.0602472, -0.499092, -116.442, 10.9042, -59 )
 use_in_baked_light = true
 width = 128.0
 height = 50.0
@@ -154,7 +69,7 @@ depth = 20.0
 material = ExtResource( 2 )
 
 [node name="wall7" type="CSGBox" parent="world"]
-transform = Transform( 0.864468, 0.0599336, 0.499101, -0.051904, 0.998202, -0.0299668, -0.5, 0, 0.866025, -27.4418, 24.9204, -31 )
+transform = Transform( 0.705602, 0.0578914, 0.706238, -0.051904, 0.998202, -0.0299668, -0.706704, -0.015512, 0.707339, -49.4418, 5.02484, -51 )
 use_in_baked_light = true
 width = 122.0
 height = 50.0
@@ -162,11 +77,69 @@ depth = 20.0
 material = ExtResource( 2 )
 
 [node name="wall6" type="CSGBox" parent="world"]
-transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -116.442, 29.661, -152 )
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -116.442, -1.33514, -152 )
 use_in_baked_light = true
 width = 86.0
 height = 50.0
 depth = 20.0
+material = ExtResource( 2 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="world"]
+transform = Transform( 0.982372, -0.185907, 0.0195823, 0.186936, 0.976967, -0.102908, 0, 0.104754, 0.994498, -46.9902, 19.6308, -112.413 )
+radius = 8.89389
+height = 37.7157
+material = ExtResource( 2 )
+
+[node name="CSGCylinder6" type="CSGCylinder" parent="world"]
+transform = Transform( 0.997281, 0.0732853, -0.00771941, -0.0736908, 0.991794, -0.104469, 0, 0.104754, 0.994498, -70.9902, 19.6308, -40.6809 )
+radius = 8.89389
+height = 37.7157
+material = ExtResource( 2 )
+
+[node name="CSGCylinder7" type="CSGCylinder" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.8918, 3.71058, -81.6406 )
+radius = 19.5525
+height = 12.8699
+sides = 14
+material = ExtResource( 2 )
+
+[node name="CSGCylinder2" type="CSGCylinder" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -130.162, -0.209968, -114.318 )
+radius = 8.89389
+height = 15.3467
+material = ExtResource( 2 )
+
+[node name="CSGCylinder3" type="CSGCylinder" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -77.5348, 3.16789, -131.781 )
+radius = 8.89389
+height = 15.3467
+material = ExtResource( 2 )
+
+[node name="CSGCylinder4" type="CSGCylinder" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -95.4842, 1.93176, -150.817 )
+radius = 8.89389
+height = 22.0701
+material = ExtResource( 2 )
+
+[node name="CSGCylinder8" type="CSGCylinder" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -83.017, 8.35592, -96.4966 )
+radius = 12.2181
+height = 20.0
+sides = 24
+material = ExtResource( 2 )
+
+[node name="CSGCylinder9" type="CSGCylinder" parent="world"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -83.017, 21.35, -96.497 )
+radius = 12.2181
+height = 6.0
+sides = 24
+cone = true
+material = ExtResource( 2 )
+
+[node name="CSGCylinder5" type="CSGCylinder" parent="world"]
+transform = Transform( 0.866025, 0.5, -2.18557e-08, -0.12941, 0.224144, -0.965926, -0.482963, 0.836516, 0.258819, -102.484, 13.8713, -53.4303 )
+radius = 3.81304
+height = 143.353
 material = ExtResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -183,16 +156,16 @@ shadow_bias = 0.2
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 11, -80 )
 
 [node name="spawn_point2" parent="spawns" instance=ExtResource( 3 )]
-transform = Transform( -0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, -29.6526, -3.29583, -41.65 )
-
-[node name="spawn_point7" parent="spawns" instance=ExtResource( 3 )]
-transform = Transform( -0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0.252426, -3.62131, -3.6044 )
+transform = Transform( -0.755408, 0, 0.655255, 0, 1, 0, -0.655255, 0, -0.755408, -45.5404, -1.9767, -63.468 )
 
 [node name="spawn_point3" parent="spawns" instance=ExtResource( 3 )]
-transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -52.7783, 3.82409, -71.7758 )
-
-[node name="spawn_point5" parent="spawns" instance=ExtResource( 3 )]
-transform = Transform( -0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -52.7783, -3.17903, -71.7758 )
+transform = Transform( 0.0436369, 0, -0.999048, 0, 1, 0, 0.999048, 0, 0.0436369, -92.8466, -1.05877, -38.3228 )
 
 [node name="spawn_point4" parent="spawns" instance=ExtResource( 3 )]
-transform = Transform( -0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -83.6526, -3.1115, -32.65 )
+transform = Transform( 0.812721, -0.0014162, 0.582652, 0.00212169, 0.999998, -0.000528829, -0.582649, 0.00166602, 0.812722, -40.1849, -3.34563, 39.6697 )
+
+[node name="spawn_point6" parent="spawns" instance=ExtResource( 3 )]
+transform = Transform( -0.328092, 0, 0.944646, 0, 1, 0, -0.944646, 0, -0.328092, -4.56168, -0.902909, -24.9152 )
+
+[node name="spawn_point5" parent="spawns" instance=ExtResource( 3 )]
+transform = Transform( 0.189078, 0, 0.981962, 0, 1, 0, -0.981962, 0, 0.189078, 9.82984, 2.0233, -9.94079 )

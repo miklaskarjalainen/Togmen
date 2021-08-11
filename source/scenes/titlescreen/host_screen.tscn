@@ -48,11 +48,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -248.0
-margin_top = -368.0
+margin_left = -256.0
+margin_top = -360.0
 margin_right = -16.0
-margin_bottom = -264.0
+margin_bottom = -256.0
 items = [ "Marsic", null, false, "Alientus", null, false ]
+same_column_width = true
+fixed_column_width = 232
+icon_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
