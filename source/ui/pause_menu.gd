@@ -1,5 +1,7 @@
 extends Control
 
+func _ready():
+	Net.connect("on_server_disconnect", self, "_on_back_button_up")
 
 func _physics_process(delta:float):
 	# Grap / Release mouse cursor #

@@ -60,6 +60,8 @@ func create_client(ip_addr:String) -> void:
 	print("Client Created IP: %s Port: %s" % [ip_addr, PORT])
 
 func destroy_client() -> void: # Disconnect
+	if get_tree().network_peer == null:
+		return
 	get_tree().network_peer = null
 	emit_signal("on_server_disconnect")
 
@@ -93,4 +95,5 @@ func _on_connection_fail() -> void:
 
 func _on_server_disconnect() -> void:
 	print("Disconnected from the server")
+	emit_signal("on_server_disconnect")
 
