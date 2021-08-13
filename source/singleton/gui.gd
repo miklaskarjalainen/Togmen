@@ -31,7 +31,8 @@ func register_peer(peer_node):
 	scoreboard.add_entry(peer_node)
 
 func set_player(_player):
-	visible = true if _player != null else false # Makes the title screen visible if the player is not null
+	# Makes the gui visible if the player is not null
+	visible = _player != null
 	player = _player
 
 func hitmark_play():

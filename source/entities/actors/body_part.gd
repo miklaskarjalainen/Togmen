@@ -1,6 +1,8 @@
 extends Area
 class_name BodyPart
 
+# Used in bullet damage calculations.
+
 export(NodePath)             var player_path
 export(float, 0.0, 5.0, 0.1) var multiplier = 1.0
 
