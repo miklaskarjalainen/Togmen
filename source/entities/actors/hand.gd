@@ -92,8 +92,8 @@ func _handle_shooting():
 		_shoot()
 	elif Input.is_action_pressed("shoot") and get_weapon().is_auto():
 		_shoot()
-	if Input.is_action_just_pressed("throw_grenade") and grenade_dir.get_child_count() == 0:
-		_throw_grenade()
+#	if Input.is_action_just_pressed("throw_grenade") and grenade_dir.get_child_count() == 0:
+#		_throw_grenade()
 
 func _shoot():
 	# Returns false if there's something preventing from shooting like,
