@@ -56,6 +56,7 @@ func _physics_process(delta:float):
 		if health <= 0 and get_killer() == null:
 			Gui.killed_by("", "suicide")
 			_respawn()
+
 	
 	_do_player_animations()
 
@@ -125,15 +126,27 @@ func _do_player_movement(delta:float):
 		move_spd += JUMP_MOV_BOOST
 	
 	# Crouching #
-	is_crouching = Input.is_action_pressed("crouch")
+	if not is_crouching:
+		if Input.is_action_pressed("crouch") and $crouch_timer.is_stopped():
+			$crouch_timer.wait_time += 0.1
+			$crouch_timer.start()
+			$crouch_reset_timer.start()
+			is_crouching = true
+			pass
+	else: # uncrouch if needed
+		is_crouching = Input.is_action_pressed("crouch")
+	
 	
 	# Gravity #
 	motion.y -= GRAVITY * delta
 	
+	# TODO: Killfeed ja custom headshot message for kinves
 	Debug.add_line("speed", hor_motion.length())
 	Debug.add_line("is_grounded", is_grounded())
 	Debug.add_line("is_crouching", is_crouching)
 	Debug.add_line("is_host", Net.is_host())
+	Debug.add_line("crouch_timer", $crouch_timer.time_left)
+	Debug.add_line("crouch_reset_timer", $crouch_reset_timer.time_left)
 	
 	motion = move_and_slide(motion, Vector3.UP, true, 4)
 
@@ -284,3 +297,7 @@ func get_hand():
 # Signals #
 func _on_respawn_timer_timeout():
 	_respawn()
+
+func _on_crouch_reset_timer_timeout():
+	$crouch_timer.wait_time = 0.1
+	print("crouch timer reset")

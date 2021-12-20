@@ -202,7 +202,7 @@ sfx_shoot = ExtResource( 13 )
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 visible = false
 script = ExtResource( 9 )
-base_damage = 43
+base_damage = 50
 max_ammo = 7
 damage_falloff = 0.2
 base_recoil = 0.5
@@ -265,6 +265,15 @@ __meta__ = {
 "_editor_description_": "Leeway with pessing space, if this timeout is running, the player will jump when he touches the ground."
 }
 
+[node name="crouch_timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[node name="crouch_reset_timer" type="Timer" parent="."]
+wait_time = 2.4
+one_shot = true
+
 [node name="coll" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.677288, 0 )
 visible = false
@@ -325,3 +334,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3023, 0 )
 shape = SubResource( 9 )
 
 [connection signal="timeout" from="respawn_timer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="timeout" from="crouch_reset_timer" to="." method="_on_crouch_reset_timer_timeout"]
